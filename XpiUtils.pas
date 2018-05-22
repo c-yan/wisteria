@@ -3,7 +3,7 @@ unit XpiUtils;
 
 interface
 
-uses Windows, Classes, SysUtils, Forms, Graphics, Dialogs;
+uses Windows, Classes, SysUtils, Forms, Graphics;
 
 procedure SaveViaXpi(FileName: string; Src: TBitmap);
 function IsLoadableViaXpi(Ext: string): Boolean;
