@@ -8,8 +8,6 @@ procedure ReduceColor(const Src: TBitmap; Colors: Integer; Dither: Boolean);
 
 implementation
 
-uses main;
-
 function CompareInteger(Item1, Item2: Pointer): Integer;
 begin
   Result := Integer(Item1) - Integer(Item2);
