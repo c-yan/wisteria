@@ -3,7 +3,7 @@ unit exif;
 interface
 
 uses
-  Classes, SysUtils, Math;
+  System.Classes, System.SysUtils, System.Math;
 
 function GetOriginalDateTime(FileName: string): AnsiString;
 function GetModel(FileName: string): AnsiString;

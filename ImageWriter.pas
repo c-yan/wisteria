@@ -3,7 +3,7 @@ unit ImageWriter;
 interface
 
 uses
-  Classes, Graphics, SysUtils;
+  System.Classes, Vcl.Graphics, System.SysUtils;
 
 procedure SaveAsPSD(Src: TBitmap; FileName: string);
 procedure SaveAsPPM(Src: TBitmap; FileName: string);

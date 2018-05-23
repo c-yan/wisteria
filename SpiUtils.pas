@@ -3,7 +3,8 @@ unit SpiUtils;
 
 interface
 
-uses Windows, Classes, SysUtils, Forms, Graphics;
+uses
+  Winapi.Windows, System.Classes, System.SysUtils, Vcl.Forms, Vcl.Graphics;
 
 procedure LoadViaSpi(FileName: string; Src: TBitmap);
 function IsLoadableViaSpi(Ext: string): Boolean;
@@ -69,14 +70,14 @@ procedure InitSpi();
     Handle: THandle;
     Data: TWin32FindData;
   begin
-    Handle := Windows.FindFirstFile(PChar(Dir + '*.spi'), Data);
+    Handle := Winapi.Windows.FindFirstFile(PChar(Dir + '*.spi'), Data);
     if Handle = INVALID_HANDLE_VALUE then Exit;
     FileList.Add(Dir + Data.cFileName);
-    while Windows.FindNextFile(Handle, Data) = True do
+    while Winapi.Windows.FindNextFile(Handle, Data) = True do
     begin
       FileList.Add(Dir + Data.cFileName);
     end;
-    Windows.FindClose(Handle);
+    Winapi.Windows.FindClose(Handle);
   end;
 
   var

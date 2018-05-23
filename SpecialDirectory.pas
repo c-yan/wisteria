@@ -1,8 +1,9 @@
 unit SpecialDirectory;
 
 interface
+
 uses
-  Windows, SysUtils, ShlObj;
+  Winapi.Windows, System.SysUtils, Winapi.ShlObj;
 
 function MyDocumentsDirectory: string;
 function DesktopDirectory: string;

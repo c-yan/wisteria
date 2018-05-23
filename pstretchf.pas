@@ -2,7 +2,8 @@ unit pstretchf;
 
 interface
 
-uses Windows, SysUtils, Graphics, Math, ParallelUtils;
+uses
+  Winapi.Windows, System.SysUtils, Vcl.Graphics, System.Math, ParallelUtils;
 
 const
   PixelBits = pf24bit;

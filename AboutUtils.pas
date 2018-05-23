@@ -3,7 +3,7 @@ unit AboutUtils;
 interface
 
 uses
-  Windows, Forms, ShellApi;
+  Winapi.Windows, Vcl.Forms, Winapi.ShellApi;
 
 resourcestring
   MailAddress = 'recv@cyanet.jp';

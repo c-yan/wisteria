@@ -2,7 +2,9 @@ unit NColorReduction;
 
 interface
 
-uses Windows, Classes, SysUtils, Forms, Graphics, Math, MMSystem;
+uses
+  Winapi.Windows, System.Classes, System.SysUtils, Vcl.Forms, Vcl.Graphics,
+  System.Math, Winapi.MMSystem;
 
 procedure ReduceColor(const Src: TBitmap; Colors: Integer; Dither: Boolean);
 

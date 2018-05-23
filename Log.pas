@@ -3,7 +3,7 @@ unit Log;
 interface
 
 uses
-  SysUtils;
+  System.SysUtils;
 
 procedure InitLog(FileName: string);
 procedure Error(Text: string);

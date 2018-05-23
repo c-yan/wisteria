@@ -3,7 +3,8 @@ unit XpiUtils;
 
 interface
 
-uses Windows, Classes, SysUtils, Forms, Graphics;
+uses
+  Winapi.Windows, System.Classes, System.SysUtils, Vcl.Forms, Vcl.Graphics;
 
 procedure SaveViaXpi(FileName: string; Src: TBitmap);
 function IsLoadableViaXpi(Ext: string): Boolean;
@@ -80,14 +81,14 @@ procedure InitXpi();
     Handle: THandle;
     Data: TWin32FindData;
   begin
-    Handle := Windows.FindFirstFile(PChar(Dir + '*.xpi'), Data);
+    Handle := Winapi.Windows.FindFirstFile(PChar(Dir + '*.xpi'), Data);
     if Handle = INVALID_HANDLE_VALUE then Exit;
     FileList.Add(Dir + Data.cFileName);
-    while Windows.FindNextFile(Handle, Data) = True do
+    while Winapi.Windows.FindNextFile(Handle, Data) = True do
     begin
       FileList.Add(Dir + Data.cFileName);
     end;
-    Windows.FindClose(Handle);
+    Winapi.Windows.FindClose(Handle);
   end;
 
   var

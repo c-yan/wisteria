@@ -1,7 +1,9 @@
 unit ParallelUtils;
 
 interface
-uses Windows, SysUtils, Forms;
+
+uses
+  Winapi.Windows, System.SysUtils, Vcl.Forms;
 
 procedure ParallelFor(Start, Stop: Integer; Block: TProc<Integer, Integer>); overload;
 procedure ParallelFor(Start, Stop: Integer; Block: TProc<Integer>); overload;

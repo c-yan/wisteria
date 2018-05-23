@@ -2,7 +2,8 @@ unit ImageFilter;
 
 interface
 
-uses Windows, Graphics, Classes, SysUtils, Math;
+uses
+  Winapi.Windows, Vcl.Graphics, System.Classes, System.SysUtils, System.Math;
 
 type
   TProgressProc = procedure(Progress: Integer);
