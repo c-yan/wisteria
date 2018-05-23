@@ -5,19 +5,19 @@ uses
   Main in 'Main.pas' {MainForm},
   Process in 'Process.pas' {ProcessForm},
   SpecialDirectory in 'SpecialDirectory.pas',
-  ImageWriter in 'ImageWriter.pas',
-  NColorReduction in 'NColorReduction.pas',
-  ImageFilter in 'ImageFilter.pas',
   Log in 'Log.pas',
-  exif in 'exif.pas',
-  pstretchf in 'pstretchf.pas',
   ParallelUtils in 'ParallelUtils.pas',
   {$IFNDEF WIN64}
   SpiUtils in 'SpiUtils.pas',
   XpiUtils in 'XpiUtils.pas',
   {$ENDIF }
   AboutUtils in 'AboutUtils.pas',
-  Helper in 'Helper.pas';
+  Helper in 'Helper.pas',
+  ImageFilter in 'ImageLib\ImageFilter.pas',
+  ImageWriter in 'ImageLib\ImageWriter.pas',
+  NColorReduction in 'ImageLib\NColorReduction.pas',
+  pstretchf in 'ImageLib\pstretchf.pas',
+  exif in 'ImageLib\exif.pas';
 
 {$R *.res}
 

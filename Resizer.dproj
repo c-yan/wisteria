@@ -104,17 +104,17 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="SpecialDirectory.pas"/>
-        <DCCReference Include="ImageWriter.pas"/>
-        <DCCReference Include="NColorReduction.pas"/>
-        <DCCReference Include="ImageFilter.pas"/>
         <DCCReference Include="Log.pas"/>
-        <DCCReference Include="exif.pas"/>
-        <DCCReference Include="pstretchf.pas"/>
         <DCCReference Include="ParallelUtils.pas"/>
         <DCCReference Include="SpiUtils.pas"/>
         <DCCReference Include="XpiUtils.pas"/>
         <DCCReference Include="AboutUtils.pas"/>
         <DCCReference Include="Helper.pas"/>
+        <DCCReference Include="ImageLib\ImageFilter.pas"/>
+        <DCCReference Include="ImageLib\ImageWriter.pas"/>
+        <DCCReference Include="ImageLib\NColorReduction.pas"/>
+        <DCCReference Include="ImageLib\pstretchf.pas"/>
+        <DCCReference Include="ImageLib\exif.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
