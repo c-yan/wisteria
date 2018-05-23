@@ -3,10 +3,8 @@ unit ImageFilter;
 interface
 
 uses
-  Winapi.Windows, Vcl.Graphics, System.Classes, System.SysUtils, System.Math;
-
-type
-  TProgressProc = procedure(Progress: Integer);
+  Winapi.Windows, Vcl.Graphics, System.Classes, System.SysUtils, System.Math,
+  ImageTypes;
 
 procedure GrayscaleFilter(Src: TBitmap; Method: Integer; PProc: TProgressProc);
 procedure SharpenFilter(Src: TBitmap; V: Integer; PProc: TProgressProc);
@@ -38,38 +36,6 @@ procedure MonochromeImage(Src, Obj: TBitmap);
 implementation
 
 type
-  TByteTriple = packed array[0..2] of Byte;
-  TByteQuad = packed array[0..3] of Byte;
-  TRGBTriple = packed record
-    B, G, R: Byte;
-  end;
-  TRGBQuad = packed record
-    B, G, R, A: Byte;
-  end;
-
-const
-  PixelBits = pf24bit;
-type
-  TPixel = TByteTriple;
-  TRGB = TRGBTriple;
-
-{
-const
-  PixelBits = pf32bit;
-type
-  TPixel = TByteQuad;
-  TRGB = TRGBQuad;
-}
-
-  TPixelArray = array[0..400000] of TPixel;
-  PPixelArray = ^TPixelArray;
-
-  PRGB = ^TRGB;
-  TRGBArray = array[0..400000] of TRGB;
-  PRGBArray = ^TRGBArray;
-
-  TByteArray = array[0..400000] of Byte;
-  PByteArray = ^TByteArray;
   TMapProc = function(X, Y, W, H: Integer): Integer;
 
   TDoubleArray = array[0..400000] of Double;

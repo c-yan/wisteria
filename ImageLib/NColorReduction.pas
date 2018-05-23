@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, System.Classes, System.SysUtils, Vcl.Forms, Vcl.Graphics,
-  System.Math, Winapi.MMSystem;
+  System.Math, Winapi.MMSystem, ImageTypes;
 
 procedure ReduceColor(const Src: TBitmap; Colors: Integer; Dither: Boolean);
 
@@ -17,13 +17,7 @@ end;
 
 procedure ReduceColor(const Src: TBitmap; Colors: Integer; Dither: Boolean);
   type
-    TByteQuad = packed array[0..3] of Byte;
-    PByteQuad = ^TByteQuad;
-    TByteQuadArray = array[0..0] of TByteQuad;
-    PByteQuadArray = ^TByteQuadArray;
-
     TWordQuad = packed array[0..3] of Word;
-    PWordQuad = ^TWordQuad;
 
     TColorInfo = record
       Min, Max: Integer;

@@ -3,19 +3,13 @@ unit ImageWriter;
 interface
 
 uses
-  System.Classes, Vcl.Graphics, System.SysUtils;
+  System.Classes, Vcl.Graphics, System.SysUtils, ImageTypes;
 
 procedure SaveAsPSD(Src: TBitmap; FileName: string);
 procedure SaveAsPPM(Src: TBitmap; FileName: string);
 
 implementation
 
-type
-  TByteArray = array[0..400000] of Byte;
-  PByteArray = ^TByteArray;
-  TPixel = packed array[0..2] of Byte;
-  TPixelArray = array[0..400000] of TPixel;
-  PPixelArray = ^TPixelArray;
 
 procedure SaveAsPSD(Src: TBitmap; FileName: string);
 var

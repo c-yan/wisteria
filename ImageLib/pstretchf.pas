@@ -3,19 +3,8 @@ unit pstretchf;
 interface
 
 uses
-  Winapi.Windows, System.SysUtils, Vcl.Graphics, System.Math, ParallelUtils;
-
-const
-  PixelBits = pf24bit;
-type
-  TByteTriple = packed array[0..2] of Byte;
-  TByteQuad = packed array[0..3] of Byte;
-  TPixel = TByteTriple;
-  PPixel = ^TPixel;
-  TPixelArray = array[0..400000] of TPixel;
-  PPixelArray = ^TPixelArray;
-
-  TProgressProc = procedure(Progress: Integer);
+  Winapi.Windows, System.SysUtils, Vcl.Graphics, System.Math, ParallelUtils,
+  ImageTypes;
 
   procedure Stretch(Src: TBitmap; Width, Height, Method: Integer; PProc: TProgressProc);
   procedure SetLinearizeOnReduce(Value: Integer);

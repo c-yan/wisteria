@@ -17,7 +17,8 @@ uses
   ImageWriter in 'ImageLib\ImageWriter.pas',
   NColorReduction in 'ImageLib\NColorReduction.pas',
   pstretchf in 'ImageLib\pstretchf.pas',
-  exif in 'ImageLib\exif.pas';
+  exif in 'ImageLib\exif.pas',
+  ImageTypes in 'ImageLib\ImageTypes.pas';
 
 {$R *.res}
 

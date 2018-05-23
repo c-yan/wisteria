@@ -11,7 +11,7 @@ uses
   SpiUtils, XpiUtils,
   {$ENDIF}
   Vcl.FileCtrl, ImageFilter, Vcl.Clipbrd, NColorReduction, Log,  System.IniFiles,
-  AboutUtils, ParallelUtils;
+  AboutUtils, ParallelUtils, ImageTypes;
 
 type
   TValueType = (vtAbsolute, vtRelative);
