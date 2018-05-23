@@ -114,6 +114,7 @@
         <DCCReference Include="SpiUtils.pas"/>
         <DCCReference Include="XpiUtils.pas"/>
         <DCCReference Include="AboutUtils.pas"/>
+        <DCCReference Include="Helper.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

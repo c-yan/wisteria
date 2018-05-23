@@ -12,11 +12,12 @@ uses
   exif in 'exif.pas',
   pstretchf in 'pstretchf.pas',
   ParallelUtils in 'ParallelUtils.pas',
-{$IFNDEF WIN64}
+  {$IFNDEF WIN64}
   SpiUtils in 'SpiUtils.pas',
   XpiUtils in 'XpiUtils.pas',
-{$ENDIF}
-  AboutUtils in 'AboutUtils.pas';
+  {$ENDIF }
+  AboutUtils in 'AboutUtils.pas',
+  Helper in 'Helper.pas';
 
 {$R *.res}
 
