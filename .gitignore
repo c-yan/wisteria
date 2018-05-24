@@ -67,3 +67,6 @@ __recovery/
 
 Win32
 Win64
+
+help/*  
+helpsrc/_build/*

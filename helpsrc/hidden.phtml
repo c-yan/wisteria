@@ -1,0 +1,80 @@
+隠し設定
+<p>以下に挙げられている設定は、wisteria.ini の直書き換えによってのみ設定できます.</p>
+
+<h2>[Files]</h2>
+<dl>
+<dt>MapFile</dt>
+<dd>MapFile のファイル名を設定します.<br />
+設定しておけば最新版を同じディレクトリに上書きした時に自分の書き換えた設定が飛ばなくて済みます.</dd>
+
+<dt>ClipboardFile</dt>
+<dd>貼り付けをしたときに入力として作られる一時ファイルの名前を設定できます.<br />
+書き換える意義があるかどうかは不明です.</dd>
+</dl>
+
+<h2>[Directories]</h2>
+<dl>
+<dt>SpiDirectory</dt>
+<dd>Susie Plug-in のディレクトリを指定します.<br />
+Susie のディレクトリを指定すれば、プラグインの一元管理ができます.</dd>
+
+<dt>SampleDirectory</dt>
+<dd>雛型のあるディレクトリを指定します.<br />
+設定しておけば最新版を同じディレクトリに上書きした時に自分の書き換えた雛形が飛ばなくて済みますが、新しい設定が増えた場合に追従できないかもしれません.</dd>
+</dl>
+
+<h2>[HTML]</h2>
+<dl>
+<dt>TemplateFile</dt>
+<dd>基本テンプレートを切り替えれます.</dd>
+
+<dt>FileName</dt>
+<dd>出力する HTML ファイルの名前を変更できます.<br />
+出力時に確認なく上書きされるので、よくありそうな名前を使う場合にはお気をつけて.</dd>
+
+<dt>Nth, OnStart, OnItem, OnNth, OnRemain, OnEnd</dt>
+<dd>HTML 出力の制御ができます.</dd>
+</dl>
+
+<h2>[Other]</h2>
+<dl>
+<dt>TimeFormat</dt>
+<dd>時刻設定の書式を変更できます.<br />
+%t をファイル名に使う場合には、ファイル名に使えない文字を書式中で使わないようご注意ください.</dd>
+
+<dt>EnableLMap</dt>
+<dd>LMap を使用できるようにします.</dd>
+
+<dt>PostExec</dt>
+<dd>処理後にフォルダを開く代わりに、外部プログラムを起動します.
+以下の様に指定してください. ? は対象のディレクトリに置換されます.<br />
+<code>PostExec=C:\Program Files\foo\bar.exe -d "?" -baz</code></dd>
+
+<dt>DisableIL</dt>
+<dd>内蔵の画像ローダーを無効にします.</dd>
+
+<dt>MinimizedStart</dt>
+<dd>最小化状態で起動します.</dd>
+
+<dt>TrimRectError</dt>
+<dd>切り抜き範囲が入力画像からはみ出している場合にエラー停止します.</dd>
+
+<dt>TrimRectFillColor</dt>
+<dd>切り抜き範囲が入力画像からはみ出している場合に穴埋めする色を設定します.</dd>
+
+<dt>FilterOrder</dt>
+<dd>フィルタ順序を指定します.
+複数回も可能です.<br />
+<code>0=lmap, 1=ガンマ補正, 2=正規化, 3=輝度補正, 4=コントラスト補正, 5=ノイズ除去, 6=サイズ変更, 7=輪郭強調中, 8=白黒化/自動8bit化</code></dd>
+
+<dt>MaxThreads</dt>
+<dd>処理の最大スレッド数を指定します.<br />
+デフォルト値は0で、その場合には OS から取得したプロセッサ数(GetSystemInfo で取得した dwNumberOfProcessors) になります.</dd>
+
+<dt>ContinueOnError</dt>
+<dd>エラー時でも実行を継続するようになります.</dd>
+
+<dt>LogFileName</dt>
+<dd>指定したファイルにログを吐くようになります.
+フルパスで指定してください.</dd>
+</dl>
