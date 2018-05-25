@@ -1525,7 +1525,7 @@ begin
 
   if ParamCount > 0 then
   begin
-    if ExtractFileExt(ParamStr(1)) = '.ini' then
+    if LowerCase(ExtractFileExt(ParamStr(1))) = '.ini' then
     begin
       LoadIniFile(ParamStr(1));
       if ParamCount > 1 then Application.OnIdle := ParamExecute;
