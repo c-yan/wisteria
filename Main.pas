@@ -2323,6 +2323,7 @@ procedure TMainForm.AddFile(FileName: string);
 {$IFNDEF WIN64}
     Result := Result or IsLoadableViaSpi(Copy(Ext, 2, Length(Ext)));
 {$ENDIF}
+    if not Result then Warn(Format('Unsupported image format: %s', [FileName]));
   end;
 begin
   if (FileGetAttr(FileName) and faDirectory) <> 0 then
