@@ -2319,7 +2319,12 @@ procedure TMainForm.AddFile(FileName: string);
   begin
     Ext := LowerCase(ExtractFileExt(FileName));
     if DisableIL then Result := False
+{$IF CompilerVersion >= 21.0}
+    else Result := (Ext = '.bmp') or (Ext = '.jpg') or (Ext = '.jpeg') or (Ext = '.gif') or (Ext = '.png') or
+                   (Ext = '.ico') or (Ext = '.tif') or (Ext = '.tiff') or (Ext = '.jxr') or (Ext = '.hdp') or (Ext = '.wdp');
+{$ELSE}
     else Result := (Ext = '.bmp') or (Ext = '.jpg') or (Ext = '.jpeg') or (Ext = '.gif') or (Ext = '.png');
+{$IFEND}
 {$IFNDEF WIN64}
     Result := Result or IsLoadableViaSpi(Copy(Ext, 2, Length(Ext)));
 {$ENDIF}

@@ -12,13 +12,29 @@
 <h2>ファイル名の生成規則</h2>
 <p>%系の記述子が使えます.</p>
 
+<h2>読込形式</h2>
+<p>以下の画像形式に対応しています. また、Susie プラグインにより拡張できます.</p>
+<ul>
+<li>Windows Bitmap (拡張子: bmp)</li>
+<li>JPEG (拡張子: jpeg, jpg)</li>
+<li>Graphics Interchange Format (拡張子: gif)</li>
+<li>Portable Network Graphics (拡張子: png)</li>
+<li>Windows Icon (拡張子: ico)</li>
+<li>Tagged Image File Format (拡張子: tiff, tif)</li>
+<li>JPEG XR / HD Photo / Windows Media Photo (拡張子: jxr, hdp, wdp)</li>
+</ul>
+
 <h2>出力形式</h2>
-<p>出力ファイル名の拡張子が bmp の場合はビットマップ画像を、
-gif の場合は GIF 画像を、
-png の場合は PNG 画像を、
-jpg, jpeg の場合は JPEG 画像を、
-pnm, ppm の場合は PNM(P3) 画像を、
-psd の場合は Photoshop 3.0 形式の画像を出力します.</p>
+<p>以下の画像形式に対応しています. また、A to B Convertor プラグインにより拡張できます.</p>
+<ul>
+<li>Windows Bitmap (拡張子: bmp)</li>
+<li>JPEG (拡張子: jpeg, jpg)</li>
+<li>Graphics Interchange Format (拡張子: gif)</li>
+<li>Portable Network Graphics (拡張子: png)</li>
+<li>Portable Pixmap Format (P3 / ASCII) (拡張子: pnm, ppm)</li>
+<li>Photoshop 3.0 (拡張子: psd)</li>
+</ul>
+<p>また、拡張子として png8, bmp8 を指定した場合は256色に、png4, bmp4 を指定した場合には16色で、png, bmp として出力します(必要であれば減色します).</p>
 
 <h2>雛型</h2>
 <p>雛型の実体は samples ディレクトリにある *.ini です.
