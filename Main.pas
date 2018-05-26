@@ -539,18 +539,6 @@ begin
   end;
 end;
 
-function IncludeTrailingBackslash(const S: string): string;
-begin
-  if (S = '') or (S[Length(S)] <> '\') then Result := S + '\'
-  else Result := S;
-end;
-
-function ExcludeTrailingBackslash(const S: string): string;
-begin
-  Result := '';
-  if (S <> '') and (S[Length(S)] = '\') then Result := Copy(S, 1, Length(S) - 1)
-end;
-
 function AvoidCollisionName(const FileName: string): string;
 var
   I: Integer;
@@ -707,7 +695,7 @@ var
 
     function ExtractFilePathWithoutDrive(S: string): string;
     begin
-      Result := ExcludeTrailingBackSlash(ExtractFilePath(S));
+      Result := ExcludeTrailingPathDelimiter(ExtractFilePath(S));
       Result := Copy(Result, Length(ExtractFileDrive(S)) + 1, Length(S));
     end;
 
@@ -725,7 +713,7 @@ var
         case S[I] of
           'D': Result := Result + ExtractFileDrive(ProcInfo.Name);
           'P': Result := Result + ExtractFilePathWithoutDrive(ProcInfo.Name);
-          'p': Result := Result + StringReplace(ExcludeTrailingBackSlash(ExtractFilePath(ProcInfo.Name)), '%', '%%', [rfReplaceAll]);
+          'p': Result := Result + StringReplace(ExcludeTrailingPathDelimiter(ExtractFilePath(ProcInfo.Name)), '%', '%%', [rfReplaceAll]);
           'r': Result := Result + ExtractFileName(ExtractFileDir(ProcInfo.Name));
           'n': Result := Result + StringReplace(ChangeFileExt(ExtractFileName(ProcInfo.Name), ''), '%', '%%', [rfReplaceAll]);
           'e': Result := Result + StringReplace(Copy(ExtractFileExt(ProcInfo.Name), 2, Length(ExtractFileExt(ProcInfo.Name))), '%', '%%', [rfReplaceAll]);
@@ -1473,7 +1461,7 @@ procedure TMainForm.FormCreate(Sender: TObject);
 
 begin
   Application.OnException := AppException;
-  AppPath := ExcludeTrailingBackslash(ExtractFilePath(Application.ExeName));
+  AppPath := ExcludeTrailingPathDelimiter(ExtractFilePath(Application.ExeName));
   Application.OnHint := AppHint;
   FileList := TStringList.Create;
   CriticalSection := TCriticalSection.Create;
