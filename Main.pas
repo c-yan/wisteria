@@ -807,12 +807,16 @@ var
     FileExt: string;
     WICImage: TWICImage;
   begin
-    Result := False;
+    Result := True;
     WICImage := TWICImage.Create;
     try
-      WICImage.LoadFromFile(ProcInfo.Name);
+      try
+        WICImage.LoadFromFile(ProcInfo.Name);
+      except
+        Result := False;
+        Exit;
+      end;
       Src.Assign(WICImage);
-      Result := True;
       FileExt := LowerCase(ExtractFileExt(ProcInfo.Name));
       if (FileExt = '.jpg') or (FileExt = '.jpeg') then
       begin
