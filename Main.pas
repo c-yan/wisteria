@@ -789,8 +789,7 @@ var
     end;
   end;
 
-{$IF CompilerVersion >= 21.0}
-  function Load(var ProcInfo: TProcInfo; Src: TBitmap): Boolean;
+  function LoadByWIC(var ProcInfo: TProcInfo; Src: TBitmap): Boolean;
   var
     FileExt: string;
     WICImage: TWICImage;
@@ -816,8 +815,8 @@ var
       WICImage.Free;
     end;
   end;
-{$ELSE}
-  function Load(var ProcInfo: TProcInfo; Src: TBitmap): Boolean;
+
+  function LoadByIL(var ProcInfo: TProcInfo; Src: TBitmap): Boolean;
   var
     FileExt: string;
     PNG: TPngImage;
@@ -864,7 +863,15 @@ var
     end
     else Result := False;
   end;
-{$IFEND}
+
+  function Load(var ProcInfo: TProcInfo; Src: TBitmap): Boolean;
+  begin
+    {$IF CompilerVersion >= 21.0}
+    Result := LoadByWIC(ProcInfo, Src);
+    {$ELSE}
+    Result := LoadByIL(ProcInfo, Src);
+    {$IFEND}
+  end;
 
   function Save(SaveName: string; Grayscale: Boolean; Src: TBitmap): Boolean;
   var
