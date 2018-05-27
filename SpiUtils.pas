@@ -32,9 +32,6 @@ type
   TCreatePicture = function(FilePath: PAnsiChar; Flag: Longword; HBInfo: PHANDLE; HBm: PHANDLE; var PictureInfo: TPictureInfo; ProgressCallback: TProgressCallback; lData: Longint): Integer; stdcall;
 
 var
-  GetPluginInfo: TGetPluginInfo;
-  GetPicture: TGetPicture;
-  CreatePicture: TCreatePicture;
   SpiMapInfo: TStrings;
   XpiMapInfo: TStrings;
 
@@ -111,6 +108,7 @@ procedure InitSpi();
   procedure AddSpi(FileName: string);
   var
     HDLL: HINST;
+    GetPluginInfo: TGetPluginInfo;
   const
     BufSize = 256;
   begin
@@ -143,6 +141,7 @@ procedure InitXpi();
   procedure AddXpi(FileName: string);
   var
     HDLL: HINST;
+    GetPluginInfo: TGetPluginInfo;
   const
     BufSize = 256;
   begin
@@ -177,6 +176,7 @@ var
   BitmapInfo: ^TBitmapInfo;
   Ext: string;
   HDLL: HINST;
+  GetPicture: TGetPicture;
 begin
   Ext := ExtractFileExt(FileName);
   Ext := Copy(Ext, 2, Length(Ext));
@@ -207,6 +207,7 @@ var
   HDLL: HINST;
   PictureInfo: TPictureInfo;
   DS: TDIBSECTION;
+  CreatePicture: TCreatePicture;
 begin
   Ext := ExtractFileExt(FileName);
   Ext := Copy(Ext, 2, Length(Ext));
