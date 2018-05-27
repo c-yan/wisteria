@@ -48,6 +48,21 @@ begin
   Result := XpiMapInfo.IndexOfName(Ext) <> -1;
 end;
 
+procedure GetPluginList(Dir, Pattern: string; FileList: TStrings);
+var
+  Handle: THandle;
+  Data: TWin32FindData;
+begin
+  Handle := Winapi.Windows.FindFirstFile(PChar(Dir + Pattern), Data);
+  if Handle = INVALID_HANDLE_VALUE then Exit;
+  FileList.Add(Dir + Data.cFileName);
+  while Winapi.Windows.FindNextFile(Handle, Data) = True do
+  begin
+    FileList.Add(Dir + Data.cFileName);
+  end;
+  Winapi.Windows.FindClose(Handle);
+end;
+
 procedure InitSpi();
   procedure AddSpi(FileName: string);
   var
@@ -86,28 +101,13 @@ procedure InitSpi();
     FreeLibrary(HDLL);
   end;
 
-  procedure GetSpiList(Dir: string; FileList: TStrings);
-  var
-    Handle: THandle;
-    Data: TWin32FindData;
-  begin
-    Handle := Winapi.Windows.FindFirstFile(PChar(Dir + '*.spi'), Data);
-    if Handle = INVALID_HANDLE_VALUE then Exit;
-    FileList.Add(Dir + Data.cFileName);
-    while Winapi.Windows.FindNextFile(Handle, Data) = True do
-    begin
-      FileList.Add(Dir + Data.cFileName);
-    end;
-    Winapi.Windows.FindClose(Handle);
-  end;
-
   var
   I: Integer;
   SpiList: TStrings;
 begin
   SpiList := TStringList.Create;
   try
-    GetSpiList(ExtractFilePath(Application.ExeName), SpiList);
+    GetPluginList(ExtractFilePath(Application.ExeName), '*.spi', SpiList);
     for I := 0 to SpiList.Count - 1 do
     begin
       AddSpi(SpiList.Strings[I]);
@@ -155,28 +155,13 @@ procedure InitXpi();
     FreeLibrary(HDLL);
   end;
 
-  procedure GetXpiList(Dir: string; FileList: TStrings);
-  var
-    Handle: THandle;
-    Data: TWin32FindData;
-  begin
-    Handle := Winapi.Windows.FindFirstFile(PChar(Dir + '*.xpi'), Data);
-    if Handle = INVALID_HANDLE_VALUE then Exit;
-    FileList.Add(Dir + Data.cFileName);
-    while Winapi.Windows.FindNextFile(Handle, Data) = True do
-    begin
-      FileList.Add(Dir + Data.cFileName);
-    end;
-    Winapi.Windows.FindClose(Handle);
-  end;
-
   var
   I: Integer;
   XpiList: TStrings;
 begin
   XpiList := TStringList.Create;
   try
-    GetXpiList(ExtractFilePath(Application.ExeName), XpiList);
+    GetPluginList(ExtractFilePath(Application.ExeName), '*.xpi', XpiList);
     for I := 0 to XpiList.Count - 1 do
     begin
       AddXpi(XpiList.Strings[I]);
