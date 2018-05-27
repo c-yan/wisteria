@@ -8,7 +8,7 @@ uses
   Vcl.ComCtrls, System.SyncObjs, Winapi.ShellApi, Process, SpecialDirectory, exif,
   Vcl.Imaging.GIFImg, Vcl.Imaging.jpeg, Vcl.Imaging.pngimage, ImageWriter, pstretchf,
   {$IFNDEF WIN64}
-  SpiUtils, XpiUtils,
+  SpiUtils,
   {$ENDIF}
   Vcl.FileCtrl, ImageFilter, Vcl.Clipbrd, NColorReduction, Log,  System.IniFiles,
   AboutUtils, ParallelUtils, ImageTypes;

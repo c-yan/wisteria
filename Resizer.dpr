@@ -9,7 +9,6 @@ uses
   ParallelUtils in 'ParallelUtils.pas',
   {$IFNDEF WIN64}
   SpiUtils in 'SpiUtils.pas',
-  XpiUtils in 'XpiUtils.pas',
   {$ENDIF }
   AboutUtils in 'AboutUtils.pas',
   Helper in 'Helper.pas',

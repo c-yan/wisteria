@@ -107,7 +107,6 @@
         <DCCReference Include="Log.pas"/>
         <DCCReference Include="ParallelUtils.pas"/>
         <DCCReference Include="SpiUtils.pas"/>
-        <DCCReference Include="XpiUtils.pas"/>
         <DCCReference Include="AboutUtils.pas"/>
         <DCCReference Include="Helper.pas"/>
         <DCCReference Include="ImageLib\ImageFilter.pas"/>
