@@ -1010,10 +1010,10 @@ var
     Application.ProcessMessages;
 
 {$IFNDEF WIN64}
-    if DisableIL then LoadViaSpi(ProcInfo.Name, Src)
+    if DisableIL then LoadBySpi(ProcInfo.Name, Src)
     else
     begin
-      if not Load(ProcInfo, Src) then LoadViaSpi(ProcInfo.Name, Src);
+      if not Load(ProcInfo, Src) then LoadBySpi(ProcInfo.Name, Src);
     end;
 {$ELSE}
     Load(ProcInfo, Src);
@@ -1313,10 +1313,10 @@ var
     Application.ProcessMessages;
 
 {$IFNDEF WIN64}
-    if DisableIS then SaveViaXpi(SaveName, Src)
+    if DisableIS then SaveByXpi(SaveName, Src)
     else
     begin
-      if not Save(SaveName, ProcInfo.Grayscale, Src) then SaveViaXpi(SaveName, Src);
+      if not Save(SaveName, ProcInfo.Grayscale, Src) then SaveByXpi(SaveName, Src);
     end;
 {$ELSE}
     Save(SaveName, ProcInfo.Grayscale, Src);
@@ -2325,7 +2325,7 @@ procedure TMainForm.AddFile(FileName: string);
     else Result := (Ext = '.bmp') or (Ext = '.jpg') or (Ext = '.jpeg') or (Ext = '.gif') or (Ext = '.png');
 {$IFEND}
 {$IFNDEF WIN64}
-    Result := Result or IsLoadableViaSpi(Copy(Ext, 2, Length(Ext)));
+    Result := Result or IsLoadableBySpi(Copy(Ext, 2, Length(Ext)));
 {$ENDIF}
     if not Result then Warn(Format('Unsupported image format: %s', [FileName]));
   end;

@@ -5,10 +5,10 @@ interface
 uses
   Winapi.Windows, System.Classes, System.SysUtils, Vcl.Forms, Vcl.Graphics;
 
-procedure LoadViaSpi(FileName: string; Src: TBitmap);
-function IsLoadableViaSpi(Ext: string): Boolean;
-procedure SaveViaXpi(FileName: string; Src: TBitmap);
-function IsLoadableViaXpi(Ext: string): Boolean;
+function IsLoadableBySpi(Ext: string): Boolean;
+function IsSavableByXpi(Ext: string): Boolean;
+procedure LoadBySpi(FileName: string; Src: TBitmap);
+procedure SaveByXpi(FileName: string; Src: TBitmap);
 procedure DumpSpiMapInfo();
 procedure DumpXpiMapInfo();
 
@@ -38,12 +38,12 @@ var
   SpiMapInfo: TStrings;
   XpiMapInfo: TStrings;
 
-function IsLoadableViaSpi(Ext: string): Boolean;
+function IsLoadableBySpi(Ext: string): Boolean;
 begin
   Result := SpiMapInfo.IndexOfName(Ext) <> -1;
 end;
 
-function IsLoadableViaXpi(Ext: string): Boolean; // Loadable???
+function IsSavableByXpi(Ext: string): Boolean;
 begin
   Result := XpiMapInfo.IndexOfName(Ext) <> -1;
 end;
@@ -186,7 +186,7 @@ begin
   end;
 end;
 
-procedure LoadViaSpi(FileName: string; Src: TBitmap);
+procedure LoadBySpi(FileName: string; Src: TBitmap);
 var
   pHBInfo, pHBm: HLOCAL;
   BitmapInfo: ^TBitmapInfo;
@@ -195,7 +195,7 @@ var
 begin
   Ext := ExtractFileExt(FileName);
   Ext := Copy(Ext, 2, Length(Ext));
-  if IsLoadableViaSpi(Ext) then
+  if IsLoadableBySpi(Ext) then
   begin
     HDLL := LoadLibrary(PChar(SpiMapInfo.Values[Ext]));
     GetPicture := GetProcAddress(HDLL, 'GetPicture');
@@ -216,7 +216,7 @@ begin
   end;
 end;
 
-procedure SaveViaXpi(FileName: string; Src: TBitmap);
+procedure SaveByXpi(FileName: string; Src: TBitmap);
 var
   Ext: string;
   HDLL: HINST;
@@ -225,7 +225,7 @@ var
 begin
   Ext := ExtractFileExt(FileName);
   Ext := Copy(Ext, 2, Length(Ext));
-  if IsLoadableViaXpi(Ext) then
+  if IsSavableByXpi(Ext) then
   begin
     HDLL := LoadLibrary(PChar(XpiMapInfo.Values[Ext]));
     CreatePicture := GetProcAddress(HDLL, 'CreatePicture');
