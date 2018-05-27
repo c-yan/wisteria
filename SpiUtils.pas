@@ -63,6 +63,16 @@ begin
   Winapi.Windows.FindClose(Handle);
 end;
 
+function GetPluginApiVersion(GetPluginInfo: TGetPluginInfo): string;
+var
+  A: AnsiString;
+begin
+  SetLength(A, 5);
+  GetPluginInfo(0, PAnsiChar(A), 5);
+  SetLength(A, 4);
+  Result := string(A);
+end;
+
 function GetFilterPatterns(GetPluginInfo: TGetPluginInfo): string;
 const
   BufSize = 256;
@@ -100,17 +110,13 @@ end;
 procedure InitSpi();
   procedure AddSpi(FileName: string);
   var
-    A: AnsiString;
     HDLL: HINST;
   const
     BufSize = 256;
   begin
     HDLL := LoadLibrary(PChar(FileName));
     GetPluginInfo := GetProcAddress(HDLL, 'GetPluginInfo');
-    SetLength(A, 5);
-    GetPluginInfo(0, PAnsiChar(A), 5);
-    SetLength(A, 4);
-    if A = '00IN' then
+    if GetPluginApiVersion(GetPluginInfo) = '00IN' then
     begin
       RegisterFileExtensions(FileName, GetFilterPatterns(GetPluginInfo), SpiMapInfo);
     end;
@@ -136,17 +142,13 @@ end;
 procedure InitXpi();
   procedure AddXpi(FileName: string);
   var
-    A: AnsiString;
     HDLL: HINST;
   const
     BufSize = 256;
   begin
     HDLL := LoadLibrary(PChar(FileName));
     GetPluginInfo := GetProcAddress(HDLL, 'GetPluginInfo');
-    SetLength(A, 5);
-    GetPluginInfo(0, PAnsiChar(A), 5);
-    SetLength(A, 4);
-    if A = 'T0XN' then
+    if GetPluginApiVersion(GetPluginInfo) = 'T0XN' then
     begin
       RegisterFileExtensions(FileName, GetFilterPatterns(GetPluginInfo), XpiMapInfo);
     end;
