@@ -63,13 +63,44 @@ begin
   Winapi.Windows.FindClose(Handle);
 end;
 
+function GetFilterPatterns(GetPluginInfo: TGetPluginInfo): string;
+const
+  BufSize = 256;
+var
+  A: AnsiString;
+begin
+  SetLength(A, BufSize);
+  GetPluginInfo(2, PAnsiChar(A), BufSize);
+  SetLength(A, StrLen(PAnsiChar(A)));
+  Result := string(A);
+end;
+
+function PatternToExt(Pattern: string): string;
+begin
+  Result := Trim(StringReplace(Pattern, '*.', '', [rfReplaceAll]));
+end;
+
+procedure RegisterFileExtensions(PluginFileName: string; FilterPatterns: string; MapInfo: TStrings);
+var
+  I: Cardinal;
+  List: TStringList;
+begin
+  List := TStringList.Create;
+  try
+    List.Text := StringReplace(FilterPatterns, ';', #13#10, [rfReplaceAll]);
+    for I := 0 to List.Count - 1 do
+    begin
+      MapInfo.Values[PatternToExt(List.Strings[I])] := PluginFileName;
+    end;
+  finally
+    List.Free;
+  end;
+end;
+
 procedure InitSpi();
   procedure AddSpi(FileName: string);
   var
-    I: Cardinal;
     A: AnsiString;
-    S: string;
-    List: TStringList;
     HDLL: HINST;
   const
     BufSize = 256;
@@ -81,22 +112,7 @@ procedure InitSpi();
     SetLength(A, 4);
     if A = '00IN' then
     begin
-      SetLength(A, BufSize);
-      GetPluginInfo(2, PAnsiChar(A), BufSize);
-      SetLength(A, StrLen(PAnsiChar(A)));
-      S := LowerCase(string(A));
-      S := StringReplace(S, '*.', '', [rfReplaceAll]);
-      S := StringReplace(S, ' ', '', [rfReplaceAll]);
-      List := TStringList.Create;
-      try
-        List.Text := StringReplace(S, ';', #13#10, [rfReplaceAll]);
-        for I := 0 to List.Count - 1 do
-        begin
-          SpiMapInfo.Values[List.Strings[I]] := FileName;
-        end;
-      finally
-        List.Free;
-      end;
+      RegisterFileExtensions(FileName, GetFilterPatterns(GetPluginInfo), SpiMapInfo);
     end;
     FreeLibrary(HDLL);
   end;
@@ -120,10 +136,7 @@ end;
 procedure InitXpi();
   procedure AddXpi(FileName: string);
   var
-    I: Cardinal;
     A: AnsiString;
-    S: string;
-    List: TStringList;
     HDLL: HINST;
   const
     BufSize = 256;
@@ -135,22 +148,7 @@ procedure InitXpi();
     SetLength(A, 4);
     if A = 'T0XN' then
     begin
-      SetLength(A, BufSize);
-      GetPluginInfo(2, PAnsiChar(A), BufSize);
-      SetLength(A, StrLen(PAnsiChar(A)));
-      S := LowerCase(string(A));
-      S := StringReplace(S, '*.', '', [rfReplaceAll]);
-      S := StringReplace(S, ' ', '', [rfReplaceAll]);
-      List := TStringList.Create;
-      try
-        List.Text := StringReplace(S, ';', #13#10, [rfReplaceAll]);
-        for I := 0 to List.Count - 1 do
-        begin
-          XpiMapInfo.Values[List.Strings[I]] := FileName;
-        end;
-      finally
-        List.Free;
-      end;
+      RegisterFileExtensions(FileName, GetFilterPatterns(GetPluginInfo), XpiMapInfo);
     end;
     FreeLibrary(HDLL);
   end;
