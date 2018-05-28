@@ -32,8 +32,8 @@ type
   TCreatePicture = function(FilePath: PAnsiChar; Flag: Longword; HBInfo: PHANDLE; HBm: PHANDLE; var PictureInfo: TPictureInfo; ProgressCallback: TProgressCallback; lData: Longint): Integer; stdcall;
 
 const
-  SpiFileExtension = 'spi';
-  XpiFileExtension = 'xpi';
+  SpiFileExt = 'spi';
+  XpiFileExt = 'xpi';
 
 var
   SpiMapInfo: TStrings;
@@ -91,7 +91,7 @@ begin
   Result := Trim(StringReplace(Pattern, '*.', '', [rfReplaceAll]));
 end;
 
-procedure RegisterFileExtensions(PluginFileName: string; FilterPatterns: string; MapInfo: TStrings);
+procedure RegisterFileExts(PluginFileName: string; FilterPatterns: string; MapInfo: TStrings);
 var
   I: Cardinal;
   List: TStringList;
@@ -120,7 +120,7 @@ begin
     GetPluginInfo := GetProcAddress(HDLL, 'GetPluginInfo');
     if GetPluginApiVersion(GetPluginInfo) = PluginApiVersion then
     begin
-      RegisterFileExtensions(PluginFileName, GetFilterPatterns(GetPluginInfo), MapInfo);
+      RegisterFileExts(PluginFileName, GetFilterPatterns(GetPluginInfo), MapInfo);
     end;
   finally
     FreeLibrary(HDLL);
@@ -146,12 +146,12 @@ end;
 
 procedure InitSpi();
 begin
-  InitPluginRuntime('*.' + SpiFileExtension, '00IN', SpiMapInfo);
+  InitPluginRuntime('*.' + SpiFileExt, '00IN', SpiMapInfo);
 end;
 
 procedure InitXpi();
 begin
-  InitPluginRuntime('*.' + XpiFileExtension, 'T0XN', XpiMapInfo);
+  InitPluginRuntime('*.' + XpiFileExt, 'T0XN', XpiMapInfo);
 end;
 
 procedure LoadBySpi(FileName: string; Src: TBitmap);
@@ -208,19 +208,19 @@ begin
   end;
 end;
 
-procedure DumpMapInfo(MapInfo: TStrings; PluginFileExtension: string);
+procedure DumpMapInfo(MapInfo: TStrings; PluginFileExt: string);
 begin
-  MapInfo.SaveToFile(Format('%s\%s.ini', [ExtractFilePath(Application.ExeName), PluginFileExtension]));
+  MapInfo.SaveToFile(Format('%s\%s.ini', [ExtractFilePath(Application.ExeName), PluginFileExt]));
 end;
 
 procedure DumpSpiMapInfo();
 begin
-  DumpMapInfo(SpiMapInfo, SpiFileExtension);
+  DumpMapInfo(SpiMapInfo, SpiFileExt);
 end;
 
 procedure DumpXpiMapInfo();
 begin
-  DumpMapInfo(XpiMapInfo, XpiFileExtension);
+  DumpMapInfo(XpiMapInfo, XpiFileExt);
 end;
 
 initialization
