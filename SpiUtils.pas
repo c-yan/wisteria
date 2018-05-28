@@ -112,12 +112,15 @@ const
   BufSize = 256;
 begin
   HDLL := LoadLibrary(PChar(PluginFileName));
-  GetPluginInfo := GetProcAddress(HDLL, 'GetPluginInfo');
-  if GetPluginApiVersion(GetPluginInfo) = PluginApiVersion then
-  begin
-    RegisterFileExtensions(PluginFileName, GetFilterPatterns(GetPluginInfo), MapInfo);
+  try
+    GetPluginInfo := GetProcAddress(HDLL, 'GetPluginInfo');
+    if GetPluginApiVersion(GetPluginInfo) = PluginApiVersion then
+    begin
+      RegisterFileExtensions(PluginFileName, GetFilterPatterns(GetPluginInfo), MapInfo);
+    end;
+  finally
+    FreeLibrary(HDLL);
   end;
-  FreeLibrary(HDLL);
 end;
 
 procedure InitPluginRuntime(FilterPattern, PluginApiVersion: string; MapInfo: TStrings);
@@ -160,21 +163,24 @@ begin
   if IsLoadableBySpi(Ext) then
   begin
     HDLL := LoadLibrary(PChar(SpiMapInfo.Values[Ext]));
-    GetPicture := GetProcAddress(HDLL, 'GetPicture');
-    if GetPicture(PAnsiChar(AnsiString(FileName)), 0, 0, pHBInfo, pHBm, nil, 0) = 0 then
-    begin
-      BitmapInfo := LocalLock(pHBInfo);
-      Src.Width := BitmapInfo^.bmiHeader.biWidth;
-      Src.Height := BitmapInfo^.bmiHeader.biHeight;
-      Src.PixelFormat := pf24bit;
-      SetDIBits(Src.Canvas.Handle, Src.Handle, 0, BitmapInfo^.bmiHeader.biHeight,
-        LocalLock(pHBm), BitmapInfo^, DIB_RGB_COLORS);
-      LocalUnlock(pHBm);
-      LocalUnlock(pHBInfo);
-      LocalFree(pHBInfo);
-      LocalFree(pHBm);
+    try
+      GetPicture := GetProcAddress(HDLL, 'GetPicture');
+      if GetPicture(PAnsiChar(AnsiString(FileName)), 0, 0, pHBInfo, pHBm, nil, 0) = 0 then
+      begin
+        BitmapInfo := LocalLock(pHBInfo);
+        Src.Width := BitmapInfo^.bmiHeader.biWidth;
+        Src.Height := BitmapInfo^.bmiHeader.biHeight;
+        Src.PixelFormat := pf24bit;
+        SetDIBits(Src.Canvas.Handle, Src.Handle, 0, BitmapInfo^.bmiHeader.biHeight,
+          LocalLock(pHBm), BitmapInfo^, DIB_RGB_COLORS);
+        LocalUnlock(pHBm);
+        LocalUnlock(pHBInfo);
+        LocalFree(pHBInfo);
+        LocalFree(pHBm);
+      end;
+    finally
+      FreeLibrary(HDLL);
     end;
-    FreeLibrary(HDLL);
   end;
 end;
 
@@ -191,11 +197,14 @@ begin
   if IsSavableByXpi(Ext) then
   begin
     HDLL := LoadLibrary(PChar(XpiMapInfo.Values[Ext]));
-    CreatePicture := GetProcAddress(HDLL, 'CreatePicture');
-    ZeroMemory(@PictureInfo, SizeOf(PictureInfo));
-    GetObject(Src.Handle, sizeof(DIBSECTION), @DS);
-    CreatePicture(PAnsiChar(AnsiString(FileName)), 1, @DS.dsBmih, DS.dsBm.bmBits, PictureInfo, nil, 0);
-    FreeLibrary(HDLL);
+    try
+      CreatePicture := GetProcAddress(HDLL, 'CreatePicture');
+      ZeroMemory(@PictureInfo, SizeOf(PictureInfo));
+      GetObject(Src.Handle, sizeof(DIBSECTION), @DS);
+      CreatePicture(PAnsiChar(AnsiString(FileName)), 1, @DS.dsBmih, DS.dsBm.bmBits, PictureInfo, nil, 0);
+    finally
+      FreeLibrary(HDLL);
+    end;
   end;
 end;
 
