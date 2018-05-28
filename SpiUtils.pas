@@ -104,24 +104,24 @@ begin
   end;
 end;
 
-procedure InitSpi();
-  procedure AddSpi(FileName: string);
-  var
-    HDLL: HINST;
-    GetPluginInfo: TGetPluginInfo;
-  const
-    BufSize = 256;
+procedure AddPlugin(PluginFileName, PluginApiVersion: string; MapInfo: TStrings);
+var
+  HDLL: HINST;
+  GetPluginInfo: TGetPluginInfo;
+const
+  BufSize = 256;
+begin
+  HDLL := LoadLibrary(PChar(PluginFileName));
+  GetPluginInfo := GetProcAddress(HDLL, 'GetPluginInfo');
+  if GetPluginApiVersion(GetPluginInfo) = PluginApiVersion then
   begin
-    HDLL := LoadLibrary(PChar(FileName));
-    GetPluginInfo := GetProcAddress(HDLL, 'GetPluginInfo');
-    if GetPluginApiVersion(GetPluginInfo) = '00IN' then
-    begin
-      RegisterFileExtensions(FileName, GetFilterPatterns(GetPluginInfo), SpiMapInfo);
-    end;
-    FreeLibrary(HDLL);
+    RegisterFileExtensions(PluginFileName, GetFilterPatterns(GetPluginInfo), MapInfo);
   end;
+  FreeLibrary(HDLL);
+end;
 
-  var
+procedure InitSpi();
+var
   I: Integer;
   SpiList: TStrings;
 begin
@@ -130,7 +130,7 @@ begin
     GetPluginList(ExtractFilePath(Application.ExeName), '*.spi', SpiList);
     for I := 0 to SpiList.Count - 1 do
     begin
-      AddSpi(SpiList.Strings[I]);
+      AddPlugin(SpiList.Strings[I], '00IN', SpiMapInfo);
     end;
   finally
     SpiList.Free;
@@ -138,23 +138,7 @@ begin
 end;
 
 procedure InitXpi();
-  procedure AddXpi(FileName: string);
-  var
-    HDLL: HINST;
-    GetPluginInfo: TGetPluginInfo;
-  const
-    BufSize = 256;
-  begin
-    HDLL := LoadLibrary(PChar(FileName));
-    GetPluginInfo := GetProcAddress(HDLL, 'GetPluginInfo');
-    if GetPluginApiVersion(GetPluginInfo) = 'T0XN' then
-    begin
-      RegisterFileExtensions(FileName, GetFilterPatterns(GetPluginInfo), XpiMapInfo);
-    end;
-    FreeLibrary(HDLL);
-  end;
-
-  var
+var
   I: Integer;
   XpiList: TStrings;
 begin
@@ -163,7 +147,7 @@ begin
     GetPluginList(ExtractFilePath(Application.ExeName), '*.xpi', XpiList);
     for I := 0 to XpiList.Count - 1 do
     begin
-      AddXpi(XpiList.Strings[I]);
+      AddPlugin(XpiList.Strings[I], 'T0XN', XpiMapInfo);
     end;
   finally
     XpiList.Free;
