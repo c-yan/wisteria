@@ -31,6 +31,10 @@ type
   TGetPicture = function(Buf: PAnsiChar; Len: Longint; Flag: Longword; var HBInfo: HLOCAL; var HBm: HLOCAL; ProgressCallback: TProgressCallback; lData: Longint): Integer; stdcall;
   TCreatePicture = function(FilePath: PAnsiChar; Flag: Longword; HBInfo: PHANDLE; HBm: PHANDLE; var PictureInfo: TPictureInfo; ProgressCallback: TProgressCallback; lData: Longint): Integer; stdcall;
 
+const
+  SpiFileExtension = 'spi';
+  XpiFileExtension = 'xpi';
+
 var
   SpiMapInfo: TStrings;
   XpiMapInfo: TStrings;
@@ -142,12 +146,12 @@ end;
 
 procedure InitSpi();
 begin
-  InitPluginRuntime('*.spi', '00IN', SpiMapInfo);
+  InitPluginRuntime('*.' + SpiFileExtension, '00IN', SpiMapInfo);
 end;
 
 procedure InitXpi();
 begin
-  InitPluginRuntime('*.xpi', 'T0XN', XpiMapInfo);
+  InitPluginRuntime('*.' + XpiFileExtension, 'T0XN', XpiMapInfo);
 end;
 
 procedure LoadBySpi(FileName: string; Src: TBitmap);
@@ -204,14 +208,19 @@ begin
   end;
 end;
 
+procedure DumpMapInfo(MapInfo: TStrings; PluginFileExtension: string);
+begin
+  MapInfo.SaveToFile(Format('%s\%s.ini', [ExtractFilePath(Application.ExeName), PluginFileExtension]));
+end;
+
 procedure DumpSpiMapInfo();
 begin
-  SpiMapInfo.SaveToFile(ExtractFilePath(Application.ExeName) + '\spi.ini');
+  DumpMapInfo(SpiMapInfo, SpiFileExtension);
 end;
 
 procedure DumpXpiMapInfo();
 begin
-  XpiMapInfo.SaveToFile(ExtractFilePath(Application.ExeName) + '\xpi.ini');
+  DumpMapInfo(XpiMapInfo, XpiFileExtension);
 end;
 
 initialization
