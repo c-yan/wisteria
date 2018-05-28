@@ -120,38 +120,31 @@ begin
   FreeLibrary(HDLL);
 end;
 
-procedure InitSpi();
+procedure InitPluginRuntime(FilterPattern, PluginApiVersion: string; MapInfo: TStrings);
 var
   I: Integer;
-  SpiList: TStrings;
+  PluginList: TStrings;
 begin
-  SpiList := TStringList.Create;
+  PluginList := TStringList.Create;
   try
-    GetPluginList(ExtractFilePath(Application.ExeName), '*.spi', SpiList);
-    for I := 0 to SpiList.Count - 1 do
+    GetPluginList(ExtractFilePath(Application.ExeName), FilterPattern, PluginList);
+    for I := 0 to PluginList.Count - 1 do
     begin
-      AddPlugin(SpiList.Strings[I], '00IN', SpiMapInfo);
+      AddPlugin(PluginList.Strings[I], PluginApiVersion, MapInfo);
     end;
   finally
-    SpiList.Free;
+    PluginList.Free;
   end;
 end;
 
-procedure InitXpi();
-var
-  I: Integer;
-  XpiList: TStrings;
+procedure InitSpi();
 begin
-  XpiList := TStringList.Create;
-  try
-    GetPluginList(ExtractFilePath(Application.ExeName), '*.xpi', XpiList);
-    for I := 0 to XpiList.Count - 1 do
-    begin
-      AddPlugin(XpiList.Strings[I], 'T0XN', XpiMapInfo);
-    end;
-  finally
-    XpiList.Free;
-  end;
+  InitPluginRuntime('*.spi', '00IN', SpiMapInfo);
+end;
+
+procedure InitXpi();
+begin
+  InitPluginRuntime('*.xpi', 'T0XN', XpiMapInfo);
 end;
 
 procedure LoadBySpi(FileName: string; Src: TBitmap);
