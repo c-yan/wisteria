@@ -6,15 +6,18 @@ uses
   Winapi.Windows, System.Classes, System.SysUtils, Vcl.Forms, Vcl.Graphics;
 
 function IsLoadableBySpi(Ext: string): Boolean;
-function IsSavableByXpi(Ext: string): Boolean;
 procedure LoadBySpi(FileName: string; Src: TBitmap);
-procedure SaveByXpi(FileName: string; Src: TBitmap);
 procedure DumpSpiMapInfo();
+{$IFNDEF WIN64}
+function IsSavableByXpi(Ext: string): Boolean;
+procedure SaveByXpi(FileName: string; Src: TBitmap);
 procedure DumpXpiMapInfo();
+{$ENDIF}
 
 implementation
 
 type
+  {$IFNDEF WIN64}
   TPictureInfo = packed record
     Left: Longint;
     Top: Longint;
@@ -30,24 +33,37 @@ type
   TGetPluginInfo = function(InfoNo: Longint; Buf: PAnsiChar; BufLen: Longint): Integer; stdcall;
   TGetPicture = function(Buf: PAnsiChar; Len: Longint; Flag: Longword; var HBInfo: HLOCAL; var HBm: HLOCAL; ProgressCallback: TProgressCallback; lData: Longint): Integer; stdcall;
   TCreatePicture = function(FilePath: PAnsiChar; Flag: Longword; HBInfo: PHANDLE; HBm: PHANDLE; var PictureInfo: TPictureInfo; ProgressCallback: TProgressCallback; lData: Longint): Integer; stdcall;
+  {$ELSE}
+  TProgressCallback = function(nNum, nDenom: Integer; lData: LONG_PTR): Integer; stdcall;
+  TGetPluginInfo = function(InfoNo: Integer; Buf: PAnsiChar; BufLen: Integer): Integer; stdcall;
+  TGetPicture = function(Buf: PAnsiChar; Len: LONG_PTR; Flag: Cardinal; var HBInfo: THandle; var HBm: THandle; ProgressCallback: TProgressCallback; lData: LONG_PTR): Integer; stdcall;
+  {$ENDIF}
 
 const
+  {$IFNDEF WIN64}
   SpiFileExt = 'spi';
   XpiFileExt = 'xpi';
+  {$ELSE}
+  SpiFileExt = 'sph';
+  {$ENDIF}
 
 var
   SpiMapInfo: TStrings;
+  {$IFNDEF WIN64}
   XpiMapInfo: TStrings;
+  {$ENDIF}
 
 function IsLoadableBySpi(Ext: string): Boolean;
 begin
   Result := SpiMapInfo.IndexOfName(Ext) <> -1;
 end;
 
+{$IFNDEF WIN64}
 function IsSavableByXpi(Ext: string): Boolean;
 begin
   Result := XpiMapInfo.IndexOfName(Ext) <> -1;
 end;
+{$ENDIF}
 
 procedure GetPluginList(Dir, Pattern: string; FileList: TStrings);
 var
@@ -149,10 +165,12 @@ begin
   InitPluginRuntime('*.' + SpiFileExt, '00IN', SpiMapInfo);
 end;
 
+{$IFNDEF WIN64}
 procedure InitXpi();
 begin
   InitPluginRuntime('*.' + XpiFileExt, 'T0XN', XpiMapInfo);
 end;
+{$ENDIF}
 
 procedure LoadBySpi(FileName: string; Src: TBitmap);
 var
@@ -174,8 +192,7 @@ begin
     Src.Width := BitmapInfo^.bmiHeader.biWidth;
     Src.Height := BitmapInfo^.bmiHeader.biHeight;
     Src.PixelFormat := pf24bit;
-    SetDIBits(Src.Canvas.Handle, Src.Handle, 0, BitmapInfo^.bmiHeader.biHeight,
-      LocalLock(pHBm), BitmapInfo^, DIB_RGB_COLORS);
+    SetDIBits(0, Src.Handle, 0, BitmapInfo^.bmiHeader.biHeight, LocalLock(pHBm), BitmapInfo^, DIB_RGB_COLORS);
     LocalUnlock(pHBm);
     LocalUnlock(pHBInfo);
     LocalFree(pHBInfo);
@@ -185,6 +202,7 @@ begin
   end;
 end;
 
+{$IFNDEF WIN64}
 procedure SaveByXpi(FileName: string; Src: TBitmap);
 var
   Ext: string;
@@ -207,6 +225,7 @@ begin
     FreeLibrary(HDLL);
   end;
 end;
+{$ENDIF}
 
 procedure DumpMapInfo(MapInfo: TStrings; PluginFileExt: string);
 begin
@@ -218,19 +237,25 @@ begin
   DumpMapInfo(SpiMapInfo, SpiFileExt);
 end;
 
+{$IFNDEF WIN64}
 procedure DumpXpiMapInfo();
 begin
   DumpMapInfo(XpiMapInfo, XpiFileExt);
 end;
+{$ENDIF}
 
 initialization
   SpiMapInfo := TStringList.Create;
-  XpiMapInfo := TStringList.Create;
   InitSpi();
+  {$IFNDEF WIN64}
+  XpiMapInfo := TStringList.Create;
   InitXpi();
+  {$ENDIF}
 
 finalization
-  XpiMapInfo.Free;
   SpiMapInfo.Free;
+  {$IFNDEF WIN64}
+  XpiMapInfo.Free;
+  {$ENDIF}
 
 end.

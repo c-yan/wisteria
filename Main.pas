@@ -7,10 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.StdCtrls, Vcl.ExtCtrls,
   Vcl.ComCtrls, System.SyncObjs, Winapi.ShellApi, Process, SpecialDirectory, exif,
   Vcl.Imaging.GIFImg, Vcl.Imaging.jpeg, Vcl.Imaging.pngimage, ImageWriter, pstretchf,
-  {$IFNDEF WIN64}
-  SpiUtils,
-  {$ENDIF}
-  Vcl.FileCtrl, ImageFilter, Vcl.Clipbrd, NColorReduction, Log,  System.IniFiles,
+  SpiUtils, Vcl.FileCtrl, ImageFilter, Vcl.Clipbrd, NColorReduction, Log,  System.IniFiles,
   AboutUtils, ParallelUtils, ImageTypes;
 
 type
@@ -1009,15 +1006,11 @@ var
     ProcessForm.LocalProgress := 0;
     Application.ProcessMessages;
 
-{$IFNDEF WIN64}
     if DisableIL then LoadBySpi(ProcInfo.Name, Src)
     else
     begin
       if not Load(ProcInfo, Src) then LoadBySpi(ProcInfo.Name, Src);
     end;
-{$ELSE}
-    Load(ProcInfo, Src);
-{$ENDIF}
 
     if AbortRequire then
     begin
@@ -2324,9 +2317,7 @@ procedure TMainForm.AddFile(FileName: string);
 {$ELSE}
     else Result := (Ext = '.bmp') or (Ext = '.jpg') or (Ext = '.jpeg') or (Ext = '.gif') or (Ext = '.png');
 {$IFEND}
-{$IFNDEF WIN64}
     Result := Result or IsLoadableBySpi(Copy(Ext, 2, Length(Ext)));
-{$ENDIF}
     if not Result then Warn(Format('Unsupported image format: %s', [FileName]));
   end;
 begin

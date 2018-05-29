@@ -7,9 +7,7 @@ uses
   SpecialDirectory in 'SpecialDirectory.pas',
   Log in 'Log.pas',
   ParallelUtils in 'ParallelUtils.pas',
-  {$IFNDEF WIN64}
   SpiUtils in 'SpiUtils.pas',
-  {$ENDIF }
   AboutUtils in 'AboutUtils.pas',
   Helper in 'Helper.pas',
   ImageFilter in 'ImageLib\ImageFilter.pas',
