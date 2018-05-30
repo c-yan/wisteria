@@ -28,6 +28,7 @@ p#copyright {
 div#nav {
   float: left;
   margin-left: 0.5em;
+  margin-right: 1.6em;
   width: 13em;
 }
 
@@ -44,6 +45,17 @@ div#nav ul, div#nav li {
   list-style-type: none;
   padding: 0;
   margin: 0;
+}
+
+dl.changelog dt {
+  border-color: #bbbbbb;
+  border-style: solid;
+  border-width: 0 0 2px 0;
+}
+
+dl.changelog dd {
+  display: list-item;
+  list-style-type: circle;
 }
 
 dd + dt {
