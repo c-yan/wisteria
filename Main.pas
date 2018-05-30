@@ -786,6 +786,7 @@ var
     end;
   end;
 
+  {$IF CompilerVersion >= 21.0}
   function LoadByWIC(var ProcInfo: TProcInfo; Src: TBitmap): Boolean;
   var
     FileExt: string;
@@ -812,6 +813,7 @@ var
       WICImage.Free;
     end;
   end;
+  {$IFEND}
 
   function LoadByIL(var ProcInfo: TProcInfo; Src: TBitmap): Boolean;
   var
