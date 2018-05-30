@@ -2,6 +2,8 @@
 
 interface
 
+{$DEFINE NoJPEGSubsampling}
+
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.StdCtrls, Vcl.ExtCtrls,
@@ -104,6 +106,9 @@ type
     Enlarge5Menu: TMenuItem;
     CompressionMenu: TMenuItem;
     N8: TMenuItem;
+    {$IFNDEF NoJPEGSubsampling}
+    JPEGSubsamplingMenu: TMenuItem;
+    {$ENDIF}
     N6: TMenuItem;
     LinearizedReductionMenu: TMenuItem;
     ShowHelpMenu: TMenuItem;
@@ -257,6 +262,10 @@ type
     procedure SetSortFileList(const Value: Boolean);
     function GetMethod: Integer;
     procedure SetMethod(const Value: Integer);
+    {$IFNDEF NoJPEGSubsampling}
+    procedure SetJPEGSubsampling(const Value: Boolean);
+    function GetJPEGSubsampling: Boolean;
+    {$ENDIF}
     function GetLinearizedReduction: Boolean;
     procedure SetLinearizedReduction(const Value: Boolean);
     procedure SetMaxThreads(const Value: Integer);
@@ -275,6 +284,9 @@ type
     property RatioBase: TRatioBase read GetRatioBase write SetRatioBase;
     property Method: Integer read GetMethod write SetMethod;
     property JpegQuality: Integer read FJpegQuality write SetJpegQuality;
+    {$IFNDEF NoJPEGSubsampling}
+    property JpegSubsampling: Boolean read GetJPEGSubsampling write SetJPEGSubsampling;
+    {$ENDIF}
     property TimeStampCopy: Boolean read GetTimeStampCopy write SetTimeStampCopy;
     property DoTrim: Boolean read GetDoTrim write SetDoTrim;
     property TrimRect: string read FTrimRect write FTrimRect;
@@ -888,6 +900,9 @@ var
       try
         JPEG.ProgressiveEncoding := ProgressiveJpeg;
         JPEG.CompressionQuality  := JpegQuality;
+        {$IFNDEF NoJPEGSubsampling}
+        JPEG.Subsampling := JpegSubsampling;
+        {$ENDIF}
         JPEG.Grayscale := Grayscale;
         JPEG.Assign(Src);
         JPEG.SaveToFile(SaveName);
@@ -1574,6 +1589,9 @@ begin
       FilePattern         := ReadString('Output', 'FilePattern', FilePattern);
       AvoidCollision      := ReadBool('Output', 'AvoidCollision', AvoidCollision);
       JPEGQuality         := ReadInteger('Output', 'JPEGQuality', JPEGQuality);
+      {$IFNDEF NoJPEGSubsampling}
+      JpegSubsampling     := ReadBool('Output', 'JPEGSubsampling', JpegSubsampling);
+      {$ENDIF}
       ProgressiveJpeg     := ReadBool('Output', 'ProgressiveJPEG', ProgressiveJpeg);
       PngCompress         := ReadInteger('Output', 'PNGCompressLevel', PNGCompress);
       TimeStampCopy       := ReadBool('Output', 'TimeStampCopy', TimeStampCopy);
@@ -1673,6 +1691,9 @@ begin
       WriteString('Output', 'FilePattern', FilePattern);
       WriteBool('Output', 'AvoidCollision', AvoidCollision);
       WriteInteger('Output', 'JPEGQuality', JPEGQuality);
+      {$IFNDEF NoJPEGSubsampling}
+      WriteBool('Output', 'JPEGSubsampling', JpegSubsampling);
+      {$ENDIF}
       WriteBool('Output', 'ProgressiveJPEG', ProgressiveJpeg);
       WriteInteger('Output', 'PNGCompressLevel', PNGCompress);
       WriteBool('Output', 'TimeStampCopy', TimeStampCopy);
@@ -2130,6 +2151,13 @@ begin
   FJpegQuality := Value;
 end;
 
+{$IFNDEF NoJPEGSubsampling}
+procedure TMainForm.SetJPEGSubsampling(const Value: Boolean);
+begin
+  JPEGSubsamplingMenu.Checked := Value;
+end;
+{$ENDIF}
+
 function TMainForm.GetHTMLReversePlace: Boolean;
 begin
   Result := HTMLReversePlaceMenu.Checked;
@@ -2144,6 +2172,13 @@ function TMainForm.GetIncludeSubDir: Boolean;
 begin
   Result := IncludeSubDirMenu.Checked;
 end;
+
+{$IFNDEF NoJPEGSubsampling}
+function TMainForm.GetJPEGSubsampling: Boolean;
+begin
+  Result := JPEGSubsamplingMenu.Checked;
+end;
+{$ENDIF}
 
 procedure TMainForm.SetHTMLReversePlace(const Value: Boolean);
 begin
