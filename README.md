@@ -10,4 +10,5 @@ AtoB Converter プラグイン対応     |○          |○          |×        
 JPEG サブサンプリング無効圧縮対応 |○          |○          |○          |×
 並列処理対応                      |×          |○          |○          |○
 High DPI 対応                     |×          |×          |×          |○
+タスクバーでの進捗表示            |×          |○          |○          |○
 参考: ビルドに使う Delphi の版数  |Delphi 2007 |Delphi XE2  |Delphi XE2  |Delphi 10.2
