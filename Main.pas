@@ -10,7 +10,7 @@ uses
   Vcl.ComCtrls, System.SyncObjs, Winapi.ShellApi, Process, SpecialDirectory, exif,
   Vcl.Imaging.GIFImg, Vcl.Imaging.jpeg, Vcl.Imaging.pngimage, ImageWriter, pstretchf,
   SpiUtils, Vcl.FileCtrl, ImageFilter, Vcl.Clipbrd, NColorReduction, Log,  System.IniFiles,
-  AboutUtils, ParallelUtils, ImageTypes;
+  AboutUtils, ParallelUtils, ImageTypes, Winapi.ShlObj, System.Win.ComObj;
 
 type
   TValueType = (vtAbsolute, vtRelative);
@@ -995,6 +995,26 @@ var
   ProcInfo: TProcInfo;
   Html: string;
   ViewWidth: Integer;
+  {$IF CompilerVersion >= 21.0}
+  TaskBarList : ITaskbarList3;
+
+  procedure InitializeTaskbarProgress;
+  begin
+    TaskBarList := CreateComObject(CLSID_TaskbarList) as ITaskBarList3;
+    TaskBarList.SetProgressState(Handle, TBPF_NORMAL);
+  end;
+
+  procedure UpdateTaskbarProgress(ProgressValue: Integer);
+  begin
+    TaskBarList.SetProgressValue(Handle, ProgressValue, 100);
+  end;
+
+  procedure FinalizeTaskbarProgress;
+  begin
+    TaskBarList.SetProgressState(Handle, TBPF_NOPROGRESS);
+    TaskBarList := nil;
+  end;
+  {$IFEND}
 
   function AbortRequire: Boolean;
   begin
@@ -1020,6 +1040,9 @@ var
     ProcessForm.ProcessingFile := MinimizeName(ProcInfo.Name, ProcessForm.FileNameLabel.Canvas, ViewWidth);
     ProcessForm.ProcessSituation := 'ファイルを読み込み中';
     ProcessForm.GlobalProgress := (I * 100) div FileList.Count;
+    {$IF CompilerVersion >= 21.0}
+    if CheckWin32Version(6, 1) then UpdateTaskbarProgress((I * 100) div FileList.Count);
+    {$IFEND}
     ProcessForm.LocalProgress := 0;
     Application.ProcessMessages;
 
@@ -1385,6 +1408,9 @@ begin
     if HTMLGenerate then Html := Html + DecodeAExp(HTMLOnStart, FileList.Count);
 
     Info('*** START ***');
+    {$IF CompilerVersion >= 21.0}
+    if CheckWin32Version(6, 1) then InitializeTaskbarProgress;
+    {$IFEND}
     for I := 0 to FileList.Count - 1 do
     begin
       try
@@ -1430,6 +1456,9 @@ begin
       end;
     end;
   finally
+    {$IF CompilerVersion >= 21.0}
+    if CheckWin32Version(6, 1) then FinalizeTaskbarProgress;
+    {$IFEND}
     if StayOnTop then FormStyle := fsStayOnTop;
     ProcessForm.Hide;
     Enabled := True;
