@@ -1,5 +1,7 @@
 ﻿program Resizer;
 
+{$WEAKLINKRTTI ON}
+
 uses
   Vcl.Forms,
   Main in 'Main.pas' {MainForm},
