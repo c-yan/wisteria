@@ -1,45 +1,43 @@
 # 藤 -Resizer-
 
-複数の画像を一括して拡大・縮小します.
-サイズを指定した後に画像ファイルをウインドウにドラッグするだけなので非常に手軽です.
-また、複数の画像を含むフォルダ自体をドラッグすることも可能です.
-ファイル名は生成規則を使って自動的に付ける事が出来ます.
-3-lobed Lanczos-windowed sinc 補間法で拡大・縮小を行うので最高品質の画像を得ることが出来ます.
-HTML を自動生成する機能もあるので、サムネイル付きでウェブに画像を載せるといった用途にも便利です.
+This tool is used to resize multiple images in one shot. It is quite handy because you just drag your image files to the window after specifying the size of future images.
+It also supports to drag a folder itself that contains multiple images. What is more, you can automatically name these files according to the generation rule you define.
+You can get the highest quality of resized images thanks to 3-lobed Lanczos-windowed sinc interpolation.
+This tool has a feature to automatically output a HTML file so that it is easy to upload the images to the web with thumbnail.
 
-本ソフトウェアを利用するためには、以下の事項についての知識及び理解が必要です.
+The following items are required knowledge and understanding before using this tool:
 
-- zipファイルとその解凍方法
-- パスと拡張子
-- ドラッグ操作
+- Zip file and its unpacking
+- Path and file extension
+- Drag operation
 
-実行ファイルの存在するディレクトリに ini ファイルを作成するので、Vista 以降の場合は Program Files ディレクトリ配下には実行ファイルを配置しないでください.
+Note that on system earlier than Windows Vista, you must NOT put the executable under 'Program Files' directory because it creates ini file on the same directory as the executable.
 
-## 動作確認例がある環境
+## System Confirmed to Run
 
 - Windows XP
 - Windows 7 (32bit/64bit)
 - Windows 8 (32bit/64bit)
 - Windows 10 (64bit)
 
-## 動作不具合の確認例がある環境
+## System Not Confirmed to Run
 
-- 無し
+- Not yet
 
-## 注意
+## Note
 
-- 実行ファイル(及びショートカット)ではなく、起動したウインドウへ D&D してください.
+- Drag and drop the images not to the executable (or shortcut) but to the window booted up.
 
-## 各メジャーバージョンの機能比較表
+## Feature Comparison Table for Major Version
 
-項目                              |2.x         |3.x (32bit) |3.x (64bit) |4.x
-----------------------------------|------------|------------|------------|------------
-バイナリサイズ                    |○          |△          |×          |×
-標準での読込対応画像形式数        |× (IL)     |○ (WIC)    |○ (WIC     |○ (WIC)
-Susie プラグイン対応              |○          |○          |○          |○
-AtoB Converter プラグイン対応     |○          |○          |×          |○
-JPEG サブサンプリング無効圧縮対応 |○          |○          |○          |×
-並列処理対応                      |×          |○          |○          |○
-タスクバーでの進捗表示            |×          |○          |○          |○
-High DPI 対応                     |×          |×          |×          |○
-参考: ビルドに使う Delphi の版数  |Delphi 2007 |Delphi XE2  |Delphi XE2  |Delphi 10.2
+Item                                     |2.x         |3.x (32bit) |3.x (64bit) |4.x
+-----------------------------------------|------------|------------|------------|------------
+Binary size                              |○          |△          |×          |×
+Default number of import image format    |× (IL)     |○ (WIC)    |○ (WIC     |○ (WIC)
+Susie plugin support                     |○          |○          |○          |○
+AtoB Converter plugin support            |○          |○          |×          |○
+JPEG subsampling-off compression support |○          |○          |○          |×
+Parallel processing support              |×          |○          |○          |○
+Taskbar progress indicator               |×          |○          |○          |○
+High DPI support                         |×          |×          |×          |○
+Ref: Version of Delphi used to build     |Delphi 2007 |Delphi XE2  |Delphi XE2  |Delphi 10.2
