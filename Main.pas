@@ -384,11 +384,6 @@ type
     Grayscale: Boolean;
   end;
 
-function Chop(S: string): string;
-begin
-  Result := Copy(S, 1, Length(S) - 1);
-end;
-
 function Eval(Expr: string; var X: Extended): Boolean;
 var
   S: string;
@@ -519,14 +514,6 @@ begin
   else Result := Default;
 end;
 
-function StrToFloatDef(const S: string; Default: Extended): Extended;
-var
-  Value: Extended;
-begin
-  if TextToFloat(PChar(S), Value, fvExtended) then Result := Value
-  else Result := Default;
-end;
-
 procedure ProgressProc(Progress: Integer);
 begin
   CriticalSection.Acquire;
@@ -546,25 +533,6 @@ begin
   finally
     CriticalSection.Release
   end;
-end;
-
-function AvoidCollisionName(const FileName: string): string;
-var
-  I: Integer;
-  Path, Name, Ext: string;
-begin
-  if not FileExists(FileName) then
-  begin
-    Result := FileName;
-    Exit;
-  end;
-  I := 1;
-  Path := ExtractFilePath(FileName);
-  Name := ChangeFileExt(ExtractFileName(FileName), '');
-  Ext := ExtractFileExt(FileName);
-  while FileExists(Format('%s%s[%d]%s', [Path, Name, I, Ext])) do
-    Inc(I);
-  Result := Format('%s%s[%d]%s', [Path, Name, I, Ext]);
 end;
 
 procedure TMainForm.CreateWnd;
@@ -2385,11 +2353,6 @@ procedure TMainForm.AddFile(FileName: string);
 {$IFEND}
     Result := Result or IsLoadableBySpi(Copy(Ext, 2, Length(Ext)));
     if not Result then Warn(Format('Unsupported image format: %s', [FileName]));
-  end;
-
-  function IsDirectory(const Filename: string): Boolean;
-  begin
-    Result := (FileGetAttr(FileName) and faDirectory) <> 0;
   end;
 
 begin
