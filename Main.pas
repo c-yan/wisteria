@@ -787,7 +787,7 @@ var
   function ExifTimeToModStr(ExifTime: string): string;
   begin
     Result := '';
-    if System.SysUtils.Trim(ExifTime) = '' then Exit;
+    if Trim(ExifTime) = '' then Exit;
     ExifTime[5] := '/';
     ExifTime[8] := '/';
     try
