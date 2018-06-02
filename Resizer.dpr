@@ -17,7 +17,8 @@ uses
   NColorReduction in 'ImageLib\NColorReduction.pas',
   pstretchf in 'ImageLib\pstretchf.pas',
   exif in 'ImageLib\exif.pas',
-  ImageTypes in 'ImageLib\ImageTypes.pas';
+  ImageTypes in 'ImageLib\ImageTypes.pas',
+  CommonUtils in 'CommonUtils.pas';
 
 {$R *.res}
 

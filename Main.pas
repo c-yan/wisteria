@@ -10,7 +10,7 @@ uses
   Vcl.ComCtrls, System.SyncObjs, Winapi.ShellApi, Process, SpecialDirectory, exif,
   Vcl.Imaging.GIFImg, Vcl.Imaging.jpeg, Vcl.Imaging.pngimage, ImageWriter, pstretchf,
   SpiUtils, Vcl.FileCtrl, ImageFilter, Vcl.Clipbrd, NColorReduction, Log,  System.IniFiles,
-  AboutUtils, ParallelUtils, ImageTypes, Winapi.ShlObj, System.Win.ComObj;
+  AboutUtils, ParallelUtils, ImageTypes, CommonUtils, Winapi.ShlObj, System.Win.ComObj;
 
 type
   TValueType = (vtAbsolute, vtRelative);
@@ -814,8 +814,8 @@ var
         Exit;
       end;
       Src.Assign(WICImage);
-      FileExt := LowerCase(ExtractFileExt(ProcInfo.Name));
-      if (FileExt = '.jpg') or (FileExt = '.jpeg') then
+      FileExt := ExtractFileExt(ProcInfo.Name);
+      if FileExtInSet(FileExt, ['.jpg', '.jpeg']) then
       begin
         ProcInfo.OriginalTime := ExifTimeToModStr(string(GetOriginalDateTime(ProcInfo.Name)));
         ProcInfo.ModelName := string(GetModel(ProcInfo.Name));
@@ -835,9 +835,9 @@ var
     JPEG: TJPEGImage;
   begin
     Result := True;
-    FileExt := LowerCase(ExtractFileExt(ProcInfo.Name));
-    if FileExt = '.bmp' then Src.LoadFromFile(ProcInfo.Name)
-    else if (FileExt = '.jpg') or (FileExt = '.jpeg') then
+    FileExt := ExtractFileExt(ProcInfo.Name);
+    if FileExtInSet(FileExt, ['.bmp']) then Src.LoadFromFile(ProcInfo.Name)
+    else if FileExtInSet(FileExt, ['.jpg', '.jpeg']) then
     begin
       JPEG := TJPEGImage.Create;
       try
@@ -852,7 +852,7 @@ var
       ProcInfo.Orient := GetOrientation(ProcInfo.Name);
       if GetColorSpace(ProcInfo.Name) = 65535 then ConvertFromAdobeRGB(Src);
     end
-    else if FileExt = '.png' then
+    else if FileExtInSet(FileExt, ['.png']) then
     begin
       PNG := TPngImage.Create;
       try
@@ -862,7 +862,7 @@ var
         PNG.Free;
       end;
     end
-    else if (FileExt = '.gif') then
+    else if FileExtInSet(FileExt, ['.gif']) then
     begin
       GIF := TGIFImage.Create;
       try
@@ -892,9 +892,9 @@ var
     JPEG: TJPEGImage;
   begin
     Result := True;
-    FileExt := LowerCase(ExtractFileExt(SaveName));
-    if FileExt = '.bmp' then Src.SaveToFile(SaveName)
-    else if (FileExt = '.jpg') or (FileExt = '.jpeg') then
+    FileExt := ExtractFileExt(SaveName);
+    if FileExtInSet(FileExt, ['.bmp']) then Src.SaveToFile(SaveName)
+    else if FileExtInSet(FileExt, ['.jpg', '.jpeg']) then
     begin
       JPEG := TJPEGImage.Create;
       try
@@ -910,7 +910,7 @@ var
         JPEG.Free;
       end;
     end
-    else if (FileExt = '.png') then
+    else if FileExtInSet(FileExt, ['.png']) then
     begin
       PNG := TPngImage.Create();
       try
@@ -928,7 +928,7 @@ var
         PNG.Free;
       end;
     end
-    else if (FileExt = '.gif') then
+    else if FileExtInSet(FileExt, ['.gif']) then
     begin
       GIF := TGIFImage.Create;
       try
@@ -938,13 +938,13 @@ var
         GIF.Free;
       end;
     end
-    else if (FileExt = '.pnm') or (FileExt = '.ppm') then
+    else if FileExtInSet(FileExt, ['.pnm', '.ppm']) then
     begin
       Src.PixelFormat := pf24bit;
       if Src.Palette <> 0 then DeleteObject(Src.ReleasePalette);
       SaveAsPPM(Src, SaveName);
     end
-    else if FileExt = '.psd' then
+    else if FileExtInSet(FileExt, ['.psd']) then
     begin
       if (not Grayscale) and (Src.PixelFormat <> PixelBits) then
       begin
@@ -1306,6 +1306,7 @@ var
   var
     FilePath: string;
     ImgURL, HrefURL: string;
+    FileExt: string;
   begin
     ProcessForm.ProcessSituation := '出力中';
     ProcessForm.LocalProgress := 100;
@@ -1321,16 +1322,15 @@ var
 
     SaveName := DecodePExp(FilePattern, ProcInfo, I);
 
-    if (ExtractFileExt(SaveName) = '.png8') or
-       (ExtractFileExt(SaveName) = '.bmp8') or
-       (ExtractFileExt(SaveName) = '.gif') then
+    FileExt := ExtractFileExt(SaveName);
+
+    if FileExtInSet(FileExt, ['.png8', '.bmp8', '.gif']) then
     begin
       if Src.PixelFormat = pf24bit then ReduceColor(Src, 256, true);
-      if ExtractFileExt(SaveName) <> '.gif' then SaveName := ChangeFileExt(SaveName, Chop(ExtractFileExt(SaveName)));
+      if not FileExtInSet(FileExt, ['.gif']) then SaveName := ChangeFileExt(SaveName, Chop(ExtractFileExt(SaveName)));
     end;
 
-    if (ExtractFileExt(SaveName) = '.png4') or
-       (ExtractFileExt(SaveName) = '.bmp4') then
+    if FileExtInSet(FileExt, ['.png4', '.bmp4']) then
     begin
       ReduceColor(Src, 16, true);
       Convert8BitTo4Bit(Src, nil);
@@ -1563,7 +1563,7 @@ begin
 
   if ParamCount > 0 then
   begin
-    if LowerCase(ExtractFileExt(ParamStr(1))) = '.ini' then
+    if FileExtInSet(ExtractFileExt(ParamStr(1)), ['.ini']) then
     begin
       LoadIniFile(ParamStr(1));
       if ParamCount > 1 then Application.OnIdle := ParamExecute;
@@ -2375,13 +2375,13 @@ procedure TMainForm.AddFile(FileName: string);
   var
     Ext: string;
   begin
-    Ext := LowerCase(ExtractFileExt(FileName));
+    Ext := ExtractFileExt(FileName);
     if DisableIL then Result := False
 {$IF CompilerVersion >= 21.0}
-    else Result := (Ext = '.bmp') or (Ext = '.jpg') or (Ext = '.jpeg') or (Ext = '.gif') or (Ext = '.png') or
-                   (Ext = '.ico') or (Ext = '.tif') or (Ext = '.tiff') or (Ext = '.jxr') or (Ext = '.hdp') or (Ext = '.wdp');
+    else Result := FileExtInSet(Ext, ['.bmp', '.jpg', '.jpeg', '.gif', '.png',
+                                      '.ico', '.tif', '.tiff', '.jxr', '.hdp', '.wdp']);
 {$ELSE}
-    else Result := (Ext = '.bmp') or (Ext = '.jpg') or (Ext = '.jpeg') or (Ext = '.gif') or (Ext = '.png');
+    else Result := FileExtInSet(Ext, ['.bmp', '.jpg', '.jpeg', '.gif', '.png']);
 {$IFEND}
     Result := Result or IsLoadableBySpi(Copy(Ext, 2, Length(Ext)));
     if not Result then Warn(Format('Unsupported image format: %s', [FileName]));
