@@ -2386,8 +2386,14 @@ procedure TMainForm.AddFile(FileName: string);
     Result := Result or IsLoadableBySpi(Copy(Ext, 2, Length(Ext)));
     if not Result then Warn(Format('Unsupported image format: %s', [FileName]));
   end;
+
+  function IsDirectory(const Filename: string): Boolean;
+  begin
+    Result := (FileGetAttr(FileName) and faDirectory) <> 0;
+  end;
+
 begin
-  if (FileGetAttr(FileName) and faDirectory) <> 0 then
+  if IsDirectory(FileName) then
     DirectoryScan(FileName)
   else
     if FormatCheck(FileName) then FileList.Add(FileName);
