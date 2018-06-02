@@ -2329,7 +2329,7 @@ procedure TMainForm.AddFile(FileName: string);
       if FindFirst(Path + '\*.*', faDirectory, F) = 0 then
       begin
         repeat
-          if (F.Name <> '.') and (F.Name <> '..') then
+          if not StringInSet(F.Name, ['.', '..']) then
           begin
             DirectoryScan(Path + '\' + F.Name)
           end;
