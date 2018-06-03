@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, System.Classes, System.SysUtils, Vcl.Forms, Vcl.Graphics,
-  System.Math, Winapi.MMSystem, ImageTypes;
+  System.Math, Winapi.MMSystem, ImageTypes, ImageFunctions;
 
 procedure ReduceColor(const Src: TBitmap; Colors: Integer; Dither: Boolean);
 
@@ -68,13 +68,6 @@ procedure ReduceColor(const Src: TBitmap; Colors: Integer; Dither: Boolean);
   var
     CandidateList: array[0..BlockSideCount - 1, 0..BlockSideCount - 1, 0..BlockSideCount -1] of TPaletteIndexList;
     LookupCache: array[0..(1 shl (LookupCacheBits * 3)) - 1] of TLookupCacheElement;
-
-  function Clamp(N: Integer): Integer; inline;
-  begin
-    if N < 0 then N := 0
-    else if N > 255 then N := 255;
-    Result := N;
-  end;
 
   function MakeHistogram(const Histogram: PColorHistogram): Integer;
   var
@@ -507,7 +500,7 @@ procedure ReduceColor(const Src: TBitmap; Colors: Integer; Dither: Boolean);
           N := N + Diffs[0][X + 1][I] * 5;
           N := N + Diffs[0][X + 2][I] * 3;
           N := N + Diffs[1][X][I] * 7;
-          C[I] := Clamp(C[I] + N div 16);
+          C[I] := Clamp(C[I] + N div 16, 0, 255);
         end;
         N := NearestEntry(C, Palette);
         DP[X] := N;

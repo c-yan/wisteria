@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Vcl.Graphics, System.Classes, System.SysUtils, System.Math,
-  ImageTypes;
+  ImageTypes, ImageFunctions;
 
 procedure GrayscaleFilter(Src: TBitmap; Method: Integer; PProc: TProgressProc);
 procedure SharpenFilter(Src: TBitmap; V: Integer; PProc: TProgressProc);
@@ -72,20 +72,13 @@ function XYZTosRGB(C: TSingleQuad): TByteQuad; inline;
     Result[0] :=  0.0556 * C[2] - 0.2040 * C[1] + 1.0570 * C[0];
   end;
 
-  function Clamp(C: Single): Single; inline;
-  begin
-    if C < 0 then Result := 0
-    else if C > 1 then Result := 1
-    else Result := C;
-  end;
-
   function Nonlinearlize(C: TSingleQuad): TByteQuad; inline;
   var
     I: Integer;
   begin
     for I := 0 to 2 do
-      if C[I] <= 0.00304 then Result[I] := Trunc(Clamp(C[I]) * 12.92 * 255 + 0.5)
-      else Result[I] := Trunc((1.055 * Power(Clamp(C[I]), 1 / 2.4) - 0.055) * 255 + 0.5);
+      if C[I] <= 0.00304 then Result[I] := Trunc(Clamp(C[I], 0, 1) * 12.92 * 255 + 0.5)
+      else Result[I] := Trunc((1.055 * Power(Clamp(C[I], 0, 1), 1 / 2.4) - 0.055) * 255 + 0.5);
     Result[3] := 0;
   end;
 begin
@@ -259,12 +252,6 @@ begin
 end;
 
 procedure ContrastFixFilter(Src: TBitmap; V: Extended; PProc: TProgressProc);
-  function Clamp(X, Min, Max: Integer): Integer;
-  begin
-    if X < Min then Result := Min
-    else if X > Max then Result := Max
-    else Result := X;
-  end;
 var
   Dst: TBitmap;
   X, Y: Integer;

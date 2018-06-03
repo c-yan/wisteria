@@ -110,6 +110,7 @@
         <DCCReference Include="ImageLib\exif.pas"/>
         <DCCReference Include="ImageLib\ImageTypes.pas"/>
         <DCCReference Include="ImageLib\SpiUtils.pas"/>
+        <DCCReference Include="ImageLib\ImageFunctions.pas"/>
         <DCCReference Include="Lib\AboutUtils.pas"/>
         <DCCReference Include="Lib\Log.pas"/>
         <DCCReference Include="Lib\ParallelUtils.pas"/>

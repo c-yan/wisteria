@@ -13,6 +13,7 @@ uses
   exif in 'ImageLib\exif.pas',
   ImageTypes in 'ImageLib\ImageTypes.pas',
   SpiUtils in 'ImageLib\SpiUtils.pas',
+  ImageFunctions in 'ImageLib\ImageFunctions.pas',
   AboutUtils in 'Lib\AboutUtils.pas',
   Log in 'Lib\Log.pas',
   ParallelUtils in 'Lib\ParallelUtils.pas',

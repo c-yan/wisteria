@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, System.SysUtils, Vcl.Graphics, System.Math, ParallelUtils,
-  ImageTypes;
+  ImageTypes, ImageFunctions;
 
   procedure Stretch(Src: TBitmap; Width, Height, Method: Integer; PProc: TProgressProc);
   procedure SetLinearizeOnReduce(Value: Integer);
@@ -138,14 +138,8 @@ begin
 end;
 
 function GammaCorrect(V: Double): Integer; inline;
-  function _Clamp(V: Double): Double; inline;
-  begin
-    if V < 0.0 then Result := 0.0
-    else if V > 1.0 then Result := 1.0
-    else Result := V;
-  end;
 begin
-  V := _Clamp(V);
+  V := Clamp(V, 0, 1);
   if V <= 0.0031308 then Result := Trunc(V * 12.92 * 255.0 + 0.5)
   else Result := Trunc((1.055 * Power(V, 1.0 / 2.4) - 0.055) * 255.0 + 0.5);
 end;
@@ -274,17 +268,6 @@ begin
     Result := 1.0
   else
     Result := Sinc(X) * Sinc(X / WSize);
-end;
-
-
-function Clamp(Value: Integer; Min, Max: Integer): Integer; inline;
-begin
-  if Value < Min then
-    Result := Min
-  else if Value > Max then
-    Result := Max
-  else
-    Result := Value
 end;
 
 procedure LanczosResize1(Src, Dst: TBitmap; PProc: TProgressProc; WSize: Integer);
