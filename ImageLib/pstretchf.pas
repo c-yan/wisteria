@@ -34,10 +34,6 @@ begin
   Offset := Value;
 end;
 
-procedure NullProgressProc(Progress: Integer);
-begin
-end;
-
 function CalcSrcX(DstX: Integer; Src, Dst: TBitmap): Double; inline;
 begin
   Result := (DstX + 0.5) * Src.Width / Dst.Width - 0.5;
@@ -500,8 +496,7 @@ var
   Dst: TBitmap;
 begin
   if (Src = nil) or Src.Empty then Exit;
-  Src.PixelFormat := PixelBits;
-  if Src.Palette <> 0 then DeleteObject(Src.ReleasePalette);
+  ConvertToTrueColor(Src);
   if not Assigned(PProc) then PProc := NullProgressProc;
   SetEnlargeProc(Method and $F);
   SetReduceProc((Method shr 4) and $F);

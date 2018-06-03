@@ -85,16 +85,6 @@ begin
   Result := Nonlinearlize(ConvertFromXYZ(C));
 end;
 
-procedure NullProgressProc(Progress: Integer);
-begin
-end;
-
-procedure ConvertToTrueColor(Src: TBitmap); inline;
-begin
-  Src.PixelFormat := PixelBits;
-  if Src.Palette <> 0 then DeleteObject(Src.ReleasePalette);
-end;
-
 var
   LumaMap: array[0..4080] of Integer;
 
