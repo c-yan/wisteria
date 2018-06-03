@@ -8,10 +8,14 @@ uses
 resourcestring
   MailAddress = 'recv@cyanet.jp';
   WebAddress = 'http://hp.vector.co.jp/authors/VA015850/';
+  GitHubAddress = 'https://github.com/c-yan/wisteria/';
+  GitHubIssuesAddress = 'https://github.com/c-yan/wisteria/issues';
   TwitterId = '@c_nyan';
 
 procedure AboutBox;
 procedure GoWeb;
+procedure GoGitHub;
+procedure GoGitHubIssues;
 procedure SendMail;
 
 implementation
@@ -49,9 +53,24 @@ begin
   end;
 end;
 
+procedure OpenUrl(const URL: string);
+begin
+  ShellExecute(0, nil, PChar(URL), nil, nil, SW_SHOW);
+end;
+
 procedure GoWeb;
 begin
-  ShellExecute(0, nil, PChar(WebAddress), nil, nil, SW_SHOW);
+  OpenUrl(WebAddress);
+end;
+
+procedure GoGitHub;
+begin
+  OpenUrl(GitHubAddress);
+end;
+
+procedure GoGitHubIssues;
+begin
+  OpenUrl(GitHubIssuesAddress);
 end;
 
 procedure SendMail;

@@ -112,6 +112,8 @@ type
     N6: TMenuItem;
     LinearizedReductionMenu: TMenuItem;
     ShowHelpMenu: TMenuItem;
+    GoGitHubMenu: TMenuItem;
+    GoGitHubIssuesMenu: TMenuItem;
     procedure WhiteValueMenuClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure ExitMenuClick(Sender: TObject);
@@ -143,6 +145,8 @@ type
     procedure PngCompressMenuClick(Sender: TObject);
     procedure IdleModeMenuClick(Sender: TObject);
     procedure ShowHelpMenuClick(Sender: TObject);
+    procedure GoGitHubMenuClick(Sender: TObject);
+    procedure GoGitHubIssuesMenuClick(Sender: TObject);
   private
     FileList: TStringList;
     FJpegQuality: Integer;
@@ -1872,6 +1876,16 @@ end;
 procedure TMainForm.OnTopMenuClick(Sender: TObject);
 begin
   StayOnTop := not StayOnTop;
+end;
+
+procedure TMainForm.GoGitHubIssuesMenuClick(Sender: TObject);
+begin
+  GoGitHubIssues;
+end;
+
+procedure TMainForm.GoGitHubMenuClick(Sender: TObject);
+begin
+  GoGitHub;
 end;
 
 procedure TMainForm.GoWebMenuClick(Sender: TObject);
