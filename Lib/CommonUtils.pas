@@ -3,7 +3,7 @@ unit CommonUtils;
 interface
 
 uses
-  System.SysUtils;
+  Winapi.Windows, System.SysUtils, Winapi.ShlObj;
 
 function IsDirectory(const Filename: string): Boolean;
 function Chop(S: string): string;
@@ -11,6 +11,8 @@ function StrToFloatDef(const S: string; Default: Extended): Extended;
 function AvoidCollisionName(const FileName: string): string;
 function StringInSet(const S: string; const StringSet: array of string): Boolean;
 function FileExtInSet(const FileExt: string; const FileExtSet: array of string): Boolean;
+function MyDocumentsDirectory: string;
+function DesktopDirectory: string;
 
 implementation
 
@@ -69,6 +71,26 @@ end;
 function FileExtInSet(const FileExt: string; const FileExtSet: array of string): Boolean;
 begin
   Result := StringInSet(LowerCase(FileExt), FileExtSet);
+end;
+
+function GetSpecialDirectory(FolderID: Integer): string;
+var
+  PIDL: PItemIDList;
+begin
+  SetLength(Result, MAX_PATH);
+  SHGetSpecialFolderLocation(0, FolderID, PIDL);
+  SHGetPathFromIDList(PIDL, PChar(Result));
+  SetLength(Result, StrLen(PChar(Result)));
+end;
+
+function MyDocumentsDirectory: string;
+begin
+  Result := GetSpecialDirectory(CSIDL_PERSONAL);
+end;
+
+function DesktopDirectory: string;
+begin
+  Result := GetSpecialDirectory(CSIDL_DESKTOPDIRECTORY);
 end;
 
 end.

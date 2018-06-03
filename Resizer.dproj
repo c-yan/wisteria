@@ -113,7 +113,6 @@
         <DCCReference Include="Lib\AboutUtils.pas"/>
         <DCCReference Include="Lib\Log.pas"/>
         <DCCReference Include="Lib\ParallelUtils.pas"/>
-        <DCCReference Include="Lib\SpecialDirectory.pas"/>
         <DCCReference Include="Lib\Helper.pas"/>
         <DCCReference Include="Lib\CommonUtils.pas"/>
         <BuildConfiguration Include="Release">

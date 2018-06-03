@@ -7,7 +7,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.StdCtrls, Vcl.ExtCtrls,
-  Vcl.ComCtrls, System.SyncObjs, Winapi.ShellApi, Process, SpecialDirectory, exif,
+  Vcl.ComCtrls, System.SyncObjs, Winapi.ShellApi, Process, exif,
   Vcl.Imaging.GIFImg, Vcl.Imaging.jpeg, Vcl.Imaging.pngimage, ImageWriter, pstretchf,
   SpiUtils, Vcl.FileCtrl, ImageFilter, Vcl.Clipbrd, NColorReduction, Log,  System.IniFiles,
   AboutUtils, ParallelUtils, ImageTypes, CommonUtils, Winapi.ShlObj, System.Win.ComObj;

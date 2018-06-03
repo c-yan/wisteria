@@ -16,7 +16,6 @@ uses
   AboutUtils in 'Lib\AboutUtils.pas',
   Log in 'Lib\Log.pas',
   ParallelUtils in 'Lib\ParallelUtils.pas',
-  SpecialDirectory in 'Lib\SpecialDirectory.pas',
   Helper in 'Lib\Helper.pas',
   CommonUtils in 'Lib\CommonUtils.pas';
 
