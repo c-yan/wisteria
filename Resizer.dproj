@@ -103,19 +103,19 @@
             <Form>ProcessForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="SpecialDirectory.pas"/>
-        <DCCReference Include="Log.pas"/>
-        <DCCReference Include="ParallelUtils.pas"/>
-        <DCCReference Include="SpiUtils.pas"/>
-        <DCCReference Include="AboutUtils.pas"/>
-        <DCCReference Include="Helper.pas"/>
         <DCCReference Include="ImageLib\ImageFilter.pas"/>
         <DCCReference Include="ImageLib\ImageWriter.pas"/>
         <DCCReference Include="ImageLib\NColorReduction.pas"/>
         <DCCReference Include="ImageLib\pstretchf.pas"/>
         <DCCReference Include="ImageLib\exif.pas"/>
         <DCCReference Include="ImageLib\ImageTypes.pas"/>
-        <DCCReference Include="CommonUtils.pas"/>
+        <DCCReference Include="ImageLib\SpiUtils.pas"/>
+        <DCCReference Include="Lib\AboutUtils.pas"/>
+        <DCCReference Include="Lib\Log.pas"/>
+        <DCCReference Include="Lib\ParallelUtils.pas"/>
+        <DCCReference Include="Lib\SpecialDirectory.pas"/>
+        <DCCReference Include="Lib\Helper.pas"/>
+        <DCCReference Include="Lib\CommonUtils.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

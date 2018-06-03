@@ -6,19 +6,19 @@ uses
   Vcl.Forms,
   Main in 'Main.pas' {MainForm},
   Process in 'Process.pas' {ProcessForm},
-  SpecialDirectory in 'SpecialDirectory.pas',
-  Log in 'Log.pas',
-  ParallelUtils in 'ParallelUtils.pas',
-  SpiUtils in 'SpiUtils.pas',
-  AboutUtils in 'AboutUtils.pas',
-  Helper in 'Helper.pas',
   ImageFilter in 'ImageLib\ImageFilter.pas',
   ImageWriter in 'ImageLib\ImageWriter.pas',
   NColorReduction in 'ImageLib\NColorReduction.pas',
   pstretchf in 'ImageLib\pstretchf.pas',
   exif in 'ImageLib\exif.pas',
   ImageTypes in 'ImageLib\ImageTypes.pas',
-  CommonUtils in 'CommonUtils.pas';
+  SpiUtils in 'ImageLib\SpiUtils.pas',
+  AboutUtils in 'Lib\AboutUtils.pas',
+  Log in 'Lib\Log.pas',
+  ParallelUtils in 'Lib\ParallelUtils.pas',
+  SpecialDirectory in 'Lib\SpecialDirectory.pas',
+  Helper in 'Lib\Helper.pas',
+  CommonUtils in 'Lib\CommonUtils.pas';
 
 {$R *.res}
 
