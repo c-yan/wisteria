@@ -797,8 +797,7 @@ var
       WICImage.Free;
     end;
   end;
-  {$IFEND}
-
+  {$ELSE}
   function LoadByIL(var ProcInfo: TProcInfo; Src: TBitmap): Boolean;
   var
     FileExt: string;
@@ -846,6 +845,7 @@ var
     end
     else Result := False;
   end;
+  {$IFEND}
 
   function Load(var ProcInfo: TProcInfo; Src: TBitmap): Boolean;
   begin
