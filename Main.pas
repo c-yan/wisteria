@@ -1950,9 +1950,7 @@ begin
   S := IntToStr(SharpValue);
   if InputQuery('輪郭強調度', '強さ (0～100)', S) then
   begin
-    SharpValue := StrToIntDef(S, SharpValue);
-    if SharpValue < 0 then SharpValue := 0
-    else if SharpValue > 100 then SharpValue := 100;
+    SharpValue := StrToIntDefWithRange(S, SharpValue, 0, 100);
     DoSharpen := True;
   end;
 end;
@@ -2288,9 +2286,7 @@ begin
   S := IntToStr(CleanValue);
   if InputQuery('ノイズ除去度', '強さ (0～100)', S) then
   begin
-    CleanValue := StrToIntDef(S, CleanValue);
-    if CleanValue < 0 then CleanValue := 0
-    else if CleanValue > 100 then CleanValue := 100;
+    CleanValue := StrToIntDefWithRange(S, CleanValue, 0, 100);
     DoClean := True;
   end;
 end;
@@ -2394,9 +2390,7 @@ begin
   S := IntToStr(PngCompress);
   if InputQuery('PNG圧縮率', '圧縮率 (0～9)', S) then
   begin
-    PngCompress := StrToIntDef(S, PngCompress);
-    if PngCompress < 0 then PngCompress := 0
-    else if PngCompress > 9 then PngCompress := 9;
+    PngCompress := StrToIntDefWithRange(S, PngCompress, 0, 9);
   end;
 end;
 
@@ -2548,9 +2542,7 @@ begin
   S := IntToStr(GrayscaleMethod);
   if InputQuery('白黒化法', '手法 (0～2)', S) then
   begin
-    GrayscaleMethod := StrToIntDef(S, GrayscaleMethod);
-    if GrayscaleMethod < 0 then GrayscaleMethod := 0
-    else if GrayscaleMethod > 2 then GrayscaleMethod := 0;
+    GrayscaleMethod := StrToIntDefWithRange(S, GrayscaleMethod, 0, 2);
     DoGrayscale := True;
   end;
 end;
@@ -2614,9 +2606,7 @@ begin
   S := IntToStr(WhiteValue);
   if InputQuery('白色化閾値', '閾値 (0～255)', S) then
   begin
-    WhiteValue := StrToIntDef(S, WhiteValue);
-    if WhiteValue < 0 then WhiteValue := 0
-    else if WhiteValue > 255 then WhiteValue := 255;
+    WhiteValue := StrToIntDefWithRange(S, WhiteValue, 0, 255);
     DoWhite := True;
   end;
 end;

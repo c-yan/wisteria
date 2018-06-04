@@ -7,6 +7,7 @@ uses
 
 function IsDirectory(const Filename: string): Boolean;
 function Chop(S: string): string;
+function StrToIntDefWithRange(const S: string; Default, Min, Max: Integer): Integer;
 function StrToFloatDef(const S: string; Default: Extended): Extended;
 function AvoidCollisionName(const FileName: string): string;
 function StringInSet(const S: string; const StringSet: array of string): Boolean;
@@ -24,6 +25,17 @@ end;
 function Chop(S: string): string;
 begin
   Result := Copy(S, 1, Length(S) - 1);
+end;
+
+function StrToIntDefWithRange(const S: string; Default, Min, Max: Integer): Integer;
+  function Clamp(Value, Min, Max: Integer): Integer; inline;
+  begin
+    if Value < Min then Result := Min
+    else if Value > Max then Result := Max
+    else Result := Value;
+  end;
+begin
+  Result := Clamp(StrToIntDef(S, Default), Min, Max);
 end;
 
 function StrToFloatDef(const S: string; Default: Extended): Extended;
