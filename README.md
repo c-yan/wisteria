@@ -33,7 +33,7 @@ Note that on system earlier than Windows Vista, you must NOT put the executable 
 Item                                     |2.x         |3.x (32bit) |3.x (64bit) |4.x
 -----------------------------------------|------------|------------|------------|------------
 Binary size                              |○          |△          |×          |×
-Default number of import image format    |× (IL)     |○ (WIC)    |○ (WIC     |○ (WIC)
+Default number of import image format    |× (IL)     |○ (WIC)    |○ (WIC)    |○ (WIC)
 Susie plugin support                     |○          |○          |○          |○
 AtoB Converter plugin support            |○          |○          |×          |○
 JPEG subsampling-off compression support |○          |○          |○          |×
