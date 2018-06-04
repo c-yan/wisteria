@@ -7,6 +7,7 @@ uses
 
 const
   PixelBits = pf24bit;
+
 type
   TByteTriple = packed array[0..2] of Byte;
   TPixel = TByteTriple;

@@ -1,4 +1,4 @@
-unit ImageWriter;
+unit ImageWriters;
 
 interface
 
@@ -9,7 +9,6 @@ procedure SaveAsPSD(Src: TBitmap; FileName: string);
 procedure SaveAsPPM(Src: TBitmap; FileName: string);
 
 implementation
-
 
 procedure SaveAsPSD(Src: TBitmap; FileName: string);
 var

@@ -1,4 +1,4 @@
-unit ImageFilter;
+unit ImageFilters;
 
 interface
 

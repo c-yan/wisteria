@@ -103,19 +103,19 @@
             <Form>ProcessForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="ImageLib\ImageFilter.pas"/>
-        <DCCReference Include="ImageLib\ImageWriter.pas"/>
-        <DCCReference Include="ImageLib\NColorReduction.pas"/>
-        <DCCReference Include="ImageLib\pstretchf.pas"/>
-        <DCCReference Include="ImageLib\exif.pas"/>
-        <DCCReference Include="ImageLib\ImageTypes.pas"/>
-        <DCCReference Include="ImageLib\SpiUtils.pas"/>
+        <DCCReference Include="ImageLib\ExifReader.pas"/>
+        <DCCReference Include="ImageLib\ImageColorQuantizer.pas"/>
+        <DCCReference Include="ImageLib\ImageFilters.pas"/>
         <DCCReference Include="ImageLib\ImageFunctions.pas"/>
+        <DCCReference Include="ImageLib\ImageStretcher.pas"/>
+        <DCCReference Include="ImageLib\ImageTypes.pas"/>
+        <DCCReference Include="ImageLib\ImageWriters.pas"/>
+        <DCCReference Include="ImageLib\SpiUtils.pas"/>
         <DCCReference Include="Lib\AboutUtils.pas"/>
-        <DCCReference Include="Lib\Log.pas"/>
-        <DCCReference Include="Lib\ParallelUtils.pas"/>
-        <DCCReference Include="Lib\Helper.pas"/>
         <DCCReference Include="Lib\CommonUtils.pas"/>
+        <DCCReference Include="Lib\Helpers.pas"/>
+        <DCCReference Include="Lib\Logging.pas"/>
+        <DCCReference Include="Lib\ParallelUtils.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

@@ -1,10 +1,10 @@
-unit NColorReduction;
+unit ImageColorQuantizer;
 
 interface
 
 uses
   Winapi.Windows, System.Classes, System.SysUtils, Vcl.Forms, Vcl.Graphics,
-  System.Math, Winapi.MMSystem, ImageTypes, ImageFunctions;
+  System.Math, ImageTypes, ImageFunctions;
 
 procedure ReduceColor(const Src: TBitmap; Colors: Integer; Dither: Boolean);
 

@@ -5,12 +5,14 @@ interface
 {$DEFINE NoJPEGSubsampling}
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.StdCtrls, Vcl.ExtCtrls,
-  Vcl.ComCtrls, System.SyncObjs, Winapi.ShellApi, Process, exif,
-  Vcl.Imaging.GIFImg, Vcl.Imaging.jpeg, Vcl.Imaging.pngimage, ImageWriter, pstretchf,
-  SpiUtils, Vcl.FileCtrl, ImageFilter, Vcl.Clipbrd, NColorReduction, Log,  System.IniFiles,
-  AboutUtils, ParallelUtils, ImageTypes, CommonUtils, Winapi.ShlObj, System.Win.ComObj;
+  Winapi.Windows, Winapi.Messages, Winapi.ShellApi, Winapi.ShlObj,
+  System.SysUtils, System.Classes, System.SyncObjs, System.IniFiles,
+  System.Win.ComObj, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  Vcl.Menus, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ComCtrls, Vcl.Clipbrd,
+  Vcl.FileCtrl, Vcl.Imaging.GIFImg, Vcl.Imaging.jpeg, Vcl.Imaging.pngimage,
+  Process, ImageTypes, ExifReader, ImageWriters, ImageStretcher, ImageFilters,
+  SpiUtils, ImageColorQuantizer, Logging, AboutUtils, ParallelUtils,
+  CommonUtils;
 
 type
   TValueType = (vtAbsolute, vtRelative);
@@ -1530,7 +1532,7 @@ begin
   if IdleMode then SetPriorityClass(GetCurrentProcess, IDLE_PRIORITY_CLASS);
 
   LoadIniFile(AppPath + '\wisteria.ini');
-  InitLog(LogFileName);
+  InitLogging(LogFileName);
   LoadSampleTitle;
 
   if ParamCount > 0 then

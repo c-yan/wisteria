@@ -1,9 +1,9 @@
-unit exif;
+unit ExifReader;
 
 interface
 
 uses
-  System.Classes, System.SysUtils, System.Math, Helper;
+  System.Classes, System.SysUtils, System.Math, Helpers;
 
 function GetOriginalDateTime(FileName: string): AnsiString;
 function GetModel(FileName: string): AnsiString;

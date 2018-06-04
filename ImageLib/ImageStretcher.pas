@@ -1,4 +1,4 @@
-unit pstretchf;
+unit ImageStretcher;
 
 interface
 
@@ -6,8 +6,8 @@ uses
   Winapi.Windows, System.SysUtils, Vcl.Graphics, System.Math, ParallelUtils,
   ImageTypes, ImageFunctions;
 
-  procedure Stretch(Src: TBitmap; Width, Height, Method: Integer; PProc: TProgressProc);
-  procedure SetLinearizeOnReduce(Value: Integer);
+procedure Stretch(Src: TBitmap; Width, Height, Method: Integer; PProc: TProgressProc);
+procedure SetLinearizeOnReduce(Value: Integer);
 
 implementation
 

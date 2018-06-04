@@ -1,15 +1,15 @@
-unit Log;
+unit Logging;
 
 interface
 
 uses
   System.SysUtils;
 
-procedure InitLog(FileName: string);
-procedure Error(Text: string);
-procedure Warn(Text: string);
-procedure Info(Text: string);
-procedure Debug(Text: string);
+procedure InitLogging(const FileName: string);
+procedure Error(const Text: string);
+procedure Warn(const Text: string);
+procedure Info(const Text: string);
+procedure Debug(const Text: string);
 
 var
   DebugEnabled: Boolean = False;
@@ -19,7 +19,7 @@ implementation
 var
   LogFileName: string = '';
 
-procedure InitLog(FileName: string);
+procedure InitLogging(const FileName: string);
 var
   F: TextFile;
 begin
@@ -38,7 +38,7 @@ begin
   end;
 end;
 
-procedure Logging(Category, Text: string);
+procedure Log(const Category, Text: string);
 var
   F: TextFile;
   T: string;
@@ -54,24 +54,24 @@ begin
   end;
 end;
 
-procedure Error(Text: string);
+procedure Error(const Text: string);
 begin
-  Logging('ERROR', Text);
+  Log('ERROR', Text);
 end;
 
-procedure Warn(Text: string);
+procedure Warn(const Text: string);
 begin
-  Logging('WARN', Text);
+  Log('WARN', Text);
 end;
 
-procedure Info(Text: string);
+procedure Info(const Text: string);
 begin
-  Logging('INFO', Text);
+  Log('INFO', Text);
 end;
 
-procedure Debug(Text: string);
+procedure Debug(const Text: string);
 begin
-  if DebugEnabled then Logging('DEBUG', Text);
+  if DebugEnabled then Log('DEBUG', Text);
 end;
 
 end.
