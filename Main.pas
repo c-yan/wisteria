@@ -1656,7 +1656,7 @@ begin
       FilterOrder         := ReadString('Other', 'FilterOrder', FilterOrder);
       MaxThreads          := ReadInteger('Other', 'MaxThreads', MaxThreads);
       ContinueOnError     := ReadBool('Other', 'ContinueOnError', ContinueOnError);
-      LogFileName             := ReadString('Other', 'LogFileName', LogFileName);
+      LogFileName         := ReadString('Other', 'LogFileName', LogFileName);
 
       LmapMenu.Visible := EnableLMap;
       LmapValueMenu.Visible := EnableLMap;
