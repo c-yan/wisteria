@@ -578,19 +578,10 @@ var
 
   procedure LoadHTMLTemplate;
   var
-    S: string;
+    FileName: string;
   begin
-    S := DecodePathExp(SampleDirectory) + HTMLTemplateFile;
-    if FileExists(S) then
-    begin
-      with TStringList.Create do
-      try
-        LoadFromFile(S);
-        HTMLTemplate := Text;
-      finally
-        Free;
-      end;
-    end
+    FileName := DecodePathExp(SampleDirectory) + HTMLTemplateFile;
+    if FileExists(FileName) then HTMLTemplate := ReadAllText(FileName)
     else HTMLTemplate := '%s';
   end;
 
@@ -1353,7 +1344,7 @@ var
 
 var
   StartTick: Cardinal;
-  S: string;
+  FileName: string;
 begin
   if not ValidValue then
   begin
@@ -1419,15 +1410,9 @@ begin
       end;
       Html := Html + DecodeAExp(HTMLOnEnd, FileList.Count);
       Html := Format(HTMLTemplate, [Html]);
-      if HTMLReversePlace then S := ExtractFilePath(SaveName) + HTMLFileName
-      else S := ExtractFilePath(ProcInfo.Name) + HTMLFileName;
-      with TStringList.Create do
-      try
-        Text := Html;
-        SaveToFile(S);
-      finally
-        Free;
-      end;
+      if HTMLReversePlace then FileName := ExtractFilePath(SaveName) + HTMLFileName
+      else FileName := ExtractFilePath(ProcInfo.Name) + HTMLFileName;
+      WriteAllText(FileName, Html);
     end;
   finally
     {$IF CompilerVersion >= 21.0}

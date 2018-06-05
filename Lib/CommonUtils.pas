@@ -3,7 +3,7 @@ unit CommonUtils;
 interface
 
 uses
-  Winapi.Windows, System.SysUtils, Winapi.ShlObj;
+  Winapi.Windows, System.SysUtils, System.Classes, Winapi.ShlObj;
 
 function IsDirectory(const Filename: string): Boolean;
 function Chop(S: string): string;
@@ -14,6 +14,8 @@ function StringInSet(const S: string; const StringSet: array of string): Boolean
 function FileExtInSet(const FileExt: string; const FileExtSet: array of string): Boolean;
 function MyDocumentsDirectory: string;
 function DesktopDirectory: string;
+function ReadAllText(const FileName: string): string;
+procedure WriteAllText(const FileName, Contents: string);
 
 implementation
 
@@ -103,6 +105,28 @@ end;
 function DesktopDirectory: string;
 begin
   Result := GetSpecialDirectory(CSIDL_DESKTOPDIRECTORY);
+end;
+
+function ReadAllText(const FileName: string): string;
+begin
+  with TStringList.Create do
+  try
+    LoadFromFile(FileName);
+    Result := Text;
+  finally
+    Free;
+  end;
+end;
+
+procedure WriteAllText(const FileName, Contents: string);
+begin
+  with TStringList.Create do
+  try
+    Text := contents;
+    SaveToFile(FileName);
+  finally
+    Free;
+  end;
 end;
 
 end.

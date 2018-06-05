@@ -3,7 +3,7 @@ unit ImageWriters;
 interface
 
 uses
-  System.Classes, Vcl.Graphics, System.SysUtils, ImageTypes;
+  System.Classes, Vcl.Graphics, System.SysUtils, ImageTypes, CommonUtils;
 
 procedure SaveAsPSD(Src: TBitmap; FileName: string);
 procedure SaveAsPPM(Src: TBitmap; FileName: string);
@@ -98,13 +98,7 @@ begin
       S := S + Format('%3d %3d %3d'#10, [SP[X][2], SP[X][1], SP[X][0]]);
     end;
   end;
-  with TStringList.Create do
-  try
-    Text := S;
-    SaveToFile(FileName);
-  finally
-    Free;
-  end;
+  WriteAllText(FileName, S);
 end;
 
 end.
