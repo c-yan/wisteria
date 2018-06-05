@@ -796,7 +796,7 @@ var
         ProcInfo.Orient := GetOrientation(ProcInfo.Name);
       end;
     finally
-      WICImage.Free;
+      FreeAndNil(WICImage);
     end;
   end;
   {$ELSE}
@@ -818,7 +818,7 @@ var
         JPEG.LoadFromFile(ProcInfo.Name);
         Src.Assign(JPEG);
       finally
-        JPEG.Free;
+        FreeAndNil(JPEG);
       end;
       ProcInfo.OriginalTime := ExifTimeToModStr(string(GetOriginalDateTime(ProcInfo.Name)));
       ProcInfo.ModelName := string(GetModel(ProcInfo.Name));
@@ -832,7 +832,7 @@ var
         PNG.LoadFromFile(ProcInfo.Name);
         Src.Assign(PNG);
       finally
-        PNG.Free;
+        FreeAndNil(PNG);
       end;
     end
     else if FileExtInSet(FileExt, ['.gif']) then
@@ -842,7 +842,7 @@ var
         GIF.LoadFromFile(ProcInfo.Name);
         Src.Assign(GIF);
       finally
-        GIF.Free;
+        FreeAndNil(GIF);
       end;
     end
     else Result := False;
@@ -881,7 +881,7 @@ var
         JPEG.Assign(Src);
         JPEG.SaveToFile(SaveName);
       finally
-        JPEG.Free;
+        FreeAndNil(JPEG);
       end;
     end
     else if FileExtInSet(FileExt, ['.png']) then
@@ -899,7 +899,7 @@ var
         end;
         PNG.SaveToFile(SaveName);
       finally
-        PNG.Free;
+        FreeAndNil(PNG);
       end;
     end
     else if FileExtInSet(FileExt, ['.gif']) then
@@ -909,7 +909,7 @@ var
         GIF.Assign(Src);
         GIF.SaveToFile(SaveName);
       finally
-        GIF.Free;
+        FreeAndNil(GIF);
       end;
     end
     else if FileExtInSet(FileExt, ['.pnm', '.ppm']) then
@@ -1290,7 +1290,7 @@ var
     if FilePattern = '*' then
     begin
       Clipboard.Assign(Src);
-      Src.Free;
+      FreeAndNil(Src);
       Exit;
     end;
 
@@ -1348,7 +1348,7 @@ var
         Html := Html + DecodeAExp(HTMLOnNth, FileList.Count);
       end;
     end;
-    Src.Free;
+    FreeAndNil(Src);
   end;
 
 var
@@ -1475,7 +1475,7 @@ procedure TMainForm.FormCreate(Sender: TObject);
         Inc(I);
       end;
     finally
-      IniFile.Free;
+      FreeAndNil(IniFile);
     end;
   end;
 
@@ -1550,8 +1550,8 @@ end;
 procedure TMainForm.FormDestroy(Sender: TObject);
 begin
   SaveIniFile(AppPath + '\wisteria.ini');
-  CriticalSection.Free;
-  FileList.Free;
+  FreeAndNil(CriticalSection);
+  FreeAndNil(FileList);
 end;
 
 procedure TMainForm.LoadIniFile(FileName: string);
@@ -1662,7 +1662,7 @@ begin
       LmapValueMenu.Visible := EnableLMap;
     end;
   finally
-    IniFile.Free;
+    FreeAndNil(IniFile);
   end;
   ResetCondComboBoxEnabled;
 end;
@@ -1772,7 +1772,7 @@ begin
       WriteString('Other', 'LogFileName', LogFileName);
     end;
   finally
-    IniFile.Free;
+    FreeAndNil(IniFile);
   end;
 end;
 
@@ -1928,7 +1928,7 @@ begin
     Bitmap.LoadFromClipBoardFormat(CF_BITMAP, ClipBoard.GetAsHandle(CF_BITMAP), 0);
     Bitmap.SaveToFile(S);
   finally
-    Bitmap.Free;
+    FreeAndNil(Bitmap);
   end;
 
   FileList.Clear;

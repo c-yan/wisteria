@@ -126,7 +126,7 @@ begin
     PProc(100 * Y div (Src.Height - 1));
   end;
   Src.Assign(Dst);
-  Dst.Free;
+  FreeAndNil(Dst);
 end;
 
 procedure TurnOverFilter(Src: TBitmap; PProc: TProgressProc);
@@ -156,7 +156,7 @@ begin
     PProc((100 * Y) div (Dst.Height - 1));
   end;
   Src.Assign(Dst);
-  Dst.Free;
+  FreeAndNil(Dst);
 end;
 
 function MapToX(X, Y, W, H: Integer): Integer;
@@ -238,7 +238,7 @@ begin
   end;
 
   Src.Assign(Dst);
-  Dst.Free;
+  FreeAndNil(Dst);
 end;
 
 procedure ContrastFixFilter(Src: TBitmap; V: Extended; PProc: TProgressProc);
@@ -270,7 +270,7 @@ begin
     PProc(100 * Y div (Src.Height - 1));
   end;
   Src.Assign(Dst);
-  Dst.Free;
+  FreeAndNil(Dst);
 end;
 
 procedure GammaFixFilter(Src: TBitmap; V: Extended; PProc: TProgressProc);
@@ -302,7 +302,7 @@ begin
     PProc(100 * Y div (Src.Height - 1));
   end;
   Src.Assign(Dst);
-  Dst.Free;
+  FreeAndNil(Dst);
 end;
 
 procedure ConditionedAverage(Src: TBitmap; V, T: Integer; PProc: TProgressProc);
@@ -422,7 +422,7 @@ begin
     if Y = T then Y := H - T + 1;
   end;
   Src.Assign(Dst);
-  Dst.Free;
+  FreeAndNil(Dst);
 end;
 
 procedure SharpenFilter(Src: TBitmap; V: Integer; PProc: TProgressProc);
@@ -480,7 +480,7 @@ begin
   SP[1] := Src.ScanLine[Src.Height - 1];
   for X := 0 to Src.Width - 1 do DP[X] := SP[1][X];
   Src.Assign(Dst);
-  Dst.Free;
+  FreeAndNil(Dst);
 end;
 
 procedure LumaFixFilter(Src: TBitmap; Min, Max: Integer; PProc: TProgressProc);
@@ -522,7 +522,7 @@ begin
     PProc(100 * Y div (Src.Height - 1));
   end;
   Src.Assign(Dst);
-  Dst.Free;
+  FreeAndNil(Dst);
 end;
 
 procedure NormalizeFilter(Src: TBitmap; Min, Max: Integer; PProc: TProgressProc);
@@ -618,7 +618,7 @@ begin
     PProc(100 * Y div (Src.Height - 1));
   end;
   Src.Assign(Dst);
-  Dst.Free;
+  FreeAndNil(Dst);
 end;
 
 procedure TrimFilterImpl(Src: TBitmap; R: TRect; FillColor: TPixel; PProc: TProgressProc);
@@ -665,7 +665,7 @@ begin
   end;
 
   Src.Assign(Dst);
-  Dst.Free;
+  FreeAndNil(Dst);
 end;
 
 procedure TrimFilter(Src: TBitmap; R: TRect; FillColor: string; PProc: TProgressProc);
@@ -844,7 +844,7 @@ procedure IndexedFilter(Src: TBitmap; var Grayscale: Boolean; PProc: TProgressPr
       end;
       Src.Assign(Dst);
     finally
-      Dst.Free;
+      FreeAndNil(Dst);
     end;
   end;
 
@@ -953,7 +953,7 @@ procedure LMapFilter(Src: TBitmap; VList: string; PProc: TProgressProc);
     FreeMem(Y);
     FreeMem(X);
 
-    StringList.Free;
+    FreeAndNil(StringList);
   end;
 begin
   if (Src = nil) or Src.Empty then Exit;
@@ -997,7 +997,7 @@ begin
     PProc(100 * Y div (Src.Height - 1));
   end;
   Src.Assign(Dst);
-  Dst.Free;
+  FreeAndNil(Dst);
 end;
 
 type
@@ -1074,22 +1074,25 @@ begin
 
   PProc(0);
   Dst := TBitmap.Create;
-  Dst.Assign(Src);
-  Dst.PixelFormat := pf4bit;
-  Dst.Palette := Src.Palette;
-  for Y := 0 to Src.Height - 1 do
-  begin
-    SP := Src.ScanLine[Y];
-    DP := Dst.ScanLine[Y];
-    for X := 0 to Src.Width - 1 do
+  try
+    Dst.Assign(Src);
+    Dst.PixelFormat := pf4bit;
+    Dst.Palette := Src.Palette;
+    for Y := 0 to Src.Height - 1 do
     begin
-      if (X mod 2) = 0 then DP[X div 2] := (SP[X] shl 4) + (DP[X div 2] and $F)
-      else DP[X div 2] := (DP[X div 2] and $F0) + SP[X];
+      SP := Src.ScanLine[Y];
+      DP := Dst.ScanLine[Y];
+      for X := 0 to Src.Width - 1 do
+      begin
+        if (X mod 2) = 0 then DP[X div 2] := (SP[X] shl 4) + (DP[X div 2] and $F)
+        else DP[X div 2] := (DP[X div 2] and $F0) + SP[X];
+      end;
+      PProc(100 * Y div (Src.Height - 1));
     end;
-    PProc(100 * Y div (Src.Height - 1));
+    Src.Assign(Dst);
+  finally
+    FreeAndNil(Dst);
   end;
-  Src.Assign(Dst);
-  Dst.Free;
 end;
 
 end.

@@ -76,7 +76,7 @@ begin
       end;
     end;
   finally
-    Stream.Free;
+    FreeAndNil(Stream);
   end;
 end;
 

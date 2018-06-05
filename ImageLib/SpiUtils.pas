@@ -120,7 +120,7 @@ begin
       MapInfo.Values[PatternToExt(List.Strings[I])] := PluginFileName;
     end;
   finally
-    List.Free;
+    FreeAndNil(List);
   end;
 end;
 
@@ -156,7 +156,7 @@ begin
       AddPlugin(PluginList.Strings[I], PluginApiVersion, MapInfo);
     end;
   finally
-    PluginList.Free;
+    FreeAndNil(PluginList);
   end;
 end;
 
@@ -253,9 +253,9 @@ initialization
   {$ENDIF}
 
 finalization
-  SpiMapInfo.Free;
+  FreeAndNil(SpiMapInfo);
   {$IFNDEF WIN64}
-  XpiMapInfo.Free;
+  FreeAndNil(XpiMapInfo);
   {$ENDIF}
 
 end.

@@ -509,7 +509,7 @@ begin
     if Width > Src.Width then Enlarge(Src, Dst, PProc)
     else Reduce(Src, Dst, PProc);
     Src.Assign(Dst);
-    Dst.Free;
+    FreeAndNil(Dst);
 
     Dst := TBitmap.Create;
     Dst.PixelFormat := PixelBits;
@@ -517,7 +517,7 @@ begin
     Dst.Height := Src.Width;
     Transpose(Src, Dst, PProc);
     Src.Assign(Dst);
-    Dst.Free;
+    FreeAndNil(Dst);
 
     Dst := TBitmap.Create;
     Dst.PixelFormat := PixelBits;
@@ -527,7 +527,7 @@ begin
     if Height > Src.Width then Enlarge(Src, Dst, PProc)
     else Reduce(Src, Dst, PProc);
     Src.Assign(Dst);
-    Dst.Free;
+    FreeAndNil(Dst);
 
     Dst := TBitmap.Create;
     Dst.PixelFormat := PixelBits;
@@ -536,7 +536,7 @@ begin
     Transpose(Src, Dst, PProc);
     Src.Assign(Dst);
   finally
-    Dst.Free;
+    FreeAndnil(Dst);
   end;
 end;
 
