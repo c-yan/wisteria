@@ -766,7 +766,6 @@ var
   {$IF CompilerVersion >= 21.0}
   function LoadByWIC(var ProcInfo: TProcInfo; Src: TBitmap): Boolean;
   var
-    FileExt: string;
     WICImage: TWICImage;
   begin
     Result := True;
@@ -779,13 +778,6 @@ var
         Exit;
       end;
       Src.Assign(WICImage);
-      FileExt := ExtractFileExt(ProcInfo.Name);
-      if FileExtInSet(FileExt, ['.jpg', '.jpeg']) then
-      begin
-        ProcInfo.OriginalTime := ExifTimeToModStr(string(GetOriginalDateTime(ProcInfo.Name)));
-        ProcInfo.ModelName := string(GetModel(ProcInfo.Name));
-        ProcInfo.Orient := GetOrientation(ProcInfo.Name);
-      end;
     finally
       FreeAndNil(WICImage);
     end;
@@ -811,9 +803,6 @@ var
       finally
         FreeAndNil(JPEG);
       end;
-      ProcInfo.OriginalTime := ExifTimeToModStr(string(GetOriginalDateTime(ProcInfo.Name)));
-      ProcInfo.ModelName := string(GetModel(ProcInfo.Name));
-      ProcInfo.Orient := GetOrientation(ProcInfo.Name);
       if GetColorSpace(ProcInfo.Name) = 65535 then ConvertFromAdobeRGB(Src);
     end
     else if FileExtInSet(FileExt, ['.png']) then
@@ -847,6 +836,12 @@ var
     {$ELSE}
     Result := LoadByIL(ProcInfo, Src);
     {$IFEND}
+    if FileExtInSet(ExtractFileExt(ProcInfo.Name), ['.jpg', '.jpeg']) then
+    begin
+      ProcInfo.OriginalTime := ExifTimeToModStr(string(GetOriginalDateTime(ProcInfo.Name)));
+      ProcInfo.ModelName := string(GetModel(ProcInfo.Name));
+      ProcInfo.Orient := GetOrientation(ProcInfo.Name);
+    end;
   end;
 
   function Save(SaveName: string; Grayscale: Boolean; Src: TBitmap): Boolean;
