@@ -536,7 +536,7 @@ begin
     Transpose(Src, Dst, PProc);
     Src.Assign(Dst);
   finally
-    FreeAndnil(Dst);
+    FreeAndNil(Dst);
   end;
 end;
 
