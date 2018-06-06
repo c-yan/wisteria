@@ -437,8 +437,8 @@ object MainForm: TMainForm
         Hint = #30333#40658#30011#20687#12408#12398#22793#25563#12434#34892#12356#12414#12377
         OnClick = CheckMenuClick
       end
-      object lmapMenu: TMenuItem
-        Caption = 'lmap'
+      object LMapMenu: TMenuItem
+        Caption = 'LMap'
         Visible = False
         OnClick = CheckMenuClick
       end
@@ -495,10 +495,10 @@ object MainForm: TMainForm
         Hint = #36637#24230#12398#35336#31639#24335#12434#35373#23450#12375#12414#12377
         OnClick = GrayscaleMethodMenuClick
       end
-      object lmapValueMenu: TMenuItem
-        Caption = 'lmap'
+      object LMapValueMenu: TMenuItem
+        Caption = 'LMap'
         Visible = False
-        OnClick = lmapValueMenuClick
+        OnClick = LMapValueMenuClick
       end
     end
     object SampleMenu: TMenuItem

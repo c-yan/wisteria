@@ -81,8 +81,8 @@ type
     RotateAngleMenu: TMenuItem;
     GrayscaleMethodMenu: TMenuItem;
     OutputMenu: TMenuItem;
-    lmapMenu: TMenuItem;
-    lmapValueMenu: TMenuItem;
+    LMapMenu: TMenuItem;
+    LMapValueMenu: TMenuItem;
     WidthEdit: TEdit;
     HeightEdit: TEdit;
     AutoIndexedMenu: TMenuItem;
@@ -143,7 +143,7 @@ type
     procedure TrimValueMenuClick(Sender: TObject);
     procedure RotateAngleMenuClick(Sender: TObject);
     procedure GrayscaleMethodMenuClick(Sender: TObject);
-    procedure lmapValueMenuClick(Sender: TObject);
+    procedure LMapValueMenuClick(Sender: TObject);
     procedure PngCompressMenuClick(Sender: TObject);
     procedure IdleModeMenuClick(Sender: TObject);
     procedure ShowHelpMenuClick(Sender: TObject);
@@ -178,7 +178,7 @@ type
     FTrimRect: string;
     FRotateAngle: Integer;
     FGrayscaleMethod: Integer;
-    FlmapValue: string;
+    FLMapValue: string;
     FEnableLMap: Boolean;
     FWhiteValue: Integer;
     FPngCompress: Integer;
@@ -252,8 +252,8 @@ type
     procedure SetDoTurnOver(const Value: Boolean);
     function GetDoRotate: Boolean;
     function GetDoTurnOver: Boolean;
-    function GetDolmap: Boolean;
-    procedure SetDolmap(const Value: Boolean);
+    function GetDoLMap: Boolean;
+    procedure SetDoLMap(const Value: Boolean);
     procedure SetAutoIndexed(const Value: Boolean);
     function GetAutoIndexed: Boolean;
     procedure SetAutoRotate(const Value: Boolean);
@@ -339,15 +339,14 @@ type
     property AutoRotate: Boolean read GetAutoRotate write SetAutoRotate;
     property DoWhite: Boolean read GetDoWhite write SetDoWhite;
     property WhiteValue: Integer read FWhiteValue write FWhiteValue;
+    property DoLMap: Boolean read GetDoLMap write SetDoLMap;
+    property LMapValue: string read FLMapValue write FLMapValue;
+    property EnableLMap: Boolean read FEnableLMap write FEnableLMap;
     property IncludeSubDir: Boolean read GetIncludeSubDir write SetIncludeSubDir;
     property PostExec: string read FPostExec write FPostExec;
     property IdleMode: Boolean read GetIdleMode write SetIdleMode;
     property SortFileList: Boolean read GetSortFileList write SetSortFileList;
     property LinearizedReduction: Boolean read GetLinearizedReduction write SetLinearizedReduction;
-
-    property Dolmap: Boolean read GetDolmap write SetDolmap;
-    property lmapValue: string read FlmapValue write FlmapValue;
-    property EnableLMap: Boolean read FEnableLMap write FEnableLMap;
     property DisableIL: Boolean read FDisableIL write FDisableIL;
     property DisableIS: Boolean read FDisableIS write FDisableIS;
     property MinimizedStart: Boolean read FMinimizedStart write FMinimizedStart;
@@ -1175,11 +1174,11 @@ var
     begin
       case FilterOrder[J] of
       '0':
-        if Dolmap then
+        if DoLMap then
         begin
-          ProcessForm.ProcessSituation := 'lmap中';
+          ProcessForm.ProcessSituation := 'LMap中';
           Application.ProcessMessages;
-          LMapFilter(Src, lmapValue, ProgressProc);
+          LMapFilter(Src, LMapValue, ProgressProc);
         end;
       '1':
         if DoGammaFix then
@@ -1615,11 +1614,10 @@ begin
       CleanValue          := ReadInteger('Filter', 'CleanValue', CleanValue);
       DoGrayscale         := ReadBool('Filter', 'GrayscaleFilter', DoGrayscale);
       GrayscaleMethod     := ReadInteger('Filter', 'GrayscaleMethod', GrayscaleMethod);
-
-      Dolmap              := ReadBool('Filter', 'lmapFilter', Dolmap);
-      lmapValue           := ReadString('Filter', 'lmapValue', lmapValue);
       DoWhite             := ReadBool('Filter', 'WhiteFilter', DoWhite);
       WhiteValue          := ReadInteger('Filter', 'WhiteValue', WhiteValue);
+      DoLMap              := ReadBool('Filter', 'LMapFilter', DoLMap);
+      LMapValue           := ReadString('Filter', 'LMapValue', LMapValue);
 
       //Other
       TimeFormat          := ReadString('Other', 'TimeFormat', TimeFormat);
@@ -1638,8 +1636,8 @@ begin
       ContinueOnError     := ReadBool('Other', 'ContinueOnError', ContinueOnError);
       LogFileName         := ReadString('Other', 'LogFileName', LogFileName);
 
-      LmapMenu.Visible := EnableLMap;
-      LmapValueMenu.Visible := EnableLMap;
+      LMapMenu.Visible := EnableLMap;
+      LMapValueMenu.Visible := EnableLMap;
     end;
   finally
     FreeAndNil(IniFile);
@@ -1728,11 +1726,10 @@ begin
       WriteInteger('Filter', 'CleanValue', CleanValue);
       WriteBool('Filter', 'GrayscaleFilter', DoGrayscale);
       WriteInteger('Filter', 'GrayscaleMethod', GrayscaleMethod);
-
-      WriteBool('Filter', 'lmapFilter', Dolmap);
-      WriteString('Filter', 'lmapValue', lmapValue);
       WriteBool('Filter', 'WhiteFilter', DoWhite);
       WriteInteger('Filter', 'WhiteValue', WhiteValue);
+      WriteBool('Filter', 'LMapFilter', DoLMap);
+      WriteString('Filter', 'LMapValue', LMapValue);
 
       //Other
       WriteString('Other', 'TimeFormat', TimeFormat);
@@ -2529,26 +2526,26 @@ begin
   end;
 end;
 
-procedure TMainForm.lmapValueMenuClick(Sender: TObject);
+procedure TMainForm.LMapValueMenuClick(Sender: TObject);
 var
   S: string;
 begin
-  S := lmapValue;
-  if InputQuery('lmap', 'x1=y1,x2=y2,x3=y3,...', S) then
+  S := LMapValue;
+  if InputQuery('LMap', 'x1=y1,x2=y2,x3=y3,...', S) then
   begin
-    lmapValue := S;
-    Dolmap := True;
+    LMapValue := S;
+    DoLMap := True;
   end;
 end;
 
-function TMainForm.GetDolmap: Boolean;
+function TMainForm.GetDoLMap: Boolean;
 begin
-  Result := lmapMenu.Checked;
+  Result := LMapMenu.Checked;
 end;
 
-procedure TMainForm.SetDolmap(const Value: Boolean);
+procedure TMainForm.SetDoLMap(const Value: Boolean);
 begin
-  lmapMenu.Checked := Value;
+  LMapMenu.Checked := Value;
 end;
 
 procedure TMainForm.SetAutoIndexed(const Value: Boolean);

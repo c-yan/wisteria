@@ -16,13 +16,11 @@ procedure LumaFixFilter(Src: TBitmap; Min, Max: Integer; PProc: TProgressProc);
 procedure TurnOverFilter(Src: TBitmap; PProc: TProgressProc);
 procedure RotateFilter(Src: TBitmap; Angle: Integer; PProc: TProgressProc);
 procedure TrimFilter(Src: TBitmap; R: TRect; FillColor: string; PProc: TProgressProc);
-procedure IndexedFilter(Src: TBitmap; var Grayscale: Boolean; PProc: TProgressProc);
-procedure Convert8BitTo4Bit(Src: TBitmap; PProc: TProgressProc);
-
 procedure WhiteFilter(Src: TBitmap; Threshold: Integer; PProc: TProgressProc);
 procedure LMapFilter(Src: TBitmap; VList: string; PProc: TProgressProc);
 procedure LumaMapFilter(Src: TBitmap; PProc: TProgressProc);
-
+procedure IndexedFilter(Src: TBitmap; var Grayscale: Boolean; PProc: TProgressProc);
+procedure Convert8BitTo4Bit(Src: TBitmap; PProc: TProgressProc);
 procedure ConvertFromAdobeRGB(Src: TBitmap);
 
 implementation
