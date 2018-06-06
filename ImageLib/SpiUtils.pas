@@ -90,14 +90,14 @@ begin
   Result := string(A);
 end;
 
-function GetFilterPatterns(GetPluginInfo: TGetPluginInfo): string;
+function GetFilterPatterns(GetPluginInfo: TGetPluginInfo; InfoNo: Integer): string;
 const
   BufSize = 256;
 var
   A: AnsiString;
 begin
   SetLength(A, BufSize);
-  GetPluginInfo(2, PAnsiChar(A), BufSize);
+  GetPluginInfo(InfoNo, PAnsiChar(A), BufSize);
   SetLength(A, StrLen(PAnsiChar(A)));
   Result := string(A);
 end;
@@ -128,6 +128,8 @@ procedure AddPlugin(PluginFileName, PluginApiVersion: string; MapInfo: TStrings)
 var
   HDLL: HINST;
   GetPluginInfo: TGetPluginInfo;
+  I: Integer;
+  S: string;
 const
   BufSize = 256;
 begin
@@ -136,7 +138,14 @@ begin
     GetPluginInfo := GetProcAddress(HDLL, 'GetPluginInfo');
     if GetPluginApiVersion(GetPluginInfo) = PluginApiVersion then
     begin
-      RegisterFileExts(PluginFileName, GetFilterPatterns(GetPluginInfo), MapInfo);
+      I := 2;
+      while True do
+      begin
+        S := GetFilterPatterns(GetPluginInfo, I);
+        if S = '' then Break;
+        RegisterFileExts(PluginFileName, S, MapInfo);
+        Inc(I, 2);
+      end;
     end;
   finally
     FreeLibrary(HDLL);
