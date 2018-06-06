@@ -25,14 +25,6 @@ procedure LumaMapFilter(Src: TBitmap; PProc: TProgressProc);
 
 procedure ConvertFromAdobeRGB(Src: TBitmap);
 
-{
-procedure ScaleImage(Src, Obj: TBitmap);
-procedure SharpenImage(Src, Obj: TBitmap; Str: Integer);
-procedure CleanImage(Src, Obj: TBitmap; Str, Rad: Integer);
-procedure NormalizeImage(Src, Obj: TBitmap);
-procedure MonochromeImage(Src, Obj: TBitmap);
-}
-
 implementation
 
 type
