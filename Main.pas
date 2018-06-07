@@ -915,7 +915,7 @@ var
     else Result := False;
   end;
 
-  function ValidValue: Boolean;
+  function ValidateSizeInput: Boolean;
   begin
     Result := (EvalDef(WidthEdit.Text, -1) > 0) and (EvalDef(HeightEdit.Text, -1) > 0);
   end;
@@ -1340,7 +1340,7 @@ var
   StartTick: Cardinal;
   FileName: string;
 begin
-  if not ValidValue then
+  if not ValidateSizeInput then
   begin
     StatusView := '値が不正です';
     Exit;
