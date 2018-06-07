@@ -721,33 +721,6 @@ var
     Result := DecodePathExp(Result);
   end;
 
-  procedure SetTimeStamp(const FileName: string; const ProcInfo: TProcInfo);
-  var
-    Handle: THandle;
-  begin
-    Handle := CreateFile(PChar(FileName), GENERIC_WRITE, 0, nil, OPEN_EXISTING, 0, 0);
-    SetFileTime(Handle, @ProcInfo.CreationTime, nil, @ProcInfo.LastWriteTime);
-    CloseHandle(Handle);
-  end;
-
-  procedure GetTimeStamp(var ProcInfo: TProcInfo);
-  var
-    Handle: THandle;
-  begin
-    Handle := CreateFile(PChar(ProcInfo.Name), GENERIC_READ, 0, nil, OPEN_EXISTING, 0, 0);
-    GetFileTime(Handle, @ProcInfo.CreationTime, nil, @ProcInfo.LastWriteTime);
-    CloseHandle(Handle);
-  end;
-
-  function GetSize(const FileName: string): Cardinal;
-  var
-    Handle: THandle;
-  begin
-    Handle := CreateFile(PChar(FileName), GENERIC_READ, 0, nil, OPEN_EXISTING, 0, 0);
-    Result := GetFileSize(Handle, nil);
-    CloseHandle(Handle);
-  end;
-
   function ExifTimeToModStr(ExifTime: string): string;
   begin
     Result := '';
@@ -989,9 +962,9 @@ var
 
     ProcInfo.Order := I;
     ProcInfo.Name := ExpandFileName(FileList.Strings[I]);
-    GetTimeStamp(ProcInfo);
+    GetTimeStamp(ProcInfo.Name, @ProcInfo.CreationTime, @ProcInfo.LastWriteTime);
     ProcInfo.OriginalTime := '';
-    ProcInfo.Size := GetSize(ProcInfo.Name);
+    ProcInfo.Size := GetFileSize(ProcInfo.Name);
     ProcInfo.Orient := -1;
     ProcInfo.Grayscale := False;
 
@@ -1314,7 +1287,7 @@ var
     Save(SaveName, ProcInfo.Grayscale, Src);
 {$ENDIF}
 
-    if TimeStampCopy then SetTimeStamp(SaveName, ProcInfo);
+    if TimeStampCopy then SetTimeStamp(SaveName, @ProcInfo.CreationTime, @ProcInfo.LastWriteTime);
     if HTMLGenerate then
     begin
       if HTMLReversePlace then

@@ -16,6 +16,9 @@ function MyDocumentsDirectory: string;
 function DesktopDirectory: string;
 function ReadAllText(const FileName: string): string;
 procedure WriteAllText(const FileName, Contents: string);
+function GetFileSize(const FileName: string): Cardinal;
+procedure SetTimeStamp(const FileName: string; const CreationTime, LastWriteTime: PFileTime);
+procedure GetTimeStamp(const FileName: string; const CreationTime, LastWriteTime: PFileTime);
 
 implementation
 
@@ -127,6 +130,33 @@ begin
   finally
     Free;
   end;
+end;
+
+function GetFileSize(const FileName: string): Cardinal;
+var
+  Handle: THandle;
+begin
+  Handle := CreateFile(PChar(FileName), GENERIC_READ, 0, nil, OPEN_EXISTING, 0, 0);
+  Result := Winapi.Windows.GetFileSize(Handle, nil);
+  CloseHandle(Handle);
+end;
+
+procedure SetTimeStamp(const FileName: string; const CreationTime, LastWriteTime: PFileTime);
+var
+  Handle: THandle;
+begin
+  Handle := CreateFile(PChar(FileName), GENERIC_WRITE, 0, nil, OPEN_EXISTING, 0, 0);
+  SetFileTime(Handle, CreationTime, nil, LastWriteTime);
+  CloseHandle(Handle);
+end;
+
+procedure GetTimeStamp(const FileName: string; const CreationTime, LastWriteTime: PFileTime);
+var
+  Handle: THandle;
+begin
+  Handle := CreateFile(PChar(FileName), GENERIC_READ, 0, nil, OPEN_EXISTING, 0, 0);
+  GetFileTime(Handle, CreationTime, nil, LastWriteTime);
+  CloseHandle(Handle);
 end;
 
 end.
