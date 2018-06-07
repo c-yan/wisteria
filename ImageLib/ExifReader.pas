@@ -19,7 +19,7 @@ var
 
 function ExifDateTimeToDateTime(ExifDateTime: string): TDateTime;
 begin
-  Result := 0;
+  Result := -1;
   if Trim(ExifDateTime) = '' then Exit;
   //EXIF DateTime Format: 'YYYY:MM:DD HH:MM:SS'
   ExifDateTime[5] := '/';

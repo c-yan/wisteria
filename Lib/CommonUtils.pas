@@ -19,6 +19,7 @@ procedure WriteAllText(const FileName, Contents: string);
 function GetFileSize(const FileName: string): Cardinal;
 procedure SetTimeStamp(const FileName: string; const CreationTime, LastWriteTime: PFileTime);
 procedure GetTimeStamp(const FileName: string; const CreationTime, LastWriteTime: PFileTime);
+function FileTimeToDateTime(FileTime: TFileTime): TDateTime;
 
 implementation
 
@@ -157,6 +158,16 @@ begin
   Handle := CreateFile(PChar(FileName), GENERIC_READ, 0, nil, OPEN_EXISTING, 0, 0);
   GetFileTime(Handle, CreationTime, nil, LastWriteTime);
   CloseHandle(Handle);
+end;
+
+function FileTimeToDateTime(FileTime: TFileTime): TDateTime;
+var
+  LocalTime: TFileTime;
+  SystemTime: TSystemTime;
+begin
+  FileTimeToLocalFileTime(FileTime, LocalTime);
+  FileTimeToSystemTime(LocalTime, SystemTime);
+  Result := SystemTimeToDateTime(SystemTime);
 end;
 
 end.

@@ -383,7 +383,7 @@ type
     LastWriteTime: TFileTime;
     Size: Cardinal;
     Order: Integer;
-    OriginalTime: string;
+    OriginalTime: TDateTime;
     ModelName: string;
     Orient: Integer;
     Grayscale: Boolean;
@@ -616,6 +616,18 @@ var
   end;
 
   function DecodePExp(const S: string; ProcInfo: TProcInfo; Order: Integer): string;
+    function DateTimeToString(const DateTime: TDateTime): string;
+    begin
+      Result := '';
+      if DateTime = -1 then Exit;
+      try
+        Result := FormatDateTime(TimeFormat, DateTime);
+      except
+      on EConvertError do
+        ;
+      end;
+    end;
+
     function FileTimeToString(FileTime: TFileTime): string;
     var
       LocalTime: TFileTime;
@@ -694,19 +706,19 @@ var
           'h': Result := Result + IntToStr(ProcInfo.Height);
           'x': Result := Result + IntToStr(ProcInfo.NewWidth);
           'y': Result := Result + IntToStr(ProcInfo.NewHeight);
-          't': Result := Result + FileTimeToString(ProcInfo.LastWriteTime);
+          't': Result := Result + DateTimeToString(FileTimeToDateTime(ProcInfo.LastWriteTime));
           's': Result := Result + HumanReadableSize(ProcInfo.Size);
           '1'..'9':
                Result := Result + Format('%.*d', [Ord(S[I]) - Ord('0'), Order]);
           'f': Result := Result + IntToStr(Method);
           'j': Result := Result + Format('%.2d', [JpegQuality]);
           'v': Result := Result + ParamValues;
-          'c': Result := Result + FormatDateTime(TimeFormat, Now);
+          'c': Result := Result + DateTimeToString(Now);
           'E':
           begin
             Inc(I);
             case S[I] of
-              'o': Result := Result + ProcInfo.OriginalTime;
+              'o': Result := Result + DateTimeToString(ProcInfo.OriginalTime);
               'm': Result := Result + ProcInfo.ModelName;
             else
               Result := Result + '%E' + S[I];
@@ -719,21 +731,6 @@ var
       Inc(I);
     end;
     Result := DecodePathExp(Result);
-  end;
-
-  function ExifTimeToModStr(ExifTime: string): string;
-  var
-    DateTime: TDateTime;
-  begin
-    Result := '';
-    DateTime := ExifDateTimeToDateTime(ExifTime);
-    if DateTime = 0 then Exit;
-    try
-      Result := FormatDateTime(TimeFormat, DateTime);
-    except
-    on EConvertError do
-      ;
-    end;
   end;
 
   {$IF CompilerVersion >= 21.0}
@@ -811,7 +808,7 @@ var
     {$IFEND}
     if FileExtInSet(ExtractFileExt(ProcInfo.Name), ['.jpg', '.jpeg']) then
     begin
-      ProcInfo.OriginalTime := ExifTimeToModStr(string(GetOriginalDateTime(ProcInfo.Name)));
+      ProcInfo.OriginalTime := ExifDateTimeToDateTime(string(GetOriginalDateTime(ProcInfo.Name)));
       ProcInfo.ModelName := string(GetModel(ProcInfo.Name));
       ProcInfo.Orient := GetOrientation(ProcInfo.Name);
     end;
@@ -964,7 +961,7 @@ var
     ProcInfo.Order := I;
     ProcInfo.Name := ExpandFileName(FileList.Strings[I]);
     GetTimeStamp(ProcInfo.Name, @ProcInfo.CreationTime, @ProcInfo.LastWriteTime);
-    ProcInfo.OriginalTime := '';
+    ProcInfo.OriginalTime := -1;
     ProcInfo.Size := GetFileSize(ProcInfo.Name);
     ProcInfo.Orient := -1;
     ProcInfo.Grayscale := False;
