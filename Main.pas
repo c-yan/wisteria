@@ -730,7 +730,7 @@ var
     CloseHandle(Handle);
   end;
 
-  function GetTimeStamp(var ProcInfo: TProcInfo): TFileTime;
+  procedure GetTimeStamp(var ProcInfo: TProcInfo);
   var
     Handle: THandle;
   begin
