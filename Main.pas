@@ -722,13 +722,14 @@ var
   end;
 
   function ExifTimeToModStr(ExifTime: string): string;
+  var
+    DateTime: TDateTime;
   begin
     Result := '';
-    if Trim(ExifTime) = '' then Exit;
-    ExifTime[5] := '/';
-    ExifTime[8] := '/';
+    DateTime := ExifDateTimeToDateTime(ExifTime);
+    if DateTime = 0 then Exit;
     try
-      Result := FormatDateTime(TimeFormat, StrToDateTime(ExifTime));
+      Result := FormatDateTime(TimeFormat, DateTime);
     except
     on EConvertError do
       ;

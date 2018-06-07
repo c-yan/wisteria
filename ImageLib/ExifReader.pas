@@ -5,6 +5,7 @@ interface
 uses
   System.Classes, System.SysUtils, System.Math, Helpers;
 
+function ExifDateTimeToDateTime(ExifDateTime: string): TDateTime;
 function GetOriginalDateTime(FileName: string): AnsiString;
 function GetModel(FileName: string): AnsiString;
 function GetOrientation(FileName: string): Integer;
@@ -15,6 +16,21 @@ implementation
 
 var
   IsLittleEndian: Boolean;
+
+function ExifDateTimeToDateTime(ExifDateTime: string): TDateTime;
+begin
+  Result := 0;
+  if Trim(ExifDateTime) = '' then Exit;
+  //EXIF DateTime Format: 'YYYY:MM:DD HH:MM:SS'
+  ExifDateTime[5] := '/';
+  ExifDateTime[8] := '/';
+  try
+    Result := StrToDateTime(ExifDateTime);
+  except
+  on EConvertError do
+    ;
+  end;
+end;
 
 function TrimNullString(const S: AnsiString): AnsiString;
 var
