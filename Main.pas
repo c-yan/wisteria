@@ -628,16 +628,6 @@ var
       end;
     end;
 
-    function FileTimeToString(FileTime: TFileTime): string;
-    var
-      LocalTime: TFileTime;
-      SystemTime: TSystemTime;
-    begin
-      FileTimeToLocalFileTime(FileTime, LocalTime);
-      FileTimeToSystemTime(LocalTime, SystemTime);
-      Result := FormatDateTime(TimeFormat, SystemTimeToDateTime(SystemTime));
-    end;
-
     function HumanReadableSize(Size: Int64): string;
     var
       Denomination, Figures: Integer;
