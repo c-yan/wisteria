@@ -30,14 +30,14 @@ Note that on system earlier than Windows Vista, you must NOT put the executable 
 
 ## Feature Comparison Table for Major Version
 
-Item                                     |2.x         |3.x (32bit) |3.x (64bit) |4.x
------------------------------------------|------------|------------|------------|------------
-Binary size                              |○          |△          |×          |×
-Default number of import image format    |× (IL)     |○ (WIC)    |○ (WIC)    |○ (WIC)
-Susie plugin support                     |○          |○          |○          |○
-AtoB Converter plugin support            |○          |○          |×          |○
-JPEG subsampling-off compression support |○          |○          |○          |×
-Parallel processing support              |×          |○          |○          |○
-Taskbar progress indicator               |×          |○          |○          |○
-High DPI support                         |×          |×          |×          |○
-Ref: Version of Delphi used to build     |Delphi 2007 |Delphi XE2  |Delphi XE2  |Delphi 10.2
+Item                                     |2.x         |3.x (32bit) |3.x (64bit) |4.x (32bit) |4.x (64bit)
+-----------------------------------------|------------|------------|------------|------------|------------
+Binary size                              |◎          |○          |△          |△          |×
+Default number of import image format    |× (IL)     |○ (WIC)    |○ (WIC)    |○ (WIC)    |○ (WIC)
+Susie plugin support                     |○          |○          |○          |○          |○
+AtoB Converter plugin support            |○          |○          |×          |○          |×
+JPEG subsampling-off compression support |○          |○          |○          |×          |×
+Parallel processing support              |×          |○          |○          |○          |○
+Taskbar progress indicator               |×          |○          |○          |○          |○
+High DPI support                         |×          |×          |×          |○          |○
+Ref: Version of Delphi used to build     |Delphi 2007 |Delphi XE2  |Delphi XE2  |Delphi 10.2 |Delphi 10.2
