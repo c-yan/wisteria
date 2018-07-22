@@ -20,36 +20,49 @@ end;
 
 function Clamp(Value, Min, Max: Int64): Int64; inline; overload;
 begin
-  if Value < Min then Result := Min
-  else if Value > Max then Result := Max
-  else Result := Value;
+  if Value < Min then
+    Result := Min
+  else if Value > Max then
+    Result := Max
+  else
+    Result := Value;
 end;
 
 function Clamp(Value, Min, Max: Integer): Integer; inline; overload;
 begin
-  if Value < Min then Result := Min
-  else if Value > Max then Result := Max
-  else Result := Value;
+  if Value < Min then
+    Result := Min
+  else if Value > Max then
+    Result := Max
+  else
+    Result := Value;
 end;
 
 function Clamp(Value, Min, Max: Single): Single; inline; overload;
 begin
-  if Value < Min then Result := Min
-  else if Value > Max then Result := Max
-  else Result := Value;
+  if Value < Min then
+    Result := Min
+  else if Value > Max then
+    Result := Max
+  else
+    Result := Value;
 end;
 
 function Clamp(Value, Min, Max: Double): Double; inline; overload;
 begin
-  if Value < Min then Result := Min
-  else if Value > Max then Result := Max
-  else Result := Value;
+  if Value < Min then
+    Result := Min
+  else if Value > Max then
+    Result := Max
+  else
+    Result := Value;
 end;
 
 procedure ConvertToTrueColor(const Src: TBitmap); inline;
 begin
   Src.PixelFormat := PixelBits;
-  if Src.Palette <> 0 then DeleteObject(Src.ReleasePalette);
+  if Src.Palette <> 0 then
+    DeleteObject(Src.ReleasePalette);
 end;
 
 end.

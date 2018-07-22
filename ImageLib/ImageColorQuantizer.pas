@@ -16,58 +16,64 @@ begin
 end;
 
 procedure ReduceColor(const Src: TBitmap; Colors: Integer; Dither: Boolean);
-  type
-    TWordQuad = packed array[0..3] of Word;
+type
+  TWordQuad = packed array [0 .. 3] of Word;
 
-    TColorInfo = record
-      Min, Max: Integer;
-      Mid, Err: Double;
-    end;
+  TColorInfo = record
+    Min, Max: Integer;
+    Mid, Err: Double;
+  end;
 
-    TColorCube = record
-      C: array[0..2] of TColorInfo;
-      Err: Double;
-    end;
-    PColorCube = ^TColorCube;
+  TColorCube = record
+    C: array [0 .. 2] of TColorInfo;
+    Err: Double;
+  end;
 
-    TColorHistogram = array[0..255, 0..255, 0..255] of Integer;
-    PColorHistogram = ^TColorHistogram;
+  PColorCube = ^TColorCube;
 
-    TIntegerTriple = packed array[0..2] of Integer;
-    TIntegerTripleArray = array[0..0] of TIntegerTriple;
-    PIntegerTripleArray = ^TIntegerTripleArray;
-    TPalette = array of TByteQuad;
-    TPaletteIndexList = array of Cardinal;
+  TColorHistogram = array [0 .. 255, 0 .. 255, 0 .. 255] of Integer;
+  PColorHistogram = ^TColorHistogram;
 
-    THistogramElement = record
-      Color: TByteQuad;
-      Count: Cardinal;
-      Cache: array[0..2] of Double;
-    end;
+  TIntegerTriple = packed array [0 .. 2] of Integer;
+  TIntegerTripleArray = array [0 .. 0] of TIntegerTriple;
+  PIntegerTripleArray = ^TIntegerTripleArray;
+  TPalette = array of TByteQuad;
+  TPaletteIndexList = array of Cardinal;
 
-    TLookupCacheElement = record
-      Color: TByteQuad;
-      Index: Integer;
-    end;
+  THistogramElement = record
+    Color: TByteQuad;
+    Count: Cardinal;
+    Cache: array [0 .. 2] of Double;
+  end;
 
-  const
-    //ErrCoeff: array[0..2] of Double = (0.0722, 0.7152, 0.2126); // YPbPr
-    //ErrCoeff: array[0..2] of Double = (0.11448, 0.58661, 0.29891); // YCbCr
-    //ErrCoeff: array[0..2] of Double = (1.0, 1.0, 1.0);
-    //ErrCoeff: array[0..2] of Double = (0.09157, 0.65733, 0.25110);
-    //ErrCoeff: array[0..2] of Integer = (Trunc(0.09157 * 1024), Trunc(0.65733 * 1024), Trunc(0.25110 * 1024));
-    //ErrCoeff: array[0..2] of Integer = (Trunc(0.058326 * 1024), Trunc(0.794646 * 1024), Trunc(0.147028 * 1024));
-    ErrCoeff: array[0..2] of Integer = (Trunc(0.10529194976417361844239546296359 * 1024), Trunc(0.70389005930975282839063698587813 * 1024), Trunc(0.19081799092607355316696755115828 * 1024));
+  TLookupCacheElement = record
+    Color: TByteQuad;
+    Index: Integer;
+  end;
 
-    BlockSideSizeBits = 4;
-    BlockSideSize = 1 shl BlockSideSizeBits;
-    BlockSideCount = (256 div BlockSideSize);
-    LookupCacheBits = 6;
-    LookupCacheValue = (1 shl LookupCacheBits);
+const
+  // ErrCoeff: array[0..2] of Double = (0.0722, 0.7152, 0.2126); // YPbPr
+  // ErrCoeff: array[0..2] of Double = (0.11448, 0.58661, 0.29891); // YCbCr
+  // ErrCoeff: array[0..2] of Double = (1.0, 1.0, 1.0);
+  // ErrCoeff: array[0..2] of Double = (0.09157, 0.65733, 0.25110);
+  // ErrCoeff: array[0..2] of Integer = (Trunc(0.09157 * 1024), Trunc(0.65733 * 1024), Trunc(0.25110 * 1024));
+  // ErrCoeff: array[0..2] of Integer = (Trunc(0.058326 * 1024), Trunc(0.794646 * 1024), Trunc(0.147028 * 1024));
+  ErrCoeff: array [0 .. 2] of Integer =
+    (Trunc(0.10529194976417361844239546296359 * 1024),
+    Trunc(0.70389005930975282839063698587813 * 1024),
+    Trunc(0.19081799092607355316696755115828 * 1024));
 
-  var
-    CandidateList: array[0..BlockSideCount - 1, 0..BlockSideCount - 1, 0..BlockSideCount -1] of TPaletteIndexList;
-    LookupCache: array[0..(1 shl (LookupCacheBits * 3)) - 1] of TLookupCacheElement;
+  BlockSideSizeBits = 4;
+  BlockSideSize = 1 shl BlockSideSizeBits;
+  BlockSideCount = (256 div BlockSideSize);
+  LookupCacheBits = 6;
+  LookupCacheValue = (1 shl LookupCacheBits);
+
+var
+  CandidateList: array [0 .. BlockSideCount - 1, 0 .. BlockSideCount - 1,
+    0 .. BlockSideCount - 1] of TPaletteIndexList;
+  LookupCache: array [0 .. (1 shl (LookupCacheBits * 3)) - 1]
+    of TLookupCacheElement;
 
   function MakeHistogram(const Histogram: PColorHistogram): Integer;
   var
@@ -80,16 +86,19 @@ procedure ReduceColor(const Src: TBitmap; Colors: Integer; Dither: Boolean);
       SP := Src.Scanline[Y];
       for X := 0 to Src.Width - 1 do
       begin
-        if Histogram[SP[X][0], SP[X][1], SP[X][2]] = 0 then Inc(Result);
+        if Histogram[SP[X][0], SP[X][1], SP[X][2]] = 0 then
+          Inc(Result);
         Inc(Histogram[SP[X][0], SP[X][1], SP[X][2]]);
       end;
     end;
   end;
 
-  procedure CalcError(const NewCube: PColorCube; const Histogram: PColorHistogram);
-    type
-      TLocalHistogram = array[0..2, 0..255] of Integer;
-    procedure CutVoidCube(const Cube: PColorCube; const LocalHistogram: TLocalHistogram);
+  procedure CalcError(const NewCube: PColorCube;
+    const Histogram: PColorHistogram);
+  type
+    TLocalHistogram = array [0 .. 2, 0 .. 255] of Integer;
+    procedure CutVoidCube(const Cube: PColorCube;
+      const LocalHistogram: TLocalHistogram);
     var
       I, X: Integer;
     begin
@@ -99,7 +108,8 @@ procedure ReduceColor(const Src: TBitmap; Colors: Integer; Dither: Boolean);
         begin
           if LocalHistogram[X][I] <> 0 then
           begin
-            if I > Cube.C[X].Min then Cube.C[X].Min := I;
+            if I > Cube.C[X].Min then
+              Cube.C[X].Min := I;
             Break;
           end;
         end;
@@ -108,12 +118,14 @@ procedure ReduceColor(const Src: TBitmap; Colors: Integer; Dither: Boolean);
         begin
           if LocalHistogram[X][I] <> 0 then
           begin
-            if I < Cube.C[X].Max then Cube.C[X].Max := I;
+            if I < Cube.C[X].Max then
+              Cube.C[X].Max := I;
             Break;
           end;
         end;
       end
     end;
+
   var
     Mid, Err: Double;
     X, Y, Z, Sum, IErr, I: Integer;
@@ -146,7 +158,10 @@ procedure ReduceColor(const Src: TBitmap; Colors: Integer; Dither: Boolean);
         Inc(Sum, LocalHistogram[X][I]);
         Inc(IErr, I * LocalHistogram[X][I]);
       end;
-      if IErr <> 0 then Mid := IErr / Sum else Mid := 0;
+      if IErr <> 0 then
+        Mid := IErr / Sum
+      else
+        Mid := 0;
       Err := 0;
       for I := NewCube.C[X].Min to NewCube.C[X].Max do
       begin
@@ -155,7 +170,8 @@ procedure ReduceColor(const Src: TBitmap; Colors: Integer; Dither: Boolean);
       NewCube.C[X].Mid := Mid;
       NewCube.C[X].Err := Err * ErrCoeff[X];
     end;
-    NewCube.Err := Max(NewCube.C[0].Err, Max(NewCube.C[1].Err, NewCube.C[2].Err));
+    NewCube.Err := Max(NewCube.C[0].Err, Max(NewCube.C[1].Err,
+      NewCube.C[2].Err));
   end;
 
   procedure InvalidateCandidate;
@@ -208,6 +224,7 @@ procedure ReduceColor(const Src: TBitmap; Colors: Integer; Dither: Boolean);
         Exit;
       end;
     end;
+
   var
     C: TByteQuad;
     I, D, T: Integer;
@@ -220,12 +237,14 @@ procedure ReduceColor(const Src: TBitmap; Colors: Integer; Dither: Boolean);
       C := Palette[I];
       D := MaxDiff(X * BlockSideSize, (X + 1) * BlockSideSize - 1, C[0]);
       T := D * D * ErrCoeff[0];
-      if T >= MinMaxDiff then Continue;
+      if T >= MinMaxDiff then
+        Continue;
       D := MaxDiff(Y * BlockSideSize, (Y + 1) * BlockSideSize - 1, C[1]);
       T := T + D * D * ErrCoeff[1];
       D := MaxDiff(Z * BlockSideSize, (Z + 1) * BlockSideSize - 1, C[2]);
       T := T + D * D * ErrCoeff[2];
-      if T < MinMaxDiff then MinMaxDiff := T;
+      if T < MinMaxDiff then
+        MinMaxDiff := T;
     end;
 
     for I := 0 to Length(Palette) - 1 do
@@ -233,7 +252,8 @@ procedure ReduceColor(const Src: TBitmap; Colors: Integer; Dither: Boolean);
       C := Palette[I];
       D := MinDiff(X * BlockSideSize, (X + 1) * BlockSideSize - 1, C[0]);
       T := D * D * ErrCoeff[0];
-      if T > MinMaxDiff then Continue;
+      if T > MinMaxDiff then
+        Continue;
       D := MinDiff(Y * BlockSideSize, (Y + 1) * BlockSideSize - 1, C[1]);
       T := T + D * D * ErrCoeff[1];
       D := MinDiff(Z * BlockSideSize, (Z + 1) * BlockSideSize - 1, C[2]);
@@ -247,8 +267,8 @@ procedure ReduceColor(const Src: TBitmap; Colors: Integer; Dither: Boolean);
     end;
   end;
 
-  {//$DEFINE UseMMX}
-  {$IFDEF UseMMX}
+{ //$DEFINE UseMMX }
+{$IFDEF UseMMX}
   function NearestEntryNC(C1: TByteQuad; const Palette: TPalette): Integer;
   var
     I, Index: Integer;
@@ -259,11 +279,14 @@ procedure ReduceColor(const Src: TBitmap; Colors: Integer; Dither: Boolean);
   begin
     Best := MaxInt;
     Index := 0;
-    Candidates := CandidateList[C1[0] div BlockSideSize, C1[1] div BlockSideSize, C1[2] div BlockSideSize];
+    Candidates := CandidateList[C1[0] div BlockSideSize,
+      C1[1] div BlockSideSize, C1[2] div BlockSideSize];
     if Candidates = nil then
     begin
-      ElectCandidates(Palette, C1[0] div BlockSideSize, C1[1] div BlockSideSize, C1[2] div BlockSideSize);
-      Candidates := CandidateList[C1[0] div BlockSideSize, C1[1] div BlockSideSize, C1[2] div BlockSideSize];
+      ElectCandidates(Palette, C1[0] div BlockSideSize, C1[1] div BlockSideSize,
+        C1[2] div BlockSideSize);
+      Candidates := CandidateList[C1[0] div BlockSideSize,
+        C1[1] div BlockSideSize, C1[2] div BlockSideSize];
     end;
     asm
       pxor mm0,mm0
@@ -280,13 +303,12 @@ procedure ReduceColor(const Src: TBitmap; Colors: Integer; Dither: Boolean);
         pmullw mm2,mm2
         movq [CD],mm2
       end;
-      Diff := CD[0] * ErrCoeff[0] +
-              CD[1] * ErrCoeff[1] +
-              CD[2] * ErrCoeff[2];
+      Diff := CD[0] * ErrCoeff[0] + CD[1] * ErrCoeff[1] + CD[2] * ErrCoeff[2];
       if Best > Diff then
       begin
         Index := I;
-        if Diff = 0 then Break;
+        if Diff = 0 then
+          Break;
         Best := Diff;
       end;
     end;
@@ -295,7 +317,7 @@ procedure ReduceColor(const Src: TBitmap; Colors: Integer; Dither: Boolean);
     end;
     Result := Candidates[Index];
   end;
-  {$ELSE}
+{$ELSE}
   function NearestEntryNC(C1: TByteQuad; const Palette: TPalette): Integer;
   var
     I, Index: Integer;
@@ -305,36 +327,41 @@ procedure ReduceColor(const Src: TBitmap; Colors: Integer; Dither: Boolean);
   begin
     Best := MaxInt;
     Index := 0;
-    Candidates := CandidateList[C1[0] div BlockSideSize, C1[1] div BlockSideSize, C1[2] div BlockSideSize];
+    Candidates := CandidateList[C1[0] div BlockSideSize,
+      C1[1] div BlockSideSize, C1[2] div BlockSideSize];
     if Candidates = nil then
     begin
-      ElectCandidates(Palette, C1[0] div BlockSideSize, C1[1] div BlockSideSize, C1[2] div BlockSideSize);
-      Candidates := CandidateList[C1[0] div BlockSideSize, C1[1] div BlockSideSize, C1[2] div BlockSideSize];
+      ElectCandidates(Palette, C1[0] div BlockSideSize, C1[1] div BlockSideSize,
+        C1[2] div BlockSideSize);
+      Candidates := CandidateList[C1[0] div BlockSideSize,
+        C1[1] div BlockSideSize, C1[2] div BlockSideSize];
     end;
     for I := 0 to Length(Candidates) - 1 do
     begin
       C2 := Palette[Candidates[I]];
       Diff := (C1[0] - C2[0]) * (C1[0] - C2[0]) * ErrCoeff[0];
-      if Diff > Best then Continue;
-      Diff := Diff +
-              (C1[1] - C2[1]) * (C1[1] - C2[1]) * ErrCoeff[1] +
-              (C1[2] - C2[2]) * (C1[2] - C2[2]) * ErrCoeff[2];
+      if Diff > Best then
+        Continue;
+      Diff := Diff + (C1[1] - C2[1]) * (C1[1] - C2[1]) * ErrCoeff[1] +
+        (C1[2] - C2[2]) * (C1[2] - C2[2]) * ErrCoeff[2];
       if Best > Diff then
       begin
         Index := I;
-        if Diff = 0 then Break;
+        if Diff = 0 then
+          Break;
         Best := Diff;
       end;
     end;
     Result := Candidates[Index];
   end;
-  {$ENDIF}
-
+{$ENDIF}
   function NearestEntry(C1: TByteQuad; const Palette: TPalette): Integer;
   var
     N, Index: Integer;
   begin
-    N := (C1[0] and (LookupCacheValue - 1)) + (C1[1] and (LookupCacheValue - 1)) shl LookupCacheBits + (C1[2] and (LookupCacheValue - 1)) shl (LookupCacheBits * 2);
+    N := (C1[0] and (LookupCacheValue - 1)) + (C1[1] and (LookupCacheValue - 1))
+      shl LookupCacheBits + (C1[2] and (LookupCacheValue - 1))
+      shl (LookupCacheBits * 2);
     if Cardinal(LookupCache[N].Color) = Cardinal(C1) then
     begin
       Result := LookupCache[N].Index;
@@ -363,6 +390,7 @@ procedure ReduceColor(const Src: TBitmap; Colors: Integer; Dither: Boolean);
         FreeAndNil(List);
       end;
     end;
+
   var
     X, I: Integer;
   begin
@@ -373,14 +401,16 @@ procedure ReduceColor(const Src: TBitmap; Colors: Integer; Dither: Boolean);
     InvalidateCandidate();
   end;
 
-  procedure OptimizePalette(ColorCount: Cardinal; const Palette: TPalette; const Histogram: PColorHistogram; Count: Integer);
+  procedure OptimizePalette(ColorCount: Cardinal; const Palette: TPalette;
+    const Histogram: PColorHistogram; Count: Integer);
   type
     TErrorElement = record
-      Sum: array[0..2] of Double;
+      Sum: array [0 .. 2] of Double;
       Count: Cardinal;
     end;
 
-    procedure MakeHEA(Colors: Cardinal; const Histogram: PColorHistogram; var HEA: array of THistogramElement);
+    procedure MakeHEA(Colors: Cardinal; const Histogram: PColorHistogram;
+      var HEA: array of THistogramElement);
     var
       I, X, Y, Z, H: Integer;
     begin
@@ -411,7 +441,8 @@ procedure ReduceColor(const Src: TBitmap; Colors: Integer; Dither: Boolean);
       end;
     end;
 
-    procedure OptimizePaletteImpl(ColorCount: Cardinal; const Palette: TPalette; const HEA: array of THistogramElement; var EEA: array of TErrorElement);
+    procedure OptimizePaletteImpl(ColorCount: Cardinal; const Palette: TPalette;
+      const HEA: array of THistogramElement; var EEA: array of TErrorElement);
     var
       I, X: Integer;
       P: PByteQuad;
@@ -426,7 +457,7 @@ procedure ReduceColor(const Src: TBitmap; Colors: Integer; Dither: Boolean);
           Sum[0] := Sum[0] + Cache[0];
           Sum[1] := Sum[1] + Cache[1];
           Sum[2] := Sum[2] + Cache[2];
-          //EEA[X].Count := EEA[X].Count + HEA[I].Count;
+          // EEA[X].Count := EEA[X].Count + HEA[I].Count;
           EEA[X].Count := EEA[X].Count + Count;
         end;
       end;
@@ -447,6 +478,7 @@ procedure ReduceColor(const Src: TBitmap; Colors: Integer; Dither: Boolean);
         end;
       end;
     end;
+
   var
     I: Integer;
     HEA: array of THistogramElement;
@@ -466,20 +498,22 @@ procedure ReduceColor(const Src: TBitmap; Colors: Integer; Dither: Boolean);
     I: Integer;
   begin
     I := 0;
-    while (I < CubeList.Count) and (PColorCube(CubeList.Items[I]).Err >= NewCube.Err) do
+    while (I < CubeList.Count) and
+      (PColorCube(CubeList.Items[I]).Err >= NewCube.Err) do
     begin
       Inc(I);
     end;
     CubeList.Insert(I, NewCube);
   end;
 
-  procedure MapColorWithFloydSteinberg(const Src, Dst: TBitmap; const Palette: TPalette);
+  procedure MapColorWithFloydSteinberg(const Src, Dst: TBitmap;
+    const Palette: TPalette);
   var
     SP: PByteQuadArray;
     DP: PByteArray;
     C: TByteQuad;
     X, Y, I, N: Integer;
-    Diffs: array[0..2] of PIntegerTripleArray;
+    Diffs: array [0 .. 2] of PIntegerTripleArray;
   begin
     for I := 0 to 1 do
     begin
@@ -533,7 +567,8 @@ procedure ReduceColor(const Src: TBitmap; Colors: Integer; Dither: Boolean);
     end;
   end;
 
-  function AverageError(const Src, Dst: TBitmap; const Palette: TPalette): Extended;
+  function AverageError(const Src, Dst: TBitmap; const Palette: TPalette)
+    : Extended;
   var
     SP: PByteQuadArray;
     DP: PByteArray;
@@ -546,10 +581,10 @@ procedure ReduceColor(const Src: TBitmap; Colors: Integer; Dither: Boolean);
       DP := Dst.Scanline[Y];
       for X := 0 to Src.Width - 1 do
       begin
-        Result := Result + Sqrt(
-          (SP[X][0] - Palette[DP[X]][0]) * (SP[X][0] - Palette[DP[X]][0]) +
-          (SP[X][1] - Palette[DP[X]][1]) * (SP[X][1] - Palette[DP[X]][1]) +
-          (SP[X][2] - Palette[DP[X]][2]) * (SP[X][2] - Palette[DP[X]][2]));
+        Result := Result + Sqrt((SP[X][0] - Palette[DP[X]][0]) *
+          (SP[X][0] - Palette[DP[X]][0]) + (SP[X][1] - Palette[DP[X]][1]) *
+          (SP[X][1] - Palette[DP[X]][1]) + (SP[X][2] - Palette[DP[X]][2]) *
+          (SP[X][2] - Palette[DP[X]][2]));
       end;
     end;
     Result := Result / (Src.Width * Src.Height);
@@ -582,9 +617,14 @@ var
   Histogram: PColorHistogram;
   CubeList: TList;
 begin
-  if Colors > 16 then SetLength(Palette, 256) else SetLength(Palette, 16);
-  if Src.PixelFormat <> pf32bit then Src.PixelFormat := pf32bit;
-  if Src.Palette <> 0 then DeleteObject(Src.ReleasePalette);
+  if Colors > 16 then
+    SetLength(Palette, 256)
+  else
+    SetLength(Palette, 16);
+  if Src.PixelFormat <> pf32bit then
+    Src.PixelFormat := pf32bit;
+  if Src.Palette <> 0 then
+    DeleteObject(Src.ReleasePalette);
 
   Histogram := AllocMem($4000000);
   try
@@ -603,7 +643,8 @@ begin
     while CubeList.Count < Colors do
     begin
       Cube := CubeList.Items[0];
-      if Cube.Err = 0 then Break;
+      if Cube.Err = 0 then
+        Break;
       CubeList.Delete(0);
 
       I := 0;
@@ -613,7 +654,8 @@ begin
         I := 1;
         Err := Cube.C[1].Err;
       end;
-      if Cube.C[2].Err > Err then I := 2;
+      if Cube.C[2].Err > Err then
+        I := 2;
 
       NewCube := AllocMem(SizeOf(TColorCube));
       NewCube^ := Cube^;
@@ -629,7 +671,8 @@ begin
     end;
 
     MakePalette(CubeList, Palette);
-    for I := 0 to CubeList.Count - 1 do FreeMem(CubeList.Items[I]);
+    for I := 0 to CubeList.Count - 1 do
+      FreeMem(CubeList.Items[I]);
     FreeAndNil(CubeList);
 
     OptimizePalette(ColorCount, Palette, Histogram, 5);
@@ -641,7 +684,10 @@ begin
       Dst.Width := Src.Width;
       Dst.Height := Src.Height;
       Dst.Palette := CreateNativePalette(Palette);
-      if Dither then MapColorWithFloydSteinberg(Src, Dst, Palette) else MapColor(Src, Dst, Palette);
+      if Dither then
+        MapColorWithFloydSteinberg(Src, Dst, Palette)
+      else
+        MapColor(Src, Dst, Palette);
       Src.Assign(Dst);
     finally
       FreeAndNil(Dst);

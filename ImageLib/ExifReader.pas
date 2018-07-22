@@ -20,15 +20,15 @@ var
 function ExifDateTimeToDateTime(ExifDateTime: string): TDateTime;
 begin
   Result := -1;
-  if Trim(ExifDateTime) = '' then Exit;
-  //EXIF DateTime Format: 'YYYY:MM:DD HH:MM:SS'
+  if Trim(ExifDateTime) = '' then
+    Exit;
+  // EXIF DateTime Format: 'YYYY:MM:DD HH:MM:SS'
   ExifDateTime[5] := '/';
   ExifDateTime[8] := '/';
   try
     Result := StrToDateTime(ExifDateTime);
   except
-  on EConvertError do
-    ;
+    on EConvertError do;
   end;
 end;
 
@@ -37,7 +37,8 @@ var
   I: Integer;
 begin
   I := Length(S);
-  while (I > 0) and (S[I] = #0) do Dec(I);
+  while (I > 0) and (S[I] = #0) do
+    Dec(I);
   Result := Copy(S, 1, I);
 end;
 
@@ -49,11 +50,14 @@ begin
   IsLittleEndian := True;
 
   // SOI Marker
-  if FileStream.ReadByte <> $FF then raise Exception.Create('Marker ID is missing');
-  if FileStream.ReadByte <> $D8 then raise Exception.Create('SOI Marker is missing');
+  if FileStream.ReadByte <> $FF then
+    raise Exception.Create('Marker ID is missing');
+  if FileStream.ReadByte <> $D8 then
+    raise Exception.Create('SOI Marker is missing');
 
   // APP Marker
-  if FileStream.ReadByte <> $FF then raise Exception.Create('Marker ID is missing');
+  if FileStream.ReadByte <> $FF then
+    raise Exception.Create('Marker ID is missing');
   B := FileStream.ReadByte;
   if B = $E0 then
   begin
@@ -61,31 +65,41 @@ begin
     FileStream.Skip(16);
 
     // APP1 marker
-    if FileStream.ReadByte <> $FF then raise Exception.Create('Marker ID is missing');
-    if FileStream.ReadByte <> $E1 then raise Exception.Create('APP1 Marker is missing');
+    if FileStream.ReadByte <> $FF then
+      raise Exception.Create('Marker ID is missing');
+    if FileStream.ReadByte <> $E1 then
+      raise Exception.Create('APP1 Marker is missing');
   end
-  else if B <> $E1 then raise Exception.Create('APP1 Marker is missing');
+  else if B <> $E1 then
+    raise Exception.Create('APP1 Marker is missing');
 
   FileStream.ReadByte;
   FileStream.ReadByte;
 
   // Exif Header
-  if FileStream.ReadString(6) <> 'Exif'#0#0 then raise Exception.Create('EXIF Header is missing');
+  if FileStream.ReadString(6) <> 'Exif'#0#0 then
+    raise Exception.Create('EXIF Header is missing');
   S := FileStream.ReadString(2);
-  if S = 'II' then IsLittleEndian := True
-  else if S = 'MM' then IsLittleEndian := False
-  else raise Exception.Create('EXIF Header endian is corrupted');
+  if S = 'II' then
+    IsLittleEndian := True
+  else if S = 'MM' then
+    IsLittleEndian := False
+  else
+    raise Exception.Create('EXIF Header endian is corrupted');
 
   // TAG Mark
-  if FileStream.ReadCardinal(2, IsLittleEndian) <> $002a then raise Exception.Create('TAG Mark is missing');
+  if FileStream.ReadCardinal(2, IsLittleEndian) <> $002A then
+    raise Exception.Create('TAG Mark is missing');
 
   // Offset to first IFD
-  if FileStream.ReadCardinal(4, IsLittleEndian) <> $00000008 then raise Exception.Create('Offset is corrupted');
+  if FileStream.ReadCardinal(4, IsLittleEndian) <> $00000008 then
+    raise Exception.Create('Offset is corrupted');
 end;
 
-function IsValue(FileStream: TFileStream; Size: Integer; Value: Cardinal): Boolean;
+function IsValue(FileStream: TFileStream; Size: Integer;
+  Value: Cardinal): Boolean;
 begin
-  Result := FileStream.ReadCardinal(Size, IsLittleEndian) = value;
+  Result := FileStream.ReadCardinal(Size, IsLittleEndian) = Value;
 end;
 
 procedure SetOffset(FileStream: TFileStream);
@@ -105,7 +119,8 @@ begin
   EntryCount := FileStream.ReadCardinal(2, IsLittleEndian);
   for I := 0 to EntryCount - 1 do
   begin
-    if IsValue(FileStream, 2, Tag) then Exit;
+    if IsValue(FileStream, 2, Tag) then
+      Exit;
     FileStream.Skip(10);
   end;
   raise Exception.Create('Tag is not found');
@@ -115,8 +130,10 @@ procedure SearchExifIfd(FileStream: TFileStream);
 begin
   // Search ExifIFDPointer(34665)
   SearchEntry(FileStream, $8769);
-  if not IsValue(FileStream, 2, $0004) then raise Exception.Create('Corrupted Data');
-  if not IsValue(FileStream, 4, $00000001) then raise Exception.Create('Corrupted Data');
+  if not IsValue(FileStream, 2, $0004) then
+    raise Exception.Create('Corrupted Data');
+  if not IsValue(FileStream, 4, $00000001) then
+    raise Exception.Create('Corrupted Data');
   SetOffset(FileStream);
 end;
 
@@ -134,8 +151,10 @@ begin
       SearchExifIfd(FileStream);
       // 0x9003
       SearchEntry(FileStream, $9003);
-      if not isValue(FileStream, 2, $0002) then raise Exception.Create('Corrupted Data');
-      if not isValue(FileStream, 4, 20) then raise Exception.Create('Corrupted Data');
+      if not IsValue(FileStream, 2, $0002) then
+        raise Exception.Create('Corrupted Data');
+      if not IsValue(FileStream, 4, 20) then
+        raise Exception.Create('Corrupted Data');
       SetOffset(FileStream);
       Result := FileStream.ReadString(DATE_TIME_LEN);
     except
@@ -160,8 +179,10 @@ begin
       CheckExifHeader(FileStream);
       // 0x0110
       SearchEntry(FileStream, $0110);
-      if not isValue(FileStream, 2, $0002) then raise Exception.Create('Corrupted Data');
-      ModelLength := Min(FileStream.ReadCardinal(4, IsLittleEndian), MODEL_MAX_LEN);
+      if not IsValue(FileStream, 2, $0002) then
+        raise Exception.Create('Corrupted Data');
+      ModelLength := Min(FileStream.ReadCardinal(4, IsLittleEndian),
+        MODEL_MAX_LEN);
       SetOffset(FileStream);
       Result := TrimNullString(FileStream.ReadString(ModelLength));
     except
@@ -183,8 +204,10 @@ begin
       CheckExifHeader(FileStream);
       // 0x0112
       SearchEntry(FileStream, $0112);
-      if not isValue(FileStream, 2, $0003) then raise Exception.Create('Corrupted Data');
-      if not isValue(FileStream, 4, $00000001) then raise Exception.Create('Corrupted Data');
+      if not IsValue(FileStream, 2, $0003) then
+        raise Exception.Create('Corrupted Data');
+      if not IsValue(FileStream, 4, $00000001) then
+        raise Exception.Create('Corrupted Data');
       Result := FileStream.ReadCardinal(2, IsLittleEndian);
     except
       on Exception do;
@@ -206,14 +229,17 @@ begin
       CheckExifHeader(FileStream);
       SearchExifIfd(FileStream);
       // Search Gamma Value(42240)
-      SearchEntry(FileStream, $a500);
-      if not isValue(FileStream, 2, $0005) then raise Exception.Create('Corrupted Data');
-      if not isValue(FileStream, 4, $00000001) then raise Exception.Create('Corrupted Data');
+      SearchEntry(FileStream, $A500);
+      if not IsValue(FileStream, 2, $0005) then
+        raise Exception.Create('Corrupted Data');
+      if not IsValue(FileStream, 4, $00000001) then
+        raise Exception.Create('Corrupted Data');
       SetOffset(FileStream);
 
       Numerator := FileStream.ReadCardinal(4, IsLittleEndian);
       Denominator := FileStream.ReadCardinal(4, IsLittleEndian);
-      if Denominator = 0 then raise Exception.Create('Denominator is 0');
+      if Denominator = 0 then
+        raise Exception.Create('Denominator is 0');
       Result := Numerator / Denominator;
     except
       on Exception do;
@@ -235,8 +261,10 @@ begin
       SearchExifIfd(FileStream);
       // 0xA001 sRGB = 1,  Uncalibrated = 65535
       SearchEntry(FileStream, $A001);
-      if not isValue(FileStream, 2, $0003) then raise Exception.Create('Corrupted Data');
-      if not isValue(FileStream, 4, $00000001) then raise Exception.Create('Corrupted Data');
+      if not IsValue(FileStream, 2, $0003) then
+        raise Exception.Create('Corrupted Data');
+      if not IsValue(FileStream, 4, $00000001) then
+        raise Exception.Create('Corrupted Data');
       Result := FileStream.ReadCardinal(2, IsLittleEndian);
     except
       on Exception do;

@@ -21,33 +21,39 @@ begin
   Stream := TFileStream.Create(FileName, fmCreate);
   try
     SetLength(Buffer, Src.Width - 1);
-    //*** File Header ***
+    // *** File Header ***
     FillChar(Buffer[0], 26, 0);
-    Buffer[0] := Ord('8'); //signature
+    Buffer[0] := Ord('8'); // signature
     Buffer[1] := Ord('B');
     Buffer[2] := Ord('P');
     Buffer[3] := Ord('S');
-    Buffer[5] := 1; //version
-    if Src.PixelFormat = pf24bit then Buffer[13] := 3 else Buffer[13] := 1; //channels
-    Buffer[14] := (Src.Height shr 24) and $FF; //rows
+    Buffer[5] := 1; // version
+    if Src.PixelFormat = pf24bit then
+      Buffer[13] := 3
+    else
+      Buffer[13] := 1; // channels
+    Buffer[14] := (Src.Height shr 24) and $FF; // rows
     Buffer[15] := (Src.Height shr 16) and $FF;
     Buffer[16] := (Src.Height shr 8) and $FF;
     Buffer[17] := Src.Height and $FF;
-    Buffer[18] := (Src.Width shr 24) and $FF; //columns
+    Buffer[18] := (Src.Width shr 24) and $FF; // columns
     Buffer[19] := (Src.Width shr 16) and $FF;
     Buffer[20] := (Src.Width shr 8) and $FF;
     Buffer[21] := Src.Width and $FF;
-    Buffer[23] := 8; //depth
-    if Src.PixelFormat = pf24bit then Buffer[25] := 3 else Buffer[25] := 1; //mode
+    Buffer[23] := 8; // depth
+    if Src.PixelFormat = pf24bit then
+      Buffer[25] := 3
+    else
+      Buffer[25] := 1; // mode
     Stream.WriteBuffer(Buffer[0], 26);
 
     FillChar(Buffer[0], 26, 0);
-    Stream.WriteBuffer(Buffer[0], 4); //color Mode Data
-    Stream.WriteBuffer(Buffer[0], 4); //image resources
-    Stream.WriteBuffer(Buffer[0], 4); //layer and mask information
+    Stream.WriteBuffer(Buffer[0], 4); // color Mode Data
+    Stream.WriteBuffer(Buffer[0], 4); // image resources
+    Stream.WriteBuffer(Buffer[0], 4); // layer and mask information
 
-    //Image Data
-    Stream.WriteBuffer(Buffer[0], 2); //Compression
+    // Image Data
+    Stream.WriteBuffer(Buffer[0], 2); // Compression
     if Src.PixelFormat = pf24bit then
     begin
       for I := 2 downto 0 do

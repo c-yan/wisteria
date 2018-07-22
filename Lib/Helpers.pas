@@ -16,7 +16,7 @@ type
 implementation
 
 var
-  Buffer: array[0..1024] of Byte;
+  Buffer: array [0 .. 1024] of Byte;
 
 function TStreamHelper.ReadByte: Byte;
 begin
@@ -29,12 +29,14 @@ begin
   SetString(Result, PAnsiChar(@Buffer[0]), Count);
 end;
 
-function TStreamHelper.ReadCardinal(Count: Integer; LittleEndian: Boolean): Cardinal;
+function TStreamHelper.ReadCardinal(Count: Integer; LittleEndian: Boolean)
+  : Cardinal;
 var
   I: Integer;
 begin
   Result := 0;
-  if (Count < 0) or (Count > 4) then raise Exception.Create('out of range');
+  if (Count < 0) or (Count > 4) then
+    raise Exception.Create('out of range');
   if LittleEndian then
   begin
     for I := 0 to Count - 1 do

@@ -9,26 +9,27 @@ const
   PixelBits = pf24bit;
 
 type
-  TByteTriple = packed array[0..2] of Byte;
+  TByteTriple = packed array [0 .. 2] of Byte;
   TPixel = TByteTriple;
   PPixel = ^TPixel;
-  TPixelArray = array[0..400000] of TPixel;
+  TPixelArray = array [0 .. 400000] of TPixel;
   PPixelArray = ^TPixelArray;
 
-  TByteQuad = packed array[0..3] of Byte;
+  TByteQuad = packed array [0 .. 3] of Byte;
   PByteQuad = ^TByteQuad;
-  TByteQuadArray = array[0..0] of TByteQuad;
+  TByteQuadArray = array [0 .. 0] of TByteQuad;
   PByteQuadArray = ^TByteQuadArray;
 
-  TByteArray = array[0..400000] of Byte;
+  TByteArray = array [0 .. 400000] of Byte;
   PByteArray = ^TByteArray;
 
   TRGBTriple = packed record
     B, G, R: Byte;
   end;
+
   TRGB = TRGBTriple;
   PRGB = ^TRGB;
-  TRGBArray = array[0..400000] of TRGB;
+  TRGBArray = array [0 .. 400000] of TRGB;
   PRGBArray = ^TRGBArray;
 
   TRGBQuad = packed record

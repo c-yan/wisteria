@@ -4,8 +4,8 @@
 
 uses
   Vcl.Forms,
-  Main in 'Main.pas' {MainForm},
-  Process in 'Process.pas' {ProcessForm},
+  Main in 'Main.pas' {MainForm} ,
+  Process in 'Process.pas' {ProcessForm} ,
   ExifReader in 'ImageLib\ExifReader.pas',
   ImageColorQuantizer in 'ImageLib\ImageColorQuantizer.pas',
   ImageFilters in 'ImageLib\ImageFilters.pas',
@@ -29,4 +29,5 @@ begin
   Application.CreateForm(TMainForm, MainForm);
   Application.CreateForm(TProcessForm, ProcessForm);
   Application.Run;
+
 end.

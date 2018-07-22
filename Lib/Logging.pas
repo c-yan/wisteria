@@ -24,7 +24,8 @@ var
   F: TextFile;
 begin
   LogFileName := FileName;
-  if LogFileName = '' then Exit;
+  if LogFileName = '' then
+    Exit;
   if not DirectoryExists(ExtractFilePath(LogFileName)) then
     ForceDirectories(ExtractFilePath(LogFileName));
   if not FileExists(LogFileName) then
@@ -43,7 +44,8 @@ var
   F: TextFile;
   T: string;
 begin
-  if LogFileName = '' then Exit;
+  if LogFileName = '' then
+    Exit;
   AssignFile(F, LogFileName);
   T := FormatDateTime('yyyy-mm-dd hh:nn:ss.zzz', Now());
   try
@@ -71,7 +73,8 @@ end;
 
 procedure Debug(const Text: string);
 begin
-  if DebugEnabled then Log('DEBUG', Text);
+  if DebugEnabled then
+    Log('DEBUG', Text);
 end;
 
 end.

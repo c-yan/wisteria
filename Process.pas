@@ -30,8 +30,10 @@ type
     function GetGlobalProgress: Integer;
     function GetLocalProgress: Integer;
   public
-    property GlobalProgress: Integer  read GetGlobalProgress write SetGlobalProgress;
-    property LocalProgress: Integer read GetLocalProgress write SetLocalProgress;
+    property GlobalProgress: Integer read GetGlobalProgress
+      write SetGlobalProgress;
+    property LocalProgress: Integer read GetLocalProgress
+      write SetLocalProgress;
     property ProcessingFile: string write SetProcessingFile;
     property ProcessSituation: string write SetProcessingSituation;
     property AbortRequire: Boolean read FAbortRequire write FAbortRequire;
@@ -43,7 +45,6 @@ var
 implementation
 
 {$R *.DFM}
-
 { TProcessForm }
 
 procedure TProcessForm.SetGlobalProgress(const Value: Integer);

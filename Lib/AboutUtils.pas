@@ -31,22 +31,18 @@ begin
   try
     if GetFileVersionInfo(PChar(Application.ExeName), Ignore, BuffSize, P) then
     begin
-      VerQueryValue(P, PChar('\StringFileInfo\041103A4\FileDescription'), Pointer(FileDescription), Ignore);
-      VerQueryValue(P, PChar('\StringFileInfo\041103A4\LegalCopyright'),  Pointer(LegalCopyright),  Ignore);
-      VerQueryValue(P, PChar('\StringFileInfo\041103A4\ProductName'),     Pointer(ProductName),     Ignore);
-      VerQueryValue(P, PChar('\StringFileInfo\041103A4\ProductVersion'),  Pointer(ProductVersion),  Ignore);
-      Application.MessageBox(
-        PChar(
-          FileDescription + string(' ') + ProductVersion + #13#10 +
-          LegalCopyright                                 + #13#10 +
-          ''                                             + #13#10 +
-          'mail: '    + MailAddress                      + #13#10 +
-          'twitter: ' + TwitterId                        + #13#10 +
-          'webpage: ' + WebAddress                       + '    '
-        ),
-        ProductName,
-        MB_OK
-      );
+      VerQueryValue(P, PChar('\StringFileInfo\041103A4\FileDescription'),
+        Pointer(FileDescription), Ignore);
+      VerQueryValue(P, PChar('\StringFileInfo\041103A4\LegalCopyright'),
+        Pointer(LegalCopyright), Ignore);
+      VerQueryValue(P, PChar('\StringFileInfo\041103A4\ProductName'),
+        Pointer(ProductName), Ignore);
+      VerQueryValue(P, PChar('\StringFileInfo\041103A4\ProductVersion'),
+        Pointer(ProductVersion), Ignore);
+      Application.MessageBox(PChar(FileDescription + string(' ') +
+        ProductVersion + #13#10 + LegalCopyright + #13#10 + '' + #13#10 +
+        'mail: ' + MailAddress + #13#10 + 'twitter: ' + TwitterId + #13#10 +
+        'webpage: ' + WebAddress + '    '), ProductName, MB_OK);
     end;
   finally
     FreeMem(P);

@@ -5,7 +5,8 @@ interface
 uses
   Winapi.Windows, System.SysUtils, Vcl.Forms;
 
-procedure ParallelFor(Start, Stop: Integer; Block: TProc<Integer, Integer>); overload;
+procedure ParallelFor(Start, Stop: Integer;
+  Block: TProc<Integer, Integer>); overload;
 procedure ParallelFor(Start, Stop: Integer; Block: TProc<Integer>); overload;
 procedure SetThreadCount(Count: Integer);
 
@@ -22,6 +23,7 @@ type
     ThreadId: LongWord;
     ThreadHandle: Integer;
   end;
+
   PThreadInfo = ^TThreadInfo;
 
 function GetNumberOfProcessors: Integer;
@@ -34,8 +36,10 @@ end;
 
 procedure SetThreadCount(Count: Integer);
 begin
-  if Count > 0 then ThreadCount := Count
-  else ThreadCount := GetNumberOfProcessors;
+  if Count > 0 then
+    ThreadCount := Count
+  else
+    ThreadCount := GetNumberOfProcessors;
 end;
 
 function PallarelForThreadFunc(Parameter: Pointer): Integer;
@@ -46,7 +50,8 @@ begin
   EndThread(0);
 end;
 
-procedure ParallelFor(Start, Stop: Integer; Block: TProc<Integer, Integer>); overload;
+procedure ParallelFor(Start, Stop: Integer;
+  Block: TProc<Integer, Integer>); overload;
 var
   I: Integer;
   Infos: array of TThreadInfo;
@@ -57,7 +62,8 @@ begin
     Infos[I].Start := Start + (Stop - Start + 1) * I div ThreadCount;
     Infos[I].Stop := Start + (Stop - Start + 1) * (I + 1) div ThreadCount - 1;
     Infos[I].Proc := Block;
-    Infos[I].ThreadHandle := BeginThread(nil, 0, PallarelForThreadFunc, @Infos[I], 0, Infos[I].ThreadId);
+    Infos[I].ThreadHandle := BeginThread(nil, 0, PallarelForThreadFunc,
+      @Infos[I], 0, Infos[I].ThreadId);
   end;
   for I := 0 to ThreadCount - 1 do
   begin
@@ -73,15 +79,17 @@ end;
 procedure ParallelFor(Start, Stop: Integer; Block: TProc<Integer>); overload;
 begin
   ParallelFor(Start, Stop,
-    procedure (Start, Stop: Integer)
+    procedure(Start, Stop: Integer)
     var
       I: Integer;
     begin
-      for I := Start to Stop do Block(I);
+      for I := Start to Stop do
+        Block(I);
     end);
 end;
 
 initialization
-  ThreadCount := GetNumberOfProcessors;
+
+ThreadCount := GetNumberOfProcessors;
 
 end.

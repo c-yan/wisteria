@@ -108,9 +108,9 @@ type
     Enlarge5Menu: TMenuItem;
     CompressionMenu: TMenuItem;
     N8: TMenuItem;
-    {$IFNDEF NoJPEGSubsampling}
+{$IFNDEF NoJPEGSubsampling}
     JPEGSubsamplingMenu: TMenuItem;
-    {$ENDIF}
+{$ENDIF}
     N6: TMenuItem;
     LinearizedReductionMenu: TMenuItem;
     ShowHelpMenu: TMenuItem;
@@ -258,8 +258,8 @@ type
     function GetAutoIndexed: Boolean;
     procedure SetAutoRotate(const Value: Boolean);
     function GetAutoRotate: Boolean;
-    procedure SetDoWhite(const Value: boolean);
-    function GetDoWhite: boolean;
+    procedure SetDoWhite(const Value: Boolean);
+    function GetDoWhite: Boolean;
     function GetIncludeSubDir: Boolean;
     procedure SetIncludeSubDir(const Value: Boolean);
     function GetIdleMode: Boolean;
@@ -268,10 +268,10 @@ type
     procedure SetSortFileList(const Value: Boolean);
     function GetMethod: Integer;
     procedure SetMethod(const Value: Integer);
-    {$IFNDEF NoJPEGSubsampling}
+{$IFNDEF NoJPEGSubsampling}
     procedure SetJPEGSubsampling(const Value: Boolean);
     function GetJPEGSubsampling: Boolean;
-    {$ENDIF}
+{$ENDIF}
     function GetLinearizedReduction: Boolean;
     procedure SetLinearizedReduction(const Value: Boolean);
     procedure SetMaxThreads(const Value: Integer);
@@ -285,15 +285,17 @@ type
     property HeightValue: Extended read GetHeightValue write SetHeightValue;
     property ClipboardFile: string read FClipboardFile write FClipboardFile;
     property MapFile: string read FMapFile write FMapFile;
-    property FilePattern: string read GetFilePattern write SetFilePattern;
+    property FilePattern: string read GetFilePattern write SetFilepattern;
     property StatusView: string read GetStatusView write SetStatusView;
     property RatioBase: TRatioBase read GetRatioBase write SetRatioBase;
     property Method: Integer read GetMethod write SetMethod;
     property JpegQuality: Integer read FJpegQuality write SetJpegQuality;
-    {$IFNDEF NoJPEGSubsampling}
-    property JpegSubsampling: Boolean read GetJPEGSubsampling write SetJPEGSubsampling;
-    {$ENDIF}
-    property TimeStampCopy: Boolean read GetTimeStampCopy write SetTimeStampCopy;
+{$IFNDEF NoJPEGSubsampling}
+    property JpegSubsampling: Boolean read GetJPEGSubsampling
+      write SetJPEGSubsampling;
+{$ENDIF}
+    property TimeStampCopy: Boolean read GetTimeStampCopy
+      write SetTimeStampCopy;
     property DoTrim: Boolean read GetDoTrim write SetDoTrim;
     property TrimRect: string read FTrimRect write FTrimRect;
     property DoTurnOver: Boolean read GetDoTurnOver write SetDoTurnOver;
@@ -307,24 +309,31 @@ type
     property DoLumaFix: Boolean read GetDoLumaFix write SetDoLumaFix;
     property LumaMin: Integer read FLumaMin write FLumaMin;
     property LumaMax: Integer read FLumaMax write FLumaMax;
-    property DoContrastFix: Boolean read GetDoContrastFix write SetDoContrastFix;
+    property DoContrastFix: Boolean read GetDoContrastFix
+      write SetDoContrastFix;
     property ContrastValue: Extended read FContrastValue write FContrastValue;
     property DoClean: Boolean read GetDoClean write SetDoClean;
     property CleanValue: Integer read FCleanValue write FCleanValue;
     property DoSharpen: Boolean read GetDoSharpen write SetDoSharpen;
     property SharpValue: Integer read FSharpValue write FSharpValue;
     property DoGrayscale: Boolean read GetDoGrayscale write SetDoGrayscale;
-    property GrayscaleMethod: Integer read FGrayscaleMethod write FGrayscaleMethod;
+    property GrayscaleMethod: Integer read FGrayscaleMethod
+      write FGrayscaleMethod;
     property PngCompress: Integer read FPngCompress write FPngCompress;
-    property ProgressiveJpeg: Boolean read GetProgressiveJpeg write SetProgressiveJpeg;
+    property ProgressiveJpeg: Boolean read GetProgressiveJpeg
+      write SetProgressiveJpeg;
     property LastDirectory: string read FLastDirectory write FLastDirectory;
-    property AvoidCollision: Boolean read GetAvoidCollision write SetAvoidCollision;
+    property AvoidCollision: Boolean read GetAvoidCollision
+      write SetAvoidCollision;
     property NonMagnify: Boolean read GetNonMagnify write SetNonMagnify;
-    property SampleDirectory: string read FSampleDirectory write FSampleDirectory;
+    property SampleDirectory: string read FSampleDirectory
+      write FSampleDirectory;
     property SpiDirectory: string read FSpiDirectory write FSpiDirectory;
     property HTMLGenerate: Boolean read GetHTMLGenerate write SetHTMLGenerate;
-    property HTMLReversePlace: Boolean read GetHTMLReversePlace write SetHTMLReversePlace;
-    property HTMLTemplateFile: string read FHTMLTemplateFile write FHTMLTemplateFile;
+    property HTMLReversePlace: Boolean read GetHTMLReversePlace
+      write SetHTMLReversePlace;
+    property HTMLTemplateFile: string read FHTMLTemplateFile
+      write FHTMLTemplateFile;
     property HTMLFileName: string read FHTMLFileName write FHTMLFileName;
     property HtmlNth: Integer read FHtmlNth write FHtmlNth;
     property HTMLOnStart: string read FHTMLOnStart write FHTMLOnStart;
@@ -342,19 +351,23 @@ type
     property DoLMap: Boolean read GetDoLMap write SetDoLMap;
     property LMapValue: string read FLMapValue write FLMapValue;
     property EnableLMap: Boolean read FEnableLMap write FEnableLMap;
-    property IncludeSubDir: Boolean read GetIncludeSubDir write SetIncludeSubDir;
+    property IncludeSubDir: Boolean read GetIncludeSubDir
+      write SetIncludeSubDir;
     property PostExec: string read FPostExec write FPostExec;
     property IdleMode: Boolean read GetIdleMode write SetIdleMode;
     property SortFileList: Boolean read GetSortFileList write SetSortFileList;
-    property LinearizedReduction: Boolean read GetLinearizedReduction write SetLinearizedReduction;
+    property LinearizedReduction: Boolean read GetLinearizedReduction
+      write SetLinearizedReduction;
     property DisableIL: Boolean read FDisableIL write FDisableIL;
     property DisableIS: Boolean read FDisableIS write FDisableIS;
     property MinimizedStart: Boolean read FMinimizedStart write FMinimizedStart;
     property TrimRectError: Boolean read FTrimRectError write FTrimRectError;
-    property TrimRectFillColor: string read FTrimRectFillColor write FTrimRectFillColor;
+    property TrimRectFillColor: string read FTrimRectFillColor
+      write FTrimRectFillColor;
     property FilterOrder: string read FFilterOrder write FFilterOrder;
     property MaxThreads: Integer read FMaxThreads write SetMaxThreads;
-    property ContinueOnError: Boolean read FContinueOnError write FContinueOnError;
+    property ContinueOnError: Boolean read FContinueOnError
+      write FContinueOnError;
     property LogFileName: string read FLogFileName write FLogFileName;
   end;
 
@@ -369,6 +382,7 @@ var
   AppPath: string;
   CriticalSection: TCriticalSection;
   PrevProgressUpdateTick: Cardinal = 0;
+
 const
   ProgressUpdateIntervalTicks = 200;
 
@@ -399,7 +413,9 @@ var
     I, J, Count: Integer;
   begin
     Count := 0;
-    for I := 1 to Length(S) do if S[I] <> ' ' then Inc(Count);
+    for I := 1 to Length(S) do
+      if S[I] <> ' ' then
+        Inc(Count);
     SetLength(Result, Count);
     J := 1;
     for I := 1 to Length(S) do
@@ -412,7 +428,7 @@ var
     end;
   end;
 
-  function Exp: Extended; forward;
+function Exp: Extended; forward;
 
   function GetToken: string;
   var
@@ -420,13 +436,15 @@ var
   begin
     Result := '';
 
-    if S = '' then Exit;
+    if S = '' then
+      Exit;
 
-    if CharInSet(S[1], ['(', ')', '+', '-', '*', '/']) then I := 1
+    if CharInSet(S[1], ['(', ')', '+', '-', '*', '/']) then
+      I := 1
     else
     begin
       I := 1;
-      while (I <= Length(S)) and CharInSet(S[1], ['0'..'9', '.']) do
+      while (I <= Length(S)) and CharInSet(S[1], ['0' .. '9', '.']) do
         Inc(I);
       Dec(I);
     end;
@@ -440,21 +458,26 @@ var
     Token: string;
   begin
     Result := 0;
-    if S = '' then Error := True;
+    if S = '' then
+      Error := True;
 
     Token := GetToken;
-    if Token = '' then Exit;
+    if Token = '' then
+      Exit;
 
     case Token[1] of
-      '0'..'9', '.':
-        if not TextToFloat(PChar(Token), Result, fvExtended) then Error := True;
+      '0' .. '9', '.':
+        if not TextToFloat(PChar(Token), Result, fvExtended) then
+          Error := True;
       '(':
         begin
           Result := Exp;
           Token := GetToken;
-          if Token <> ')' then Error := True;
+          if Token <> ')' then
+            Error := True;
         end;
-      else Error := True;
+    else
+      Error := True;
     end;
   end;
 
@@ -468,12 +491,15 @@ var
     Token := GetToken;
     while (Token = '*') or (Token = '/') do
     begin
-      if Token = '*' then Result := Result * Factor
+      if Token = '*' then
+        Result := Result * Factor
       else if Token = '/' then
       begin
         X := Factor;
-        if X <> 0 then Result := Result / X
-        else Error := True;
+        if X <> 0 then
+          Result := Result / X
+        else
+          Error := True;
       end;
       Token := GetToken;
     end;
@@ -486,8 +512,10 @@ var
   begin
     Token := GetToken;
 
-    if Token = '+' then Result := Term
-    else if Token = '-' then Result := -Term
+    if Token = '+' then
+      Result := Term
+    else if Token = '-' then
+      Result := -Term
     else
     begin
       S := Token + S;
@@ -497,8 +525,10 @@ var
     Token := GetToken;
     while (Token = '+') or (Token = '-') do
     begin
-      if Token = '+' then Result := Result + Term
-      else if Token = '-' then Result := Result - Term;
+      if Token = '+' then
+        Result := Result + Term
+      else if Token = '-' then
+        Result := Result - Term;
       Token := GetToken;
     end;
     S := Token + S;
@@ -515,8 +545,10 @@ function EvalDef(Expr: string; Default: Extended): Extended;
 var
   X: Extended;
 begin
-  if Eval(Expr, X) then Result := X
-  else Result := Default;
+  if Eval(Expr, X) then
+    Result := X
+  else
+    Result := Default;
 end;
 
 procedure ProgressProc(Progress: Integer);
@@ -529,7 +561,8 @@ begin
       ProcessForm.LocalProgress := 0;
       Exit;
     end;
-    if GetTickCount - PrevProgressUpdateTick < ProgressUpdateIntervalTicks then Exit;
+    if GetTickCount - PrevProgressUpdateTick < ProgressUpdateIntervalTicks then
+      Exit;
 
     PrevProgressUpdateTick := GetTickCount;
     if ProcessForm.LocalProgress < Progress then
@@ -554,15 +587,20 @@ begin
   I := 1;
   while I <= Length(S) do
   begin
-    if S[I] <> '%' then Result := Result + S[I]
+    if S[I] <> '%' then
+      Result := Result + S[I]
     else
     begin
       Inc(I);
       case S[I] of
-        'a': Result := Result + AppPath;
-        'd': Result := Result + DesktopDirectory;
-        'm': Result := Result + MyDocumentsDirectory;
-        '%': Result := Result + '%';
+        'a':
+          Result := Result + AppPath;
+        'd':
+          Result := Result + DesktopDirectory;
+        'm':
+          Result := Result + MyDocumentsDirectory;
+        '%':
+          Result := Result + '%';
       else
         Result := Result + '$ERROR$';
       end;
@@ -580,11 +618,14 @@ var
     FileName: string;
   begin
     FileName := DecodePathExp(SampleDirectory) + HTMLTemplateFile;
-    if FileExists(FileName) then HTMLTemplate := ReadAllText(FileName)
-    else HTMLTemplate := '%s';
+    if FileExists(FileName) then
+      HTMLTemplate := ReadAllText(FileName)
+    else
+      HTMLTemplate := '%s';
   end;
 
-  function DecodeAExp(const S: string; HrefURL, ImgURL: string; Quantity: Integer): string; overload;
+  function DecodeAExp(const S: string; HrefURL, ImgURL: string;
+    Quantity: Integer): string; overload;
   var
     I: Integer;
   begin
@@ -592,16 +633,22 @@ var
     I := 1;
     while I <= Length(S) do
     begin
-      if S[I] <> '@' then Result := Result + S[I]
+      if S[I] <> '@' then
+        Result := Result + S[I]
       else
       begin
         Inc(I);
         case S[I] of
-          'n': Result := Result + #13#10;
-          's': Result := Result + HrefURL;
-          'o': Result := Result + ImgURL;
-          'q': Result := Result + IntToStr(Quantity);
-          '@': Result := Result + '@';
+          'n':
+            Result := Result + #13#10;
+          's':
+            Result := Result + HrefURL;
+          'o':
+            Result := Result + ImgURL;
+          'q':
+            Result := Result + IntToStr(Quantity);
+          '@':
+            Result := Result + '@';
         else
           Result := Result + '$ERROR$';
         end;
@@ -615,16 +662,17 @@ var
     Result := DecodeAExp(S, '', '', Quantity);
   end;
 
-  function DecodePExp(const S: string; ProcInfo: TProcInfo; Order: Integer): string;
+  function DecodePExp(const S: string; ProcInfo: TProcInfo;
+    Order: Integer): string;
     function DateTimeToString(const DateTime: TDateTime): string;
     begin
       Result := '';
-      if DateTime = -1 then Exit;
+      if DateTime = -1 then
+        Exit;
       try
         Result := FormatDateTime(TimeFormat, DateTime);
       except
-      on EConvertError do
-        ;
+        on EConvertError do;
       end;
     end;
 
@@ -647,10 +695,14 @@ var
       Figures := Length(IntToStr(Trunc(X)));
 
       case Denomination of
-        0: Result := Format('%.0f Bytes', [X]);
-        1: Result := Format('%.*f KB', [3 - Figures, X]);
-        2: Result := Format('%.*f MB', [3 - Figures, X]);
-        3: Result := Format('%.*f GB', [3 - Figures, X]);
+        0:
+          Result := Format('%.0f Bytes', [X]);
+        1:
+          Result := Format('%.*f KB', [3 - Figures, X]);
+        2:
+          Result := Format('%.*f MB', [3 - Figures, X]);
+        3:
+          Result := Format('%.*f GB', [3 - Figures, X]);
       else
         Result := 'ERROR';
       end;
@@ -659,13 +711,20 @@ var
     function ParamValues: string;
     begin
       Result := '';
-      if DoGammaFix then Result := Result + Format('ガンマ補正(%f) ', [GammaValue]);
-      if DoNormalize then Result := Result + Format('正規化(%d-%d) ', [NormalizeMin, NormalizeMax]);
-      if DoLumaFix then Result := Result + Format('輝度補正(%d-%d) ', [LumaMin, LumaMax]);
-      if DoContrastFix then Result := Result + Format('コントラスト補正(%f) ', [ContrastValue]);
-      if DoClean then Result := Result + Format('ノイズ除去(%d) ', [CleanValue]);
-      if DoSharpen then Result := Result + Format('輪郭強調(%d) ', [SharpValue]);
-      if Result <> '' then Result := Copy(Result, 1, Length(Result) - 1);
+      if DoGammaFix then
+        Result := Result + Format('ガンマ補正(%f) ', [GammaValue]);
+      if DoNormalize then
+        Result := Result + Format('正規化(%d-%d) ', [NormalizeMin, NormalizeMax]);
+      if DoLumaFix then
+        Result := Result + Format('輝度補正(%d-%d) ', [LumaMin, LumaMax]);
+      if DoContrastFix then
+        Result := Result + Format('コントラスト補正(%f) ', [ContrastValue]);
+      if DoClean then
+        Result := Result + Format('ノイズ除去(%d) ', [CleanValue]);
+      if DoSharpen then
+        Result := Result + Format('輪郭強調(%d) ', [SharpValue]);
+      if Result <> '' then
+        Result := Copy(Result, 1, Length(Result) - 1);
     end;
 
     function ExtractFilePathWithoutDrive(S: string): string;
@@ -681,39 +740,65 @@ var
     I := 1;
     while I <= Length(S) do
     begin
-      if S[I] <> '%' then Result := Result + S[I]
+      if S[I] <> '%' then
+        Result := Result + S[I]
       else
       begin
         Inc(I);
         case S[I] of
-          'D': Result := Result + ExtractFileDrive(ProcInfo.Name);
-          'P': Result := Result + ExtractFilePathWithoutDrive(ProcInfo.Name);
-          'p': Result := Result + StringReplace(ExcludeTrailingPathDelimiter(ExtractFilePath(ProcInfo.Name)), '%', '%%', [rfReplaceAll]);
-          'r': Result := Result + ExtractFileName(ExtractFileDir(ProcInfo.Name));
-          'n': Result := Result + StringReplace(ChangeFileExt(ExtractFileName(ProcInfo.Name), ''), '%', '%%', [rfReplaceAll]);
-          'e': Result := Result + StringReplace(Copy(ExtractFileExt(ProcInfo.Name), 2, Length(ExtractFileExt(ProcInfo.Name))), '%', '%%', [rfReplaceAll]);
-          'w': Result := Result + IntToStr(ProcInfo.Width);
-          'h': Result := Result + IntToStr(ProcInfo.Height);
-          'x': Result := Result + IntToStr(ProcInfo.NewWidth);
-          'y': Result := Result + IntToStr(ProcInfo.NewHeight);
-          't': Result := Result + DateTimeToString(FileTimeToDateTime(ProcInfo.LastWriteTime));
-          's': Result := Result + HumanReadableSize(ProcInfo.Size);
-          '1'..'9':
-               Result := Result + Format('%.*d', [Ord(S[I]) - Ord('0'), Order]);
-          'f': Result := Result + IntToStr(Method);
-          'j': Result := Result + Format('%.2d', [JpegQuality]);
-          'v': Result := Result + ParamValues;
-          'c': Result := Result + DateTimeToString(Now);
+          'D':
+            Result := Result + ExtractFileDrive(ProcInfo.Name);
+          'P':
+            Result := Result + ExtractFilePathWithoutDrive(ProcInfo.Name);
+          'p':
+            Result := Result + StringReplace
+              (ExcludeTrailingPathDelimiter(ExtractFilePath(ProcInfo.Name)),
+              '%', '%%', [rfReplaceAll]);
+          'r':
+            Result := Result + ExtractFileName(ExtractFileDir(ProcInfo.Name));
+          'n':
+            Result := Result + StringReplace
+              (ChangeFileExt(ExtractFileName(ProcInfo.Name), ''), '%', '%%',
+              [rfReplaceAll]);
+          'e':
+            Result := Result + StringReplace(Copy(ExtractFileExt(ProcInfo.Name),
+              2, Length(ExtractFileExt(ProcInfo.Name))), '%', '%%',
+              [rfReplaceAll]);
+          'w':
+            Result := Result + IntToStr(ProcInfo.Width);
+          'h':
+            Result := Result + IntToStr(ProcInfo.Height);
+          'x':
+            Result := Result + IntToStr(ProcInfo.NewWidth);
+          'y':
+            Result := Result + IntToStr(ProcInfo.NewHeight);
+          't':
+            Result := Result + DateTimeToString
+              (FileTimeToDateTime(ProcInfo.LastWriteTime));
+          's':
+            Result := Result + HumanReadableSize(ProcInfo.Size);
+          '1' .. '9':
+            Result := Result + Format('%.*d', [Ord(S[I]) - Ord('0'), Order]);
+          'f':
+            Result := Result + IntToStr(Method);
+          'j':
+            Result := Result + Format('%.2d', [JpegQuality]);
+          'v':
+            Result := Result + ParamValues;
+          'c':
+            Result := Result + DateTimeToString(Now);
           'E':
-          begin
-            Inc(I);
-            case S[I] of
-              'o': Result := Result + DateTimeToString(ProcInfo.OriginalTime);
-              'm': Result := Result + ProcInfo.ModelName;
-            else
-              Result := Result + '%E' + S[I];
+            begin
+              Inc(I);
+              case S[I] of
+                'o':
+                  Result := Result + DateTimeToString(ProcInfo.OriginalTime);
+                'm':
+                  Result := Result + ProcInfo.ModelName;
+              else
+                Result := Result + '%E' + S[I];
+              end;
             end;
-          end;
         else
           Result := Result + '%' + S[I];
         end;
@@ -723,7 +808,7 @@ var
     Result := DecodePathExp(Result);
   end;
 
-  {$IF CompilerVersion >= 21.0}
+{$IF CompilerVersion >= 21.0}
   function LoadByWIC(var ProcInfo: TProcInfo; Src: TBitmap): Boolean;
   var
     WICImage: TWICImage;
@@ -742,28 +827,30 @@ var
       FreeAndNil(WICImage);
     end;
   end;
-  {$ELSE}
+{$ELSE}
   function LoadByIL(var ProcInfo: TProcInfo; Src: TBitmap): Boolean;
   var
     FileExt: string;
     PNG: TPngImage;
     GIF: TGIFImage;
-    JPEG: TJPEGImage;
+    jpeg: TJPEGImage;
   begin
     Result := True;
     FileExt := ExtractFileExt(ProcInfo.Name);
-    if FileExtInSet(FileExt, ['.bmp']) then Src.LoadFromFile(ProcInfo.Name)
+    if FileExtInSet(FileExt, ['.bmp']) then
+      Src.LoadFromFile(ProcInfo.Name)
     else if FileExtInSet(FileExt, ['.jpg', '.jpeg']) then
     begin
-      JPEG := TJPEGImage.Create;
+      jpeg := TJPEGImage.Create;
       try
-        JPEG.PixelFormat := jf24bit;
-        JPEG.LoadFromFile(ProcInfo.Name);
-        Src.Assign(JPEG);
+        jpeg.PixelFormat := jf24bit;
+        jpeg.LoadFromFile(ProcInfo.Name);
+        Src.Assign(jpeg);
       finally
-        FreeAndNil(JPEG);
+        FreeAndNil(jpeg);
       end;
-      if GetColorSpace(ProcInfo.Name) = 65535 then ConvertFromAdobeRGB(Src);
+      if GetColorSpace(ProcInfo.Name) = 65535 then
+        ConvertFromAdobeRGB(Src);
     end
     else if FileExtInSet(FileExt, ['.png']) then
     begin
@@ -785,20 +872,21 @@ var
         FreeAndNil(GIF);
       end;
     end
-    else Result := False;
+    else
+      Result := False;
   end;
-  {$IFEND}
-
+{$IFEND}
   function Load(var ProcInfo: TProcInfo; Src: TBitmap): Boolean;
   begin
-    {$IF CompilerVersion >= 21.0}
+{$IF CompilerVersion >= 21.0}
     Result := LoadByWIC(ProcInfo, Src);
-    {$ELSE}
+{$ELSE}
     Result := LoadByIL(ProcInfo, Src);
-    {$IFEND}
+{$IFEND}
     if FileExtInSet(ExtractFileExt(ProcInfo.Name), ['.jpg', '.jpeg']) then
     begin
-      ProcInfo.OriginalTime := ExifDateTimeToDateTime(string(GetOriginalDateTime(ProcInfo.Name)));
+      ProcInfo.OriginalTime := ExifDateTimeToDateTime
+        (string(GetOriginalDateTime(ProcInfo.Name)));
       ProcInfo.ModelName := string(GetModel(ProcInfo.Name));
       ProcInfo.Orient := GetOrientation(ProcInfo.Name);
     end;
@@ -809,25 +897,26 @@ var
     FileExt: string;
     PNG: TPngImage;
     GIF: TGIFImage;
-    JPEG: TJPEGImage;
+    jpeg: TJPEGImage;
   begin
     Result := True;
     FileExt := ExtractFileExt(SaveName);
-    if FileExtInSet(FileExt, ['.bmp']) then Src.SaveToFile(SaveName)
+    if FileExtInSet(FileExt, ['.bmp']) then
+      Src.SaveToFile(SaveName)
     else if FileExtInSet(FileExt, ['.jpg', '.jpeg']) then
     begin
-      JPEG := TJPEGImage.Create;
+      jpeg := TJPEGImage.Create;
       try
-        JPEG.ProgressiveEncoding := ProgressiveJpeg;
-        JPEG.CompressionQuality  := JpegQuality;
-        {$IFNDEF NoJPEGSubsampling}
-        JPEG.Subsampling := JpegSubsampling;
-        {$ENDIF}
-        JPEG.Grayscale := Grayscale;
-        JPEG.Assign(Src);
-        JPEG.SaveToFile(SaveName);
+        jpeg.ProgressiveEncoding := ProgressiveJpeg;
+        jpeg.CompressionQuality := JpegQuality;
+{$IFNDEF NoJPEGSubsampling}
+        jpeg.Subsampling := JpegSubsampling;
+{$ENDIF}
+        jpeg.Grayscale := Grayscale;
+        jpeg.Assign(Src);
+        jpeg.SaveToFile(SaveName);
       finally
-        FreeAndNil(JPEG);
+        FreeAndNil(jpeg);
       end;
     end
     else if FileExtInSet(FileExt, ['.png']) then
@@ -835,8 +924,10 @@ var
       PNG := TPngImage.Create();
       try
         PNG.CompressionLevel := PngCompress;
-        if (PngCompress = 0) or (PngCompress = 1) then PNG.Filters := [pfNone]
-        else PNG.Filters := [pfNone, pfSub, pfUp, pfAverage, pfPaeth];
+        if (PngCompress = 0) or (PngCompress = 1) then
+          PNG.Filters := [pfNone]
+        else
+          PNG.Filters := [pfNone, pfSub, pfUp, pfAverage, pfPaeth];
         PNG.Assign(Src);
         if Grayscale then
         begin
@@ -861,7 +952,8 @@ var
     else if FileExtInSet(FileExt, ['.pnm', '.ppm']) then
     begin
       Src.PixelFormat := pf24bit;
-      if Src.Palette <> 0 then DeleteObject(Src.ReleasePalette);
+      if Src.Palette <> 0 then
+        DeleteObject(Src.ReleasePalette);
       SaveAsPPM(Src, SaveName);
     end
     else if FileExtInSet(FileExt, ['.psd']) then
@@ -869,16 +961,19 @@ var
       if (not Grayscale) and (Src.PixelFormat <> PixelBits) then
       begin
         Src.PixelFormat := PixelBits;
-        if Src.Palette <> 0 then DeleteObject(Src.ReleasePalette);
+        if Src.Palette <> 0 then
+          DeleteObject(Src.ReleasePalette);
       end;
       SaveAsPSD(Src, SaveName);
     end
-    else Result := False;
+    else
+      Result := False;
   end;
 
   function ValidateSizeInput: Boolean;
   begin
-    Result := (EvalDef(WidthEdit.Text, -1) > 0) and (EvalDef(HeightEdit.Text, -1) > 0);
+    Result := (EvalDef(WidthEdit.Text, -1) > 0) and
+      (EvalDef(HeightEdit.Text, -1) > 0);
   end;
 
   function RectStringToRect(RectData: string; W, H: Integer): TRect;
@@ -888,12 +983,11 @@ var
       Text := StringReplace(RectData, ',', #13#10, [rfReplaceAll]);
       if Count = 4 then
       begin
-        Result := Rect(StrToIntDef(Strings[0], 0),
-                       StrToIntDef(Strings[1], 0),
-                       StrToIntDef(Strings[2], W),
-                       StrToIntDef(Strings[3], H));
+        Result := Rect(StrToIntDef(Strings[0], 0), StrToIntDef(Strings[1], 0),
+          StrToIntDef(Strings[2], W), StrToIntDef(Strings[3], H));
       end
-      else Result := Rect(0, 0, W, H);
+      else
+        Result := Rect(0, 0, W, H);
       Free;
     end;
   end;
@@ -905,7 +999,7 @@ var
   begin
     FillChar(SI, SizeOf(SI), 0);
     SI.cb := SizeOf(SI);
-    CreateProcess(nil, PChar(Cmd), nil, nil, false, 0, nil, nil, SI, PI);
+    CreateProcess(nil, PChar(Cmd), nil, nil, False, 0, nil, nil, SI, PI);
   end;
 
 var
@@ -915,12 +1009,12 @@ var
   ProcInfo: TProcInfo;
   Html: string;
   ViewWidth: Integer;
-  {$IF CompilerVersion >= 21.0}
-  TaskBarList : ITaskbarList3;
+{$IF CompilerVersion >= 21.0}
+  TaskBarList: ITaskbarList3;
 
   procedure InitializeTaskbarProgress;
   begin
-    TaskBarList := CreateComObject(CLSID_TaskbarList) as ITaskBarList3;
+    TaskBarList := CreateComObject(CLSID_TaskbarList) as ITaskbarList3;
     TaskBarList.SetProgressState(Handle, TBPF_NORMAL);
   end;
 
@@ -934,8 +1028,7 @@ var
     TaskBarList.SetProgressState(Handle, TBPF_NOPROGRESS);
     TaskBarList := nil;
   end;
-  {$IFEND}
-
+{$IFEND}
   function AbortRequire: Boolean;
   begin
     Application.ProcessMessages;
@@ -950,26 +1043,31 @@ var
 
     ProcInfo.Order := I;
     ProcInfo.Name := ExpandFileName(FileList.Strings[I]);
-    GetTimeStamp(ProcInfo.Name, @ProcInfo.CreationTime, @ProcInfo.LastWriteTime);
+    GetTimeStamp(ProcInfo.Name, @ProcInfo.CreationTime,
+      @ProcInfo.LastWriteTime);
     ProcInfo.OriginalTime := -1;
     ProcInfo.Size := GetFileSize(ProcInfo.Name);
     ProcInfo.Orient := -1;
     ProcInfo.Grayscale := False;
 
     ViewWidth := ProcessForm.Width - ProcessForm.FileNameLabel.Left - 20;
-    ProcessForm.ProcessingFile := MinimizeName(ProcInfo.Name, ProcessForm.FileNameLabel.Canvas, ViewWidth);
+    ProcessForm.ProcessingFile := MinimizeName(ProcInfo.Name,
+      ProcessForm.FileNameLabel.Canvas, ViewWidth);
     ProcessForm.ProcessSituation := 'ファイルを読み込み中';
     ProcessForm.GlobalProgress := (I * 100) div FileList.Count;
-    {$IF CompilerVersion >= 21.0}
-    if CheckWin32Version(6, 1) then UpdateTaskbarProgress((I * 100) div FileList.Count);
-    {$IFEND}
+{$IF CompilerVersion >= 21.0}
+    if CheckWin32Version(6, 1) then
+      UpdateTaskbarProgress((I * 100) div FileList.Count);
+{$IFEND}
     ProcessForm.LocalProgress := 0;
     Application.ProcessMessages;
 
-    if DisableIL then LoadBySpi(ProcInfo.Name, Src)
+    if DisableIL then
+      LoadBySpi(ProcInfo.Name, Src)
     else
     begin
-      if not Load(ProcInfo, Src) then LoadBySpi(ProcInfo.Name, Src);
+      if not Load(ProcInfo, Src) then
+        LoadBySpi(ProcInfo.Name, Src);
     end;
 
     if AbortRequire then
@@ -992,14 +1090,18 @@ var
         ProcessForm.ProcessSituation := '回転中';
         Application.ProcessMessages;
         case ProcInfo.Orient of
-          3, 4: RotateFilter(Src, 180, ProgressProc);
-          5, 8: RotateFilter(Src, 270, ProgressProc);
-          6, 7: RotateFilter(Src, 90, ProgressProc);
+          3, 4:
+            RotateFilter(Src, 180, ProgressProc);
+          5, 8:
+            RotateFilter(Src, 270, ProgressProc);
+          6, 7:
+            RotateFilter(Src, 90, ProgressProc);
         end;
         ProcessForm.ProcessSituation := '反転中';
         Application.ProcessMessages;
         case ProcInfo.Orient of
-          2, 4, 5, 7: TurnOverFilter(Src, ProgressProc);
+          2, 4, 5, 7:
+            TurnOverFilter(Src, ProgressProc);
         end;
       end;
     end;
@@ -1028,8 +1130,8 @@ var
       ProcessForm.ProcessSituation := '切り抜き中';
       Application.ProcessMessages;
       Rect := RectStringToRect(TrimRect, Src.Width, Src.Height);
-      if TrimRectError and ((Rect.Left < 0) or (Rect.Top < 0)
-        or (Rect.Right > Src.Width) or (Rect.Bottom > Src.Height)) then
+      if TrimRectError and ((Rect.Left < 0) or (Rect.Top < 0) or
+        (Rect.Right > Src.Width) or (Rect.Bottom > Src.Height)) then
       begin
         ShowMessage('TrimRect Error');
         Result := False;
@@ -1090,22 +1192,29 @@ var
       begin
         Flag := True;
         case RatioBase of
-          //rbWidth: Flag := True;
-          rbHeight: Flag := False;
-          rbLong:   Flag := ProcInfo.Width > ProcInfo.Height;
-          rbShort:  Flag := ProcInfo.Width < ProcInfo.Height;
-          rbMax:    Flag := ProcInfo.Width / ProcInfo.Height > WidthValue / HeightValue;
-          rbMin:    Flag := ProcInfo.Width / ProcInfo.Height < WidthValue / HeightValue;
+          // rbWidth: Flag := True;
+          rbHeight:
+            Flag := False;
+          rbLong:
+            Flag := ProcInfo.Width > ProcInfo.Height;
+          rbShort:
+            Flag := ProcInfo.Width < ProcInfo.Height;
+          rbMax:
+            Flag := ProcInfo.Width / ProcInfo.Height > WidthValue / HeightValue;
+          rbMin:
+            Flag := ProcInfo.Width / ProcInfo.Height < WidthValue / HeightValue;
         end;
         if Flag then
         begin
           NewWidth := Trunc(WidthValue + 0.5);
-          NewHeight := Trunc(ProcInfo.Height * (NewWidth / ProcInfo.Width) + 0.5);
+          NewHeight :=
+            Trunc(ProcInfo.Height * (NewWidth / ProcInfo.Width) + 0.5);
         end
         else
         begin
           NewHeight := Trunc(HeightValue + 0.5);
-          NewWidth := Trunc(ProcInfo.Width * (NewHeight / ProcInfo.Height) + 0.5);
+          NewWidth :=
+            Trunc(ProcInfo.Width * (NewHeight / ProcInfo.Height) + 0.5);
         end;
       end
       else
@@ -1115,7 +1224,8 @@ var
       end;
     end;
 
-    if NonMagnify and ((NewWidth > ProcInfo.Width) or (NewHeight > ProcInfo.Height)) then
+    if NonMagnify and ((NewWidth > ProcInfo.Width) or
+      (NewHeight > ProcInfo.Height)) then
     begin
       NewWidth := ProcInfo.Width;
       NewHeight := ProcInfo.Height;
@@ -1134,87 +1244,91 @@ var
     for J := 1 to Length(FilterOrder) do
     begin
       case FilterOrder[J] of
-      '0':
-        if DoLMap then
-        begin
-          ProcessForm.ProcessSituation := 'LMap中';
-          Application.ProcessMessages;
-          LMapFilter(Src, LMapValue, ProgressProc);
-        end;
-      '1':
-        if DoGammaFix then
-        begin
-          ProcessForm.ProcessSituation := 'ガンマ補正中';
-          Application.ProcessMessages;
-          GammaFixFilter(Src, GammaValue, ProgressProc);
-        end;
-      '2':
-        if DoNormalize then
-        begin
-          ProcessForm.ProcessSituation := '正規化中';
-          Application.ProcessMessages;
-          NormalizeFilter(Src, NormalizeMin, NormalizeMax, ProgressProc);
-        end;
-      '3':
-        if DoLumaFix then
-        begin
-          ProcessForm.ProcessSituation := '輝度補正中';
-          Application.ProcessMessages;
-          LumaFixFilter(Src, LumaMin, LumaMax, ProgressProc);
-        end;
-      '4':
-        if DoContrastFix then
-        begin
-          ProcessForm.ProcessSituation := 'コントラスト補正中';
-          Application.ProcessMessages;
-          ContrastFixFilter(Src, ContrastValue, ProgressProc);
-        end;
-      '5':
-        if DoClean then
-        begin
-          ProcessForm.ProcessSituation := 'ノイズ除去中 (1/2)';
-          Application.ProcessMessages;
-          ConditionedAverage(Src, CleanValue, 1, ProgressProc);
-          ProcessForm.ProcessSituation := 'ノイズ除去中 (2/2)';
-          Application.ProcessMessages;
-          ConditionedAverage(Src, CleanValue shr 1, 2, ProgressProc);
-        end;
-      '6':
-        if (ProcInfo.Width <> ProcInfo.NewWidth) or (ProcInfo.Height <> ProcInfo.NewHeight) then
-        begin
-          ProcessForm.ProcessSituation := 'サイズ変更中';
-          Application.ProcessMessages;
-          if LinearizedReduction then SetLinearizeOnReduce(1)
-          else SetLinearizeOnReduce(0);
-          Stretch(Src, ProcInfo.NewWidth, ProcInfo.NewHeight, Method, ProgressProc);
-        end;
-      '7':
-        if DoSharpen then
-        begin
-          ProcessForm.ProcessSituation := '輪郭強調中';
-          Application.ProcessMessages;
-          SharpenFilter(Src, (100 - SharpValue) + 21, ProgressProc);
-        end;
-      '8':
-        if DoGrayscale then
-        begin
-          ProcessForm.ProcessSituation := '白黒化中';
-          Application.ProcessMessages;
-          GrayscaleFilter(Src, GrayscaleMethod, ProgressProc);
-          ProcInfo.Grayscale := True;
-        end
-        else
-        begin
-          if AutoIndexed then
+        '0':
+          if DoLMap then
           begin
-            ProcessForm.ProcessSituation := 'インデックス化中';
+            ProcessForm.ProcessSituation := 'LMap中';
             Application.ProcessMessages;
-            IndexedFilter(Src, ProcInfo.Grayscale, ProgressProc);
+            LMapFilter(Src, LMapValue, ProgressProc);
           end;
-        end;
-    end;
+        '1':
+          if DoGammaFix then
+          begin
+            ProcessForm.ProcessSituation := 'ガンマ補正中';
+            Application.ProcessMessages;
+            GammaFixFilter(Src, GammaValue, ProgressProc);
+          end;
+        '2':
+          if DoNormalize then
+          begin
+            ProcessForm.ProcessSituation := '正規化中';
+            Application.ProcessMessages;
+            NormalizeFilter(Src, NormalizeMin, NormalizeMax, ProgressProc);
+          end;
+        '3':
+          if DoLumaFix then
+          begin
+            ProcessForm.ProcessSituation := '輝度補正中';
+            Application.ProcessMessages;
+            LumaFixFilter(Src, LumaMin, LumaMax, ProgressProc);
+          end;
+        '4':
+          if DoContrastFix then
+          begin
+            ProcessForm.ProcessSituation := 'コントラスト補正中';
+            Application.ProcessMessages;
+            ContrastFixFilter(Src, ContrastValue, ProgressProc);
+          end;
+        '5':
+          if DoClean then
+          begin
+            ProcessForm.ProcessSituation := 'ノイズ除去中 (1/2)';
+            Application.ProcessMessages;
+            ConditionedAverage(Src, CleanValue, 1, ProgressProc);
+            ProcessForm.ProcessSituation := 'ノイズ除去中 (2/2)';
+            Application.ProcessMessages;
+            ConditionedAverage(Src, CleanValue shr 1, 2, ProgressProc);
+          end;
+        '6':
+          if (ProcInfo.Width <> ProcInfo.NewWidth) or
+            (ProcInfo.Height <> ProcInfo.NewHeight) then
+          begin
+            ProcessForm.ProcessSituation := 'サイズ変更中';
+            Application.ProcessMessages;
+            if LinearizedReduction then
+              SetLinearizeOnReduce(1)
+            else
+              SetLinearizeOnReduce(0);
+            Stretch(Src, ProcInfo.NewWidth, ProcInfo.NewHeight, Method,
+              ProgressProc);
+          end;
+        '7':
+          if DoSharpen then
+          begin
+            ProcessForm.ProcessSituation := '輪郭強調中';
+            Application.ProcessMessages;
+            SharpenFilter(Src, (100 - SharpValue) + 21, ProgressProc);
+          end;
+        '8':
+          if DoGrayscale then
+          begin
+            ProcessForm.ProcessSituation := '白黒化中';
+            Application.ProcessMessages;
+            GrayscaleFilter(Src, GrayscaleMethod, ProgressProc);
+            ProcInfo.Grayscale := True;
+          end
+          else
+          begin
+            if AutoIndexed then
+            begin
+              ProcessForm.ProcessSituation := 'インデックス化中';
+              Application.ProcessMessages;
+              IndexedFilter(Src, ProcInfo.Grayscale, ProgressProc);
+            end;
+          end;
+      end;
 
-    if AbortRequire then
+      if AbortRequire then
       begin
         Result := False;
         Exit;
@@ -1232,7 +1346,7 @@ var
     ProcessForm.LocalProgress := 100;
     Application.ProcessMessages;
 
-    //for Clipboards
+    // for Clipboards
     if FilePattern = '*' then
     begin
       Clipboard.Assign(Src);
@@ -1246,50 +1360,64 @@ var
 
     if FileExtInSet(FileExt, ['.png8', '.bmp8', '.gif']) then
     begin
-      if Src.PixelFormat = pf24bit then ReduceColor(Src, 256, true);
-      if not FileExtInSet(FileExt, ['.gif']) then SaveName := ChangeFileExt(SaveName, Chop(ExtractFileExt(SaveName)));
+      if Src.PixelFormat = pf24bit then
+        ReduceColor(Src, 256, True);
+      if not FileExtInSet(FileExt, ['.gif']) then
+        SaveName := ChangeFileExt(SaveName, Chop(ExtractFileExt(SaveName)));
     end;
 
     if FileExtInSet(FileExt, ['.png4', '.bmp4']) then
     begin
-      ReduceColor(Src, 16, true);
+      ReduceColor(Src, 16, True);
       Convert8BitTo4Bit(Src, nil);
       SaveName := ChangeFileExt(SaveName, Chop(ExtractFileExt(SaveName)));
     end;
 
-    if AvoidCollision then SaveName := AvoidCollisionName(SaveName);
+    if AvoidCollision then
+      SaveName := AvoidCollisionName(SaveName);
     FilePath := ExtractFilePath(SaveName);
-    if not System.SysUtils.DirectoryExists(FilePath) then System.SysUtils.ForceDirectories(FilePath);
+    if not System.SysUtils.DirectoryExists(FilePath) then
+      System.SysUtils.ForceDirectories(FilePath);
 
-    ViewWidth := ProcessForm.Width - ProcessForm.SituationLabel.Left - 20 - ProcessForm.SituationLabel.Canvas.TextWidth('出力中 ""');
-    ProcessForm.ProcessSituation := Format('出力中 "%s"', [MinimizeName(SaveName, ProcessForm.SituationLabel.Canvas, ViewWidth)]);
+    ViewWidth := ProcessForm.Width - ProcessForm.SituationLabel.Left - 20 -
+      ProcessForm.SituationLabel.Canvas.TextWidth('出力中 ""');
+    ProcessForm.ProcessSituation :=
+      Format('出力中 "%s"', [MinimizeName(SaveName,
+      ProcessForm.SituationLabel.Canvas, ViewWidth)]);
     Application.ProcessMessages;
 
 {$IFNDEF WIN64}
-    if DisableIS then SaveByXpi(SaveName, Src)
+    if DisableIS then
+      SaveByXpi(SaveName, Src)
     else
     begin
-      if not Save(SaveName, ProcInfo.Grayscale, Src) then SaveByXpi(SaveName, Src);
+      if not Save(SaveName, ProcInfo.Grayscale, Src) then
+        SaveByXpi(SaveName, Src);
     end;
 {$ELSE}
     Save(SaveName, ProcInfo.Grayscale, Src);
 {$ENDIF}
-
-    if TimeStampCopy then SetTimeStamp(SaveName, @ProcInfo.CreationTime, @ProcInfo.LastWriteTime);
+    if TimeStampCopy then
+      SetTimeStamp(SaveName, @ProcInfo.CreationTime, @ProcInfo.LastWriteTime);
     if HTMLGenerate then
     begin
       if HTMLReversePlace then
       begin
-        HrefURL := StringReplace(ExtractRelativePath(ExtractFilePath(SaveName), ProcInfo.Name), '\', '/', [rfReplaceAll]);
+        HrefURL := StringReplace(ExtractRelativePath(ExtractFilePath(SaveName),
+          ProcInfo.Name), '\', '/', [rfReplaceAll]);
         ImgURL := ExtractFileName(SaveName);
       end
       else
       begin
         HrefURL := ExtractFileName(ProcInfo.Name);
-        ImgURL := StringReplace(ExtractRelativePath(ExtractFilePath(ProcInfo.Name), SaveName), '\', '/', [rfReplaceAll]);
+        ImgURL := StringReplace
+          (ExtractRelativePath(ExtractFilePath(ProcInfo.Name), SaveName), '\',
+          '/', [rfReplaceAll]);
       end;
-      Html := Html + DecodeAExp(DecodePExp(HTMLOnItem, ProcInfo, I), HrefURL, ImgURL, FileList.Count);
-      if (HtmlNth <> 0) and (((I + 1) mod HTMLNth) = 0) and (I <> FileList.Count - 1) then
+      Html := Html + DecodeAExp(DecodePExp(HTMLOnItem, ProcInfo, I), HrefURL,
+        ImgURL, FileList.Count);
+      if (HtmlNth <> 0) and (((I + 1) mod HtmlNth) = 0) and
+        (I <> FileList.Count - 1) then
       begin
         Html := Html + DecodeAExp(HTMLOnNth, FileList.Count);
       end;
@@ -1311,33 +1439,42 @@ begin
   LoadHTMLTemplate;
   Html := '';
 
-  if SortFileList then FileList.Sort;
+  if SortFileList then
+    FileList.Sort;
 
   try
-    if StayOnTop then FormStyle := fsNormal;
-    if not MinimizedStart then SetForegroundWindow(Handle);
+    if StayOnTop then
+      FormStyle := fsNormal;
+    if not MinimizedStart then
+      SetForegroundWindow(Handle);
     ProcessForm.Left := Left + (Width - ProcessForm.Width) div 2;
     ProcessForm.Top := Top + (Height - ProcessForm.Height) div 2;
     ProcessForm.ProcessingFile := '';
     ProcessForm.ProcessSituation := '';
     ProcessForm.GlobalProgress := 0;
     ProcessForm.LocalProgress := 0;
-    if not MinimizedStart then ProcessForm.Show;
+    if not MinimizedStart then
+      ProcessForm.Show;
     Enabled := False;
 
-    if HTMLGenerate then Html := Html + DecodeAExp(HTMLOnStart, FileList.Count);
+    if HTMLGenerate then
+      Html := Html + DecodeAExp(HTMLOnStart, FileList.Count);
 
     Info('*** START ***');
-    {$IF CompilerVersion >= 21.0}
-    if CheckWin32Version(6, 1) then InitializeTaskbarProgress;
-    {$IFEND}
+{$IF CompilerVersion >= 21.0}
+    if CheckWin32Version(6, 1) then
+      InitializeTaskbarProgress;
+{$IFEND}
     for I := 0 to FileList.Count - 1 do
     begin
       try
-        if not ProcessImageLoading then Break;
-        if not ProcessFixedOrderFilters then Break;
+        if not ProcessImageLoading then
+          Break;
+        if not ProcessFixedOrderFilters then
+          Break;
         ComputeNewImageSize;
-        if not ProcessReordableFilters then Break;
+        if not ProcessReordableFilters then
+          Break;
         ProcessImageSaving;
         Info(Format('Succeded: %s', [ProcInfo.Name]));
       except
@@ -1345,7 +1482,8 @@ begin
         begin
           Warn(Format('%s', [E.Message]));
           Info(Format('Failed: %s', [ProcInfo.Name]));
-          if not ContinueOnError then Break;
+          if not ContinueOnError then
+            Break;
         end;
       end;
     end;
@@ -1353,11 +1491,11 @@ begin
 
     if HTMLGenerate then
     begin
-      if HTMLNth <> 0 then
+      if HtmlNth <> 0 then
       begin
-        if (FileList.Count mod HTMLNth) <> 0 then
+        if (FileList.Count mod HtmlNth) <> 0 then
         begin
-          for I := 0 to (HTMLNth - (FileList.Count mod HTMLNth)) - 1 do
+          for I := 0 to (HtmlNth - (FileList.Count mod HtmlNth)) - 1 do
           begin
             Html := Html + DecodeAExp(HTMLOnRemain, FileList.Count);
           end;
@@ -1365,15 +1503,19 @@ begin
       end;
       Html := Html + DecodeAExp(HTMLOnEnd, FileList.Count);
       Html := Format(HTMLTemplate, [Html]);
-      if HTMLReversePlace then FileName := ExtractFilePath(SaveName) + HTMLFileName
-      else FileName := ExtractFilePath(ProcInfo.Name) + HTMLFileName;
+      if HTMLReversePlace then
+        FileName := ExtractFilePath(SaveName) + HTMLFileName
+      else
+        FileName := ExtractFilePath(ProcInfo.Name) + HTMLFileName;
       WriteAllText(FileName, Html);
     end;
   finally
-    {$IF CompilerVersion >= 21.0}
-    if CheckWin32Version(6, 1) then FinalizeTaskbarProgress;
-    {$IFEND}
-    if StayOnTop then FormStyle := fsStayOnTop;
+{$IF CompilerVersion >= 21.0}
+    if CheckWin32Version(6, 1) then
+      FinalizeTaskbarProgress;
+{$IFEND}
+    if StayOnTop then
+      FormStyle := fsStayOnTop;
     ProcessForm.Hide;
     Enabled := True;
   end;
@@ -1385,7 +1527,8 @@ begin
     end
     else
     begin
-      ExecCmd(StringReplace(PostExec, '?', ExtractFilePath(SaveName), [rfReplaceAll]));
+      ExecCmd(StringReplace(PostExec, '?', ExtractFilePath(SaveName),
+        [rfReplaceAll]));
     end;
   end;
   StatusView := Format('%.2fs', [(GetTickCount - StartTick) / 1000]);
@@ -1426,14 +1569,14 @@ begin
   FileList := TStringList.Create;
   CriticalSection := TCriticalSection.Create;
 
-  //初期設定
+  // 初期設定
   MapFile := '%a\map.ini';
   ClipboardFile := '%a\clipboard.bmp';
 
   RatioBase := rbHeight;
   Method := 0;
   FloatMode := False;
-  JPEGQuality := 80;
+  JpegQuality := 80;
   PngCompress := 5;
   NormalizeMin := 0;
   NormalizeMax := 255;
@@ -1464,12 +1607,14 @@ begin
   HTMLFileName := 'template.html';
   HTMLTemplateFile := 'template.html';
   HTMLOnStart := '<p>@n';
-  HTMLOnItem := '<a href="@s"><img src="@o" width="%x" height="%y" alt="%n.%e"></a>@n';
+  HTMLOnItem :=
+    '<a href="@s"><img src="@o" width="%x" height="%y" alt="%n.%e"></a>@n';
   HTMLOnNth := '';
   HTMLOnRemain := '';
   HTMLOnEnd := '</p>';
 
-  if IdleMode then SetPriorityClass(GetCurrentProcess, IDLE_PRIORITY_CLASS);
+  if IdleMode then
+    SetPriorityClass(GetCurrentProcess, IDLE_PRIORITY_CLASS);
 
   LoadIniFile(AppPath + '\wisteria.ini');
   InitLogging(LogFileName);
@@ -1480,11 +1625,13 @@ begin
     if FileExtInSet(ExtractFileExt(ParamStr(1)), ['.ini']) then
     begin
       LoadIniFile(ParamStr(1));
-      if ParamCount > 1 then Application.OnIdle := ParamExecute;
+      if ParamCount > 1 then
+        Application.OnIdle := ParamExecute;
     end;
   end;
 
-  if MinimizedStart then WindowState := wsMinimized;
+  if MinimizedStart then
+    WindowState := wsMinimized;
 end;
 
 procedure TMainForm.FormDestroy(Sender: TObject);
@@ -1502,100 +1649,109 @@ begin
   try
     with IniFile do
     begin
-      //Window
-      Top                 := ReadInteger('Window', 'Top', Top);
-      Left                := ReadInteger('Window', 'Left', Left);
-      StayOnTop           := ReadBool('Window', 'StayOnTop', StayOnTop);
-      IdleMode            := ReadBool('Window', 'Idle', IdleMode);
+      // Window
+      Top := ReadInteger('Window', 'Top', Top);
+      Left := ReadInteger('Window', 'Left', Left);
+      StayOnTop := ReadBool('Window', 'StayOnTop', StayOnTop);
+      IdleMode := ReadBool('Window', 'Idle', IdleMode);
 
-      //Files
-      MapFile             := ReadString('Files', 'MapFile', MapFile);
-      ClipboardFile       := ReadString('Files', 'ClipboardFile', ClipboardFile);
+      // Files
+      MapFile := ReadString('Files', 'MapFile', MapFile);
+      ClipboardFile := ReadString('Files', 'ClipboardFile', ClipboardFile);
 
-      //Directories
-      LastDirectory       := ReadString('Directories', 'LastDirectory', LastDirectory);
-      SampleDirectory     := ReadString('Directories', 'SampleDirectory', SampleDirectory);
-      SpiDirectory        := ReadString('Directories', 'SpiDirectory', SpiDirectory);
+      // Directories
+      LastDirectory := ReadString('Directories', 'LastDirectory',
+        LastDirectory);
+      SampleDirectory := ReadString('Directories', 'SampleDirectory',
+        SampleDirectory);
+      SpiDirectory := ReadString('Directories', 'SpiDirectory', SpiDirectory);
 
-      //Resize
-      ValueType           := TValueType(ReadInteger('Resize', 'ValueType', Ord(ValueType)));
-      Keepratio           := ReadBool('Resize', 'KeepRatio', KeepRatio);
-      WidthValue          := ReadFloat('Resize', 'WidthValue', WidthValue);
-      HeightValue         := ReadFloat('Resize', 'HeightValue', HeightValue);
-      RatioBase           := TRatioBase(ReadInteger('Resize', 'RatioBase', Ord(RatioBase)));
-      Method              := ReadInteger('Resize', 'Method', Method);
-      FloatMode           := ReadBool('Resize', 'FloatMode', FloatMode);
-      NonMagnify          := ReadBool('Resize', 'NonMagnify', NonMagnify);
-      LinearizedReduction := ReadBool('Resize', 'LinearizedReduction', LinearizedReduction);
+      // Resize
+      ValueType := TValueType(ReadInteger('Resize', 'ValueType',
+        Ord(ValueType)));
+      KeepRatio := ReadBool('Resize', 'KeepRatio', KeepRatio);
+      WidthValue := ReadFloat('Resize', 'WidthValue', WidthValue);
+      HeightValue := ReadFloat('Resize', 'HeightValue', HeightValue);
+      RatioBase := TRatioBase(ReadInteger('Resize', 'RatioBase',
+        Ord(RatioBase)));
+      Method := ReadInteger('Resize', 'Method', Method);
+      FloatMode := ReadBool('Resize', 'FloatMode', FloatMode);
+      NonMagnify := ReadBool('Resize', 'NonMagnify', NonMagnify);
+      LinearizedReduction := ReadBool('Resize', 'LinearizedReduction',
+        LinearizedReduction);
 
-      //Output
-      FilePattern         := ReadString('Output', 'FilePattern', FilePattern);
-      AvoidCollision      := ReadBool('Output', 'AvoidCollision', AvoidCollision);
-      JPEGQuality         := ReadInteger('Output', 'JPEGQuality', JPEGQuality);
-      {$IFNDEF NoJPEGSubsampling}
-      JpegSubsampling     := ReadBool('Output', 'JPEGSubsampling', JpegSubsampling);
-      {$ENDIF}
-      ProgressiveJpeg     := ReadBool('Output', 'ProgressiveJPEG', ProgressiveJpeg);
-      PngCompress         := ReadInteger('Output', 'PNGCompressLevel', PNGCompress);
-      TimeStampCopy       := ReadBool('Output', 'TimeStampCopy', TimeStampCopy);
-      AutoIndexed         := ReadBool('Output', 'AutoIndexed', AutoIndexed);
-      AutoRotate          := ReadBool('Output', 'AutoRotate', AutoRotate);
+      // Output
+      FilePattern := ReadString('Output', 'FilePattern', FilePattern);
+      AvoidCollision := ReadBool('Output', 'AvoidCollision', AvoidCollision);
+      JpegQuality := ReadInteger('Output', 'JPEGQuality', JpegQuality);
+{$IFNDEF NoJPEGSubsampling}
+      JpegSubsampling := ReadBool('Output', 'JPEGSubsampling', JpegSubsampling);
+{$ENDIF}
+      ProgressiveJpeg := ReadBool('Output', 'ProgressiveJPEG', ProgressiveJpeg);
+      PngCompress := ReadInteger('Output', 'PNGCompressLevel', PngCompress);
+      TimeStampCopy := ReadBool('Output', 'TimeStampCopy', TimeStampCopy);
+      AutoIndexed := ReadBool('Output', 'AutoIndexed', AutoIndexed);
+      AutoRotate := ReadBool('Output', 'AutoRotate', AutoRotate);
 
-      //HTML
-      HTMLGenerate        := ReadBool('HTML', 'Generate', HTMLGenerate);
-      HTMLFileName        := ReadString('HTML', 'FileName', HTMLFileName);
-      HTMLReversePlace    := ReadBool('HTML', 'ReversePlace', HTMLReversePlace);
-      HTMLTemplateFile    := ReadString('HTML', 'TemplateFile', HTMLTemplateFile);
-      HtmlNth             := ReadInteger('HTML', 'Nth', 0);
-      HTMLOnStart         := ReadString('HTML', 'OnStart', HTMLOnStart);
-      HTMLOnItem          := ReadString('HTML', 'OnItem', HTMLOnItem);
-      HTMLOnNth           := ReadString('HTML', 'OnNth', HTMLOnNth);
-      HTMLOnRemain        := ReadString('HTML', 'OnRemain', HTMLOnRemain);
-      HTMLOnEnd           := ReadString('HTML', 'OnEnd', HTMLOnEnd);
+      // HTML
+      HTMLGenerate := ReadBool('HTML', 'Generate', HTMLGenerate);
+      HTMLFileName := ReadString('HTML', 'FileName', HTMLFileName);
+      HTMLReversePlace := ReadBool('HTML', 'ReversePlace', HTMLReversePlace);
+      HTMLTemplateFile := ReadString('HTML', 'TemplateFile', HTMLTemplateFile);
+      HtmlNth := ReadInteger('HTML', 'Nth', 0);
+      HTMLOnStart := ReadString('HTML', 'OnStart', HTMLOnStart);
+      HTMLOnItem := ReadString('HTML', 'OnItem', HTMLOnItem);
+      HTMLOnNth := ReadString('HTML', 'OnNth', HTMLOnNth);
+      HTMLOnRemain := ReadString('HTML', 'OnRemain', HTMLOnRemain);
+      HTMLOnEnd := ReadString('HTML', 'OnEnd', HTMLOnEnd);
 
-      //Filter
-      DoTrim              := ReadBool('Filter', 'TrimFilter', DoTrim);
-      TrimRect            := ReadString('Filter', 'TrimRect', TrimRect);
-      DoTurnOver          := ReadBool('Filter', 'TurnOverFilter', DoTurnOver);
-      DoRotate            := ReadBool('Filter', 'RotateFilter', DoRotate);
-      RotateAngle         := ReadInteger('Filter', 'RotateAngle', RotateAngle);
-      DoNormalize         := ReadBool('Filter', 'NormalizeFilter', DoNormalize);
-      NormalizeMin        := ReadInteger('Filter', 'NormalizeMin', NormalizeMin);
-      NormalizeMax        := ReadInteger('Filter', 'NormalizeMax', NormalizeMax);
-      DoLumaFix           := ReadBool('Filter', 'LuminanceCorrectionFilter', DoLumaFix);
-      LumaMin             := ReadInteger('Filter', 'LuminanceMin', LumaMin);
-      LumaMax             := ReadInteger('Filter', 'LuminanceMax', LumaMax);
-      DoGammaFix          := ReadBool('Filter', 'GammaCorrectionFilter', DoGammaFix);
-      GammaValue          := ReadFloat('Filter', 'GammaCorrectionValue', GammaValue);
-      DoContrastFix       := ReadBool('Filter', 'ContrastCorrectionFilter', DoContrastFix);
-      ContrastValue       := ReadFloat('Filter', 'ContrastCorrectionValue', ContrastValue);
-      DoSharpen           := ReadBool('Filter', 'SharpFilter', DoSharpen);
-      SharpValue          := ReadInteger('Filter', 'SharpValue', SharpValue);
-      DoClean             := ReadBool('Filter', 'CleanFilter', DoClean);
-      CleanValue          := ReadInteger('Filter', 'CleanValue', CleanValue);
-      DoGrayscale         := ReadBool('Filter', 'GrayscaleFilter', DoGrayscale);
-      GrayscaleMethod     := ReadInteger('Filter', 'GrayscaleMethod', GrayscaleMethod);
-      DoWhite             := ReadBool('Filter', 'WhiteFilter', DoWhite);
-      WhiteValue          := ReadInteger('Filter', 'WhiteValue', WhiteValue);
-      DoLMap              := ReadBool('Filter', 'LMapFilter', DoLMap);
-      LMapValue           := ReadString('Filter', 'LMapValue', LMapValue);
+      // Filter
+      DoTrim := ReadBool('Filter', 'TrimFilter', DoTrim);
+      TrimRect := ReadString('Filter', 'TrimRect', TrimRect);
+      DoTurnOver := ReadBool('Filter', 'TurnOverFilter', DoTurnOver);
+      DoRotate := ReadBool('Filter', 'RotateFilter', DoRotate);
+      RotateAngle := ReadInteger('Filter', 'RotateAngle', RotateAngle);
+      DoNormalize := ReadBool('Filter', 'NormalizeFilter', DoNormalize);
+      NormalizeMin := ReadInteger('Filter', 'NormalizeMin', NormalizeMin);
+      NormalizeMax := ReadInteger('Filter', 'NormalizeMax', NormalizeMax);
+      DoLumaFix := ReadBool('Filter', 'LuminanceCorrectionFilter', DoLumaFix);
+      LumaMin := ReadInteger('Filter', 'LuminanceMin', LumaMin);
+      LumaMax := ReadInteger('Filter', 'LuminanceMax', LumaMax);
+      DoGammaFix := ReadBool('Filter', 'GammaCorrectionFilter', DoGammaFix);
+      GammaValue := ReadFloat('Filter', 'GammaCorrectionValue', GammaValue);
+      DoContrastFix := ReadBool('Filter', 'ContrastCorrectionFilter',
+        DoContrastFix);
+      ContrastValue := ReadFloat('Filter', 'ContrastCorrectionValue',
+        ContrastValue);
+      DoSharpen := ReadBool('Filter', 'SharpFilter', DoSharpen);
+      SharpValue := ReadInteger('Filter', 'SharpValue', SharpValue);
+      DoClean := ReadBool('Filter', 'CleanFilter', DoClean);
+      CleanValue := ReadInteger('Filter', 'CleanValue', CleanValue);
+      DoGrayscale := ReadBool('Filter', 'GrayscaleFilter', DoGrayscale);
+      GrayscaleMethod := ReadInteger('Filter', 'GrayscaleMethod',
+        GrayscaleMethod);
+      DoWhite := ReadBool('Filter', 'WhiteFilter', DoWhite);
+      WhiteValue := ReadInteger('Filter', 'WhiteValue', WhiteValue);
+      DoLMap := ReadBool('Filter', 'LMapFilter', DoLMap);
+      LMapValue := ReadString('Filter', 'LMapValue', LMapValue);
 
-      //Other
-      TimeFormat          := ReadString('Other', 'TimeFormat', TimeFormat);
-      OpenFolder          := ReadBool('Other', 'OpenFolder', OpenFolder);
-      EnableLMap          := ReadBool('Other', 'EnableLMap', EnableLMap);
-      IncludeSubDir       := ReadBool('Other', 'IncludeSubDir', IncludeSubDir);
-      PostExec            := ReadString('Other', 'PostExec', PostExec);
-      SortFileList        := ReadBool('Other', 'SortFileList', SortFileList);
-      DisableIL           := ReadBool('Other', 'DisableIL', DisableIL);
-      DisableIS           := ReadBool('Other', 'DisableIS', DisableIS);
-      MinimizedStart      := ReadBool('Other', 'MinimizedStart', MinimizedStart);
-      TrimRectError       := ReadBool('Other', 'TrimRectError', TrimRectError);
-      TrimRectFillColor   := ReadString('Other', 'TrimRectFillColor', TrimRectFillColor);
-      FilterOrder         := ReadString('Other', 'FilterOrder', FilterOrder);
-      MaxThreads          := ReadInteger('Other', 'MaxThreads', MaxThreads);
-      ContinueOnError     := ReadBool('Other', 'ContinueOnError', ContinueOnError);
-      LogFileName         := ReadString('Other', 'LogFileName', LogFileName);
+      // Other
+      TimeFormat := ReadString('Other', 'TimeFormat', TimeFormat);
+      OpenFolder := ReadBool('Other', 'OpenFolder', OpenFolder);
+      EnableLMap := ReadBool('Other', 'EnableLMap', EnableLMap);
+      IncludeSubDir := ReadBool('Other', 'IncludeSubDir', IncludeSubDir);
+      PostExec := ReadString('Other', 'PostExec', PostExec);
+      SortFileList := ReadBool('Other', 'SortFileList', SortFileList);
+      DisableIL := ReadBool('Other', 'DisableIL', DisableIL);
+      DisableIS := ReadBool('Other', 'DisableIS', DisableIS);
+      MinimizedStart := ReadBool('Other', 'MinimizedStart', MinimizedStart);
+      TrimRectError := ReadBool('Other', 'TrimRectError', TrimRectError);
+      TrimRectFillColor := ReadString('Other', 'TrimRectFillColor',
+        TrimRectFillColor);
+      FilterOrder := ReadString('Other', 'FilterOrder', FilterOrder);
+      MaxThreads := ReadInteger('Other', 'MaxThreads', MaxThreads);
+      ContinueOnError := ReadBool('Other', 'ContinueOnError', ContinueOnError);
+      LogFileName := ReadString('Other', 'LogFileName', LogFileName);
 
       LMapMenu.Visible := EnableLMap;
       LMapValueMenu.Visible := EnableLMap;
@@ -1614,35 +1770,35 @@ begin
   try
     with IniFile do
     begin
-      //Window
+      // Window
       WriteBool('Window', 'StayOnTop', StayOnTop);
       WriteInteger('Window', 'Top', Top);
       WriteInteger('Window', 'Left', Left);
       WriteBool('Window', 'Idle', IdleMode);
 
-      //Files
+      // Files
       WriteString('Files', 'MapFile', MapFile);
       WriteString('Files', 'ClipboardFile', ClipboardFile);
 
-      //Directories
+      // Directories
       WriteString('Directories', 'SpiDirectory', SpiDirectory);
       WriteString('Directories', 'SampleDirectory', SampleDirectory);
       WriteString('Directories', 'LastDirectory', LastDirectory);
 
-      //Output
+      // Output
       WriteString('Output', 'FilePattern', FilePattern);
       WriteBool('Output', 'AvoidCollision', AvoidCollision);
-      WriteInteger('Output', 'JPEGQuality', JPEGQuality);
-      {$IFNDEF NoJPEGSubsampling}
+      WriteInteger('Output', 'JPEGQuality', JpegQuality);
+{$IFNDEF NoJPEGSubsampling}
       WriteBool('Output', 'JPEGSubsampling', JpegSubsampling);
-      {$ENDIF}
+{$ENDIF}
       WriteBool('Output', 'ProgressiveJPEG', ProgressiveJpeg);
-      WriteInteger('Output', 'PNGCompressLevel', PNGCompress);
+      WriteInteger('Output', 'PNGCompressLevel', PngCompress);
       WriteBool('Output', 'TimeStampCopy', TimeStampCopy);
       WriteBool('Output', 'AutoIndexed', AutoIndexed);
       WriteBool('Output', 'AutoRotate', AutoRotate);
 
-      //Resize
+      // Resize
       WriteInteger('Resize', 'ValueType', Ord(ValueType));
       WriteBool('Resize', 'KeepRatio', KeepRatio);
       WriteFloat('Resize', 'WidthValue', WidthValue);
@@ -1653,19 +1809,19 @@ begin
       WriteBool('Resize', 'NonMagnify', NonMagnify);
       WriteBool('Resize', 'LinearizedReduction', LinearizedReduction);
 
-      //HTML
+      // HTML
       WriteBool('HTML', 'Generate', HTMLGenerate);
       WriteString('HTML', 'FileName', HTMLFileName);
       WriteBool('HTML', 'ReversePlace', HTMLReversePlace);
       WriteString('HTML', 'TemplateFile', HTMLTemplateFile);
-      WriteInteger('HTML', 'Nth', HTMLNth);
+      WriteInteger('HTML', 'Nth', HtmlNth);
       WriteString('HTML', 'OnStart', HTMLOnStart);
       WriteString('HTML', 'OnItem', HTMLOnItem);
       WriteString('HTML', 'OnNth', HTMLOnNth);
       WriteString('HTML', 'OnRemain', HTMLOnRemain);
       WriteString('HTML', 'OnEnd', HTMLOnEnd);
 
-      //Filter
+      // Filter
       WriteBool('Filter', 'TrimFilter', DoTrim);
       WriteString('Filter', 'TrimRect', TrimRect);
       WriteBool('Filter', 'TurnOverFilter', DoTurnOver);
@@ -1692,7 +1848,7 @@ begin
       WriteBool('Filter', 'LMapFilter', DoLMap);
       WriteString('Filter', 'LMapValue', LMapValue);
 
-      //Other
+      // Other
       WriteString('Other', 'TimeFormat', TimeFormat);
       WriteBool('Other', 'OpenFolder', OpenFolder);
       WriteBool('Other', 'EnableLMap', EnableLMap);
@@ -1767,7 +1923,8 @@ begin
         UnitLabel1.Caption := '%';
         UnitLabel2.Caption := '%';
       end;
-  else ; //error
+  else
+    ; // error
   end;
   ResetCondComboBoxEnabled;
 end;
@@ -1854,7 +2011,7 @@ var
   Bitmap: TBitmap;
   S: string;
 begin
-  if not ClipBoard.HasFormat(CF_BITMAP) then
+  if not Clipboard.HasFormat(CF_BITMAP) then
   begin
     StatusView := 'クリップボードにビットマップファイルが存在しません';
     Exit;
@@ -1863,7 +2020,8 @@ begin
   S := DecodePathExp(ClipboardFile);
   Bitmap := TBitmap.Create;
   try
-    Bitmap.LoadFromClipBoardFormat(CF_BITMAP, ClipBoard.GetAsHandle(CF_BITMAP), 0);
+    Bitmap.LoadFromClipBoardFormat(CF_BITMAP,
+      Clipboard.GetAsHandle(CF_BITMAP), 0);
     Bitmap.SaveToFile(S);
   finally
     FreeAndNil(Bitmap);
@@ -1878,8 +2036,10 @@ procedure TMainForm.JpegQualityMenuClick(Sender: TObject);
 var
   X: Integer;
 begin
-  X := StrToIntDef(InputBox('JPEG 画質', '画質 (1～100)', IntToStr(JpegQuality)), 80);
-  if (X < 1) or (X > 100) then X := 80;
+  X := StrToIntDef(InputBox('JPEG 画質', '画質 (1～100)',
+    IntToStr(JpegQuality)), 80);
+  if (X < 1) or (X > 100) then
+    X := 80;
   JpegQuality := X;
 end;
 
@@ -1935,12 +2095,14 @@ begin
   if OnTopMenu.Checked <> Value then
   begin
     OnTopMenu.Checked := Value;
-    if Value then FormStyle := fsStayOnTop
-    else FormStyle := fsNormal;
+    if Value then
+      FormStyle := fsStayOnTop
+    else
+      FormStyle := fsNormal;
   end;
 end;
 
-procedure TMainForm.SetFilePattern(const Value: string);
+procedure TMainForm.SetFilepattern(const Value: string);
 begin
   FilePatternEdit.Text := Value;
 end;
@@ -1963,20 +2125,24 @@ end;
 procedure TMainForm.SetValueType(const Value: TValueType);
 begin
   case Value of
-    vtAbsolute: SizeRadioGroup.ItemIndex := 0;
-    vtRelative: SizeRadioGroup.ItemIndex := 1;
+    vtAbsolute:
+      SizeRadioGroup.ItemIndex := 0;
+    vtRelative:
+      SizeRadioGroup.ItemIndex := 1;
   else
-    SizeRadioGroup.ItemIndex := 1; //error
+    SizeRadioGroup.ItemIndex := 1; // error
   end;
 end;
 
 function TMainForm.GetValueType: TValueType;
 begin
   case SizeRadioGroup.ItemIndex of
-    0: Result := vtAbsolute;
-    1: Result := vtRelative;
+    0:
+      Result := vtAbsolute;
+    1:
+      Result := vtRelative;
   else
-    Result := vtRelative; //error
+    Result := vtRelative; // error
   end;
 end;
 
@@ -1998,9 +2164,12 @@ end;
 
 procedure TMainForm.SetMethod(const Value: Integer);
 begin
-  if Value < 16 then Exit;
-  TMenuItem(FindComponent(Format('Enlarge%dMenu', [Value and $F]))).Checked := True;
-  TMenuItem(FindComponent(Format('Reduce%dMenu', [(Value shr 4) and $F]))).Checked := True;
+  if Value < 16 then
+    Exit;
+  TMenuItem(FindComponent(Format('Enlarge%dMenu', [Value and $F])))
+    .Checked := True;
+  TMenuItem(FindComponent(Format('Reduce%dMenu', [(Value shr 4) and $F])))
+    .Checked := True;
 end;
 
 function TMainForm.GetKeepRatio: Boolean;
@@ -2070,28 +2239,40 @@ end;
 procedure TMainForm.SetRatioBase(const Value: TRatioBase);
 begin
   case Value of
-    rbWidth:  CondComboBox.ItemIndex := 0;
-    rbHeight: CondComboBox.ItemIndex := 1;
-    rbLong:   CondComboBox.ItemIndex := 2;
-    rbShort:  CondComboBox.ItemIndex := 3;
-    rbMax:    CondComboBox.ItemIndex := 4;
-    rbMin:    CondComboBox.ItemIndex := 5;
+    rbWidth:
+      CondComboBox.ItemIndex := 0;
+    rbHeight:
+      CondComboBox.ItemIndex := 1;
+    rbLong:
+      CondComboBox.ItemIndex := 2;
+    rbShort:
+      CondComboBox.ItemIndex := 3;
+    rbMax:
+      CondComboBox.ItemIndex := 4;
+    rbMin:
+      CondComboBox.ItemIndex := 5;
   else
-    CondComboBox.ItemIndex := 1; //error
+    CondComboBox.ItemIndex := 1; // error
   end;
 end;
 
 function TMainForm.GetRatioBase: TRatioBase;
 begin
   case CondComboBox.ItemIndex of
-    0: Result := rbWidth;
-    1: Result := rbHeight;
-    2: Result := rbLong;
-    3: Result := rbShort;
-    4: Result := rbMax;
-    5: Result := rbMin;
+    0:
+      Result := rbWidth;
+    1:
+      Result := rbHeight;
+    2:
+      Result := rbLong;
+    3:
+      Result := rbShort;
+    4:
+      Result := rbMax;
+    5:
+      Result := rbMin;
   else
-    Result := rbHeight; //error
+    Result := rbHeight; // error
   end;
 end;
 
@@ -2101,6 +2282,7 @@ begin
 end;
 
 {$IFNDEF NoJPEGSubsampling}
+
 procedure TMainForm.SetJPEGSubsampling(const Value: Boolean);
 begin
   JPEGSubsamplingMenu.Checked := Value;
@@ -2123,6 +2305,7 @@ begin
 end;
 
 {$IFNDEF NoJPEGSubsampling}
+
 function TMainForm.GetJPEGSubsampling: Boolean;
 begin
   Result := JPEGSubsamplingMenu.Checked;
@@ -2294,22 +2477,26 @@ procedure TMainForm.AddFile(FileName: string);
     Ext: string;
   begin
     Ext := ExtractFileExt(FileName);
-    if DisableIL then Result := False
+    if DisableIL then
+      Result := False
 {$IF CompilerVersion >= 21.0}
-    else Result := FileExtInSet(Ext, ['.bmp', '.jpg', '.jpeg', '.gif', '.png',
-                                      '.ico', '.tif', '.tiff', '.jxr', '.hdp', '.wdp']);
+    else
+      Result := FileExtInSet(Ext, ['.bmp', '.jpg', '.jpeg', '.gif', '.png',
+        '.ico', '.tif', '.tiff', '.jxr', '.hdp', '.wdp']);
 {$ELSE}
-    else Result := FileExtInSet(Ext, ['.bmp', '.jpg', '.jpeg', '.gif', '.png']);
+    else
+      Result := FileExtInSet(Ext, ['.bmp', '.jpg', '.jpeg', '.gif', '.png']);
 {$IFEND}
     Result := Result or IsLoadableBySpi(Copy(Ext, 2, Length(Ext)));
-    if not Result then Warn(Format('Unsupported image format: %s', [FileName]));
+    if not Result then
+      Warn(Format('Unsupported image format: %s', [FileName]));
   end;
 
 begin
   if IsDirectory(FileName) then
     DirectoryScan(FileName)
-  else
-    if FormatCheck(FileName) then FileList.Add(FileName);
+  else if FormatCheck(FileName) then
+    FileList.Add(FileName);
 end;
 
 procedure TMainForm.ParamExecute(Sender: TObject; var Done: Boolean);
@@ -2318,7 +2505,8 @@ var
 begin
   Application.OnIdle := nil;
   FileList.Clear;
-  for I := 2 to ParamCount do AddFile(ParamStr(I));
+  for I := 2 to ParamCount do
+    AddFile(ParamStr(I));
   MainProcess;
   Close;
 end;
@@ -2396,7 +2584,7 @@ begin
   if InputQuery('正規化範囲', '範囲: Min/Max', S) then
   begin
     NormalizeMin := StrToIntDef(Copy(S, 1, Pos('/', S) - 1), 0);
-    NormalizeMax := StrToIntDef(Copy(S, Pos('/', S) + 1,  Length(S)), 255);
+    NormalizeMax := StrToIntDef(Copy(S, Pos('/', S) + 1, Length(S)), 255);
     DoNormalize := True;
   end;
 end;
@@ -2409,7 +2597,7 @@ begin
   if InputQuery('輝度範囲', '範囲: Min/Max', S) then
   begin
     LumaMin := StrToIntDef(Copy(S, 1, Pos('/', S) - 1), 0);
-    LumaMax := StrToIntDef(Copy(S, Pos('/', S) + 1,  Length(S)), 255);
+    LumaMax := StrToIntDef(Copy(S, Pos('/', S) + 1, Length(S)), 255);
     DoLumaFix := True;
   end;
 end;
@@ -2418,7 +2606,8 @@ procedure TMainForm.ResetCondComboBoxEnabled;
 begin
   if RatioKeepCheckBox.Checked and (SizeRadioGroup.ItemIndex = 0) then
     CondComboBox.Enabled := True
-  else CondComboBox.Enabled := False;
+  else
+    CondComboBox.Enabled := False;
 end;
 
 procedure TMainForm.TrimValueMenuClick(Sender: TObject);
