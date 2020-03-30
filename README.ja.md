@@ -42,4 +42,4 @@ JPEG サブサンプリング無効圧縮対応 |○          |○          |○
 並列処理対応                      |×          |○          |○          |○          |○
 タスクバーでの進捗表示            |×          |○          |○          |○          |○
 High DPI 対応                     |×          |×          |×          |○          |○
-参考: ビルドに使う Delphi の版数  |Delphi 2007 |Delphi XE2  |Delphi XE2  |Delphi 10.2 |Delphi 10.2
+参考: ビルドに使う Delphi の版数  |Delphi 2007 |Delphi XE2  |Delphi XE2  |Delphi 10.3 |Delphi 10.3
