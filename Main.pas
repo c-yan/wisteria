@@ -839,7 +839,7 @@ var
     FileExt := ExtractFileExt(ProcInfo.Name);
     if FileExtInSet(FileExt, ['.bmp']) then
       Src.LoadFromFile(ProcInfo.Name)
-    else if FileExtInSet(FileExt, ['.jpg', '.jpeg']) then
+    else if FileExtInSet(FileExt, ['.jpg', '.jpeg', 'jfif']) then
     begin
       jpeg := TJPEGImage.Create;
       try
@@ -883,7 +883,8 @@ var
 {$ELSE}
     Result := LoadByIL(ProcInfo, Src);
 {$IFEND}
-    if FileExtInSet(ExtractFileExt(ProcInfo.Name), ['.jpg', '.jpeg']) then
+    if FileExtInSet(ExtractFileExt(ProcInfo.Name), ['.jpg', '.jpeg', 'jfif'])
+    then
     begin
       ProcInfo.OriginalTime := ExifDateTimeToDateTime
         (string(GetOriginalDateTime(ProcInfo.Name)));
@@ -903,7 +904,7 @@ var
     FileExt := ExtractFileExt(SaveName);
     if FileExtInSet(FileExt, ['.bmp']) then
       Src.SaveToFile(SaveName)
-    else if FileExtInSet(FileExt, ['.jpg', '.jpeg']) then
+    else if FileExtInSet(FileExt, ['.jpg', '.jpeg', 'jfif']) then
     begin
       jpeg := TJPEGImage.Create;
       try
@@ -2481,11 +2482,12 @@ procedure TMainForm.AddFile(FileName: string);
       Result := False
 {$IF CompilerVersion >= 21.0}
     else
-      Result := FileExtInSet(Ext, ['.bmp', '.jpg', '.jpeg', '.gif', '.png',
-        '.ico', '.tif', '.tiff', '.jxr', '.hdp', '.wdp']);
+      Result := FileExtInSet(Ext, ['.bmp', '.jpg', '.jpeg', 'jfif', '.gif',
+        '.png', '.ico', '.tif', '.tiff', '.jxr', '.hdp', '.wdp']);
 {$ELSE}
     else
-      Result := FileExtInSet(Ext, ['.bmp', '.jpg', '.jpeg', '.gif', '.png']);
+      Result := FileExtInSet(Ext, ['.bmp', '.jpg', '.jpeg', 'jfif',
+        '.gif', '.png']);
 {$IFEND}
     Result := Result or IsLoadableBySpi(Copy(Ext, 2, Length(Ext)));
     if not Result then
