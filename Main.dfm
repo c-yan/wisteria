@@ -382,9 +382,9 @@ object MainForm: TMainForm
     end
     object EffectMenu: TMenuItem
       Caption = #21177#26524'(&E)'
-      object WhiteFilterMenu: TMenuItem
-        Caption = #30333#33394#21270'(&W)'
-        Hint = #25351#23450#36637#24230#20197#19978#12398#30011#32032#12434#30333#33394#21270#12375#12414#12377
+      object BlackWhiteFilterMenu: TMenuItem
+        Caption = #40658#21270#30333#33394#21270'(&W)'
+        Hint = #25351#23450#36637#24230#26410#28288#12398#30011#32032#12434#40658#33394#21270#12289#20197#19978#12398#30011#32032#12434#30333#33394#21270#12375#12414#12377
         OnClick = CheckMenuClick
       end
       object TrimMenu: TMenuItem
@@ -445,10 +445,10 @@ object MainForm: TMainForm
     end
     object ValuesMenu: TMenuItem
       Caption = #20516'(&V)'
-      object WhiteValueMenu: TMenuItem
-        Caption = #30333#33394#21270#38334#20516'(&W)...'
-        Hint = #30333#33394#21270#12398#38334#20516#12434#35373#23450#12375#12414#12377
-        OnClick = WhiteValueMenuClick
+      object BlackWhiteValueMenu: TMenuItem
+        Caption = #40658#21270#30333#21270#38334#20516'(&W)...'
+        Hint = #40658#33394#65381#30333#33394#21270#12398#38334#20516#12434#35373#23450#12375#12414#12377
+        OnClick = BlackWhiteValueMenuClick
       end
       object TrimValueMenu: TMenuItem
         Caption = #20999#12426#25244#12365#31684#22258'(&T)...'

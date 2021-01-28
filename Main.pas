@@ -86,9 +86,9 @@ type
     WidthEdit: TEdit;
     HeightEdit: TEdit;
     AutoIndexedMenu: TMenuItem;
-    WhiteValueMenu: TMenuItem;
+    BlackWhiteValueMenu: TMenuItem;
     ExifAutoRotateMenu: TMenuItem;
-    WhiteFilterMenu: TMenuItem;
+    BlackWhiteFilterMenu: TMenuItem;
     IncludeSubDirMenu: TMenuItem;
     IdleModeMenu: TMenuItem;
     FileListSortMenu: TMenuItem;
@@ -116,7 +116,7 @@ type
     ShowHelpMenu: TMenuItem;
     GoGitHubMenu: TMenuItem;
     GoGitHubIssuesMenu: TMenuItem;
-    procedure WhiteValueMenuClick(Sender: TObject);
+    procedure BlackWhiteValueMenuClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure ExitMenuClick(Sender: TObject);
     procedure AboutMenuClick(Sender: TObject);
@@ -180,6 +180,7 @@ type
     FGrayscaleMethod: Integer;
     FLMapValue: string;
     FEnableLMap: Boolean;
+    FBlackValue: Integer;
     FWhiteValue: Integer;
     FPngCompress: Integer;
     FPostExec: string;
@@ -258,8 +259,8 @@ type
     function GetAutoIndexed: Boolean;
     procedure SetAutoRotate(const Value: Boolean);
     function GetAutoRotate: Boolean;
-    procedure SetDoWhite(const Value: Boolean);
-    function GetDoWhite: Boolean;
+    procedure SetDoBlackWhite(const Value: Boolean);
+    function GetDoBlackWhite: Boolean;
     function GetIncludeSubDir: Boolean;
     procedure SetIncludeSubDir(const Value: Boolean);
     function GetIdleMode: Boolean;
@@ -346,7 +347,8 @@ type
     property FloatMode: Boolean read FFloatMode write FFloatMode;
     property AutoIndexed: Boolean read GetAutoIndexed write SetAutoIndexed;
     property AutoRotate: Boolean read GetAutoRotate write SetAutoRotate;
-    property DoWhite: Boolean read GetDoWhite write SetDoWhite;
+    property DoBlackWhite: Boolean read GetDoBlackWhite write SetDoBlackWhite;
+    property BlackValue: Integer read FBlackValue write FBlackValue;
     property WhiteValue: Integer read FWhiteValue write FWhiteValue;
     property DoLMap: Boolean read GetDoLMap write SetDoLMap;
     property LMapValue: string read FLMapValue write FLMapValue;
@@ -1113,11 +1115,11 @@ var
       Exit;
     end;
 
-    if DoWhite then
+    if DoBlackWhite then
     begin
-      ProcessForm.ProcessSituation := '白色化中';
+      ProcessForm.ProcessSituation := '黒色化･白色化中';
       Application.ProcessMessages;
-      WhiteFilter(Src, WhiteValue, ProgressProc);
+      BlackWhiteFilter(Src, BlackValue, WhiteValue, ProgressProc);
     end;
 
     if AbortRequire then
@@ -1591,6 +1593,7 @@ begin
   TimeFormat := 'yyyy"年"mm"月"dd"日" hh"時"nn"分"';
   TrimRect := '0,0,0,0';
   EnableLMap := False;
+  BlackValue := 20;
   WhiteValue := 230;
   DisableIL := False;
   DisableIS := False;
@@ -1731,7 +1734,8 @@ begin
       DoGrayscale := ReadBool('Filter', 'GrayscaleFilter', DoGrayscale);
       GrayscaleMethod := ReadInteger('Filter', 'GrayscaleMethod',
         GrayscaleMethod);
-      DoWhite := ReadBool('Filter', 'WhiteFilter', DoWhite);
+      DoBlackWhite := ReadBool('Filter', 'BlackWhiteFilter', DoBlackWhite);
+      BlackValue := ReadInteger('Filter', 'BlackValue', BlackValue);
       WhiteValue := ReadInteger('Filter', 'WhiteValue', WhiteValue);
       DoLMap := ReadBool('Filter', 'LMapFilter', DoLMap);
       LMapValue := ReadString('Filter', 'LMapValue', LMapValue);
@@ -1844,7 +1848,8 @@ begin
       WriteInteger('Filter', 'CleanValue', CleanValue);
       WriteBool('Filter', 'GrayscaleFilter', DoGrayscale);
       WriteInteger('Filter', 'GrayscaleMethod', GrayscaleMethod);
-      WriteBool('Filter', 'WhiteFilter', DoWhite);
+      WriteBool('Filter', 'BlackWhiteFilter', DoBlackWhite);
+      WriteInteger('Filter', 'BlackValue', BlackValue);
       WriteInteger('Filter', 'WhiteValue', WhiteValue);
       WriteBool('Filter', 'LMapFilter', DoLMap);
       WriteString('Filter', 'LMapValue', LMapValue);
@@ -2720,25 +2725,26 @@ begin
   Result := ExifAutoRotateMenu.Checked;
 end;
 
-procedure TMainForm.SetDoWhite(const Value: Boolean);
+procedure TMainForm.SetDoBlackWhite(const Value: Boolean);
 begin
-  WhiteFilterMenu.Checked := Value;
+  BlackWhiteFilterMenu.Checked := Value;
 end;
 
-function TMainForm.GetDoWhite: Boolean;
+function TMainForm.GetDoBlackWhite: Boolean;
 begin
-  Result := WhiteFilterMenu.Checked;
+  Result := BlackWhiteFilterMenu.Checked;
 end;
 
-procedure TMainForm.WhiteValueMenuClick(Sender: TObject);
+procedure TMainForm.BlackWhiteValueMenuClick(Sender: TObject);
 var
   S: string;
 begin
-  S := IntToStr(WhiteValue);
-  if InputQuery('白色化閾値', '閾値 (0～255)', S) then
+  S := Format('%d/%d', [BlackValue, WhiteValue]);
+  if InputQuery('黒色化･白色化閾値', '閾値: 黒/白', S) then
   begin
-    WhiteValue := StrToIntDefWithRange(S, WhiteValue, 0, 255);
-    DoWhite := True;
+    BlackValue := StrToIntDef(Copy(S, 1, Pos('/', S) - 1), 0);
+    WhiteValue := StrToIntDef(Copy(S, Pos('/', S) + 1, Length(S)), 255);
+    DoBlackWhite := True;
   end;
 end;
 

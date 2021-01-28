@@ -18,7 +18,7 @@ procedure TurnOverFilter(Src: TBitmap; PProc: TProgressProc);
 procedure RotateFilter(Src: TBitmap; Angle: Integer; PProc: TProgressProc);
 procedure TrimFilter(Src: TBitmap; R: TRect; FillColor: string;
   PProc: TProgressProc);
-procedure WhiteFilter(Src: TBitmap; Threshold: Integer; PProc: TProgressProc);
+procedure BlackWhiteFilter(Src: TBitmap; BlackThreshold, WhiteThreshold: Integer; PProc: TProgressProc);
 procedure LMapFilter(Src: TBitmap; VList: string; PProc: TProgressProc);
 procedure LumaMapFilter(Src: TBitmap; PProc: TProgressProc);
 procedure IndexedFilter(Src: TBitmap; var Grayscale: Boolean;
@@ -1094,7 +1094,7 @@ begin
   LumaMapFilter(Src, PProc);
 end;
 
-procedure WhiteFilter(Src: TBitmap; Threshold: Integer; PProc: TProgressProc);
+procedure BlackWhiteFilter(Src: TBitmap; BlackThreshold, WhiteThreshold: Integer; PProc: TProgressProc);
 var
   Dst: TBitmap;
   X, Y: Integer;
@@ -1117,11 +1117,17 @@ begin
     for X := 0 to Src.Width - 1 do
     begin
       L := 0.114 * SP[X].B + 0.587 * SP[X].G + 0.299 * SP[X].R;
-      if L >= Threshold then
+      if L >= WhiteThreshold then
       begin
         DP[X].B := 255;
         DP[X].G := 255;
         DP[X].R := 255;
+      end
+      else if (DP[X].B < BlackThreshold) and (DP[X].G < BlackThreshold) and (DP[X].R < BlackThreshold) then
+      begin
+        DP[X].B := 0;
+        DP[X].G := 0;
+        DP[X].R := 0;
       end
       else
         DP[X] := SP[X];
