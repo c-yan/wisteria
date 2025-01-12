@@ -7,7 +7,7 @@ uses
 
 resourcestring
   MailAddress = 'recv@cyanet.jp';
-  WebAddress = 'https://hp.vector.co.jp/authors/VA015850/';
+  WebAddress = 'https://leafel.cyanet.jp/';
   GitHubAddress = 'https://github.com/c-yan/wisteria/';
   GitHubIssuesAddress = 'https://github.com/c-yan/wisteria/issues';
   TwitterId = '@c_nyan';

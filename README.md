@@ -40,4 +40,4 @@ JPEG subsampling-off compression support |○          |○          |○       
 Parallel processing support              |×          |○          |○          |○          |○
 Taskbar progress indicator               |×          |○          |○          |○          |○
 High DPI support                         |×          |×          |×          |○          |○
-Ref: Version of Delphi used to build     |Delphi 2007 |Delphi XE2  |Delphi XE2  |Delphi 10.3 |Delphi 10.3
+Ref: Version of Delphi used to build     |Delphi 2007 |Delphi XE2  |Delphi XE2  |Delphi 12.1 |Delphi 12.1
